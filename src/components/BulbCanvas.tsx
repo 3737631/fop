@@ -10,11 +10,12 @@ const BG_COLORS: Record<BgColor, string> = {
   white: '#ffffff',
 };
 
+const BASE = import.meta.env.BASE_URL || '/';
 const IMAGE_URLS = [
-  '/frames/frame_0_off.png',
-  '/frames/frame_1_dim.png',
-  '/frames/frame_2_medium.png',
-  '/frames/frame_3_full.png',
+  `${BASE}frames/frame_0_off.png`,
+  `${BASE}frames/frame_1_dim.png`,
+  `${BASE}frames/frame_2_medium.png`,
+  `${BASE}frames/frame_3_full.png`,
 ];
 
 interface Props {

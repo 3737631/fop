@@ -1,0 +1,11 @@
+=== CÓMO USAR TUS PROPIAS IMÁGENES ===
+
+Coloca AQUÍ (public/frames/) tus 4 imágenes PNG (800x800px recomendado, fondo negro):
+
+  frame_0_off.png      → Bombilla apagada (brillo 0%)
+  frame_1_dim.png      → Brillo tenue (25%)
+  frame_2_medium.png   → Brillo medio (60%)
+  frame_3_full.png     → Brillo máximo (100%)
+
+La app las cargará automáticamente y las interpolará con alpha blending
+al hacer scroll. Si no existen, se generan frames procedurales como placeholder.
