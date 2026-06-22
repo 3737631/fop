@@ -30,12 +30,9 @@ nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:100;poin
 
 .coin-3d{width:300px;height:300px;transform-style:preserve-3d;will-change:transform;position:absolute;z-index:2;opacity:0}
 .coin-face{position:absolute;width:300px;height:300px;border-radius:50%;backface-visibility:hidden;background-size:cover;background-position:center;overflow:hidden}
-.coin-face.front{box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 30px rgba(150,150,150,.12);transform:translateZ(-10px)}
-.coin-face.back{box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 30px rgba(150,150,150,.12);transform:translateZ(10px) rotateY(180deg)}
-.coin-edge-front{position:absolute;width:300px;height:300px;border-radius:50%;transform:translateZ(-10px);background:radial-gradient(ellipse at 50% 50%,#2a2a2a,#0a0a0a);border:1px solid rgba(100,100,100,.08)}
-.coin-edge-back{position:absolute;width:300px;height:300px;border-radius:50%;transform:translateZ(10px);background:radial-gradient(ellipse at 50% 50%,#2a2a2a,#0a0a0a);border:1px solid rgba(100,100,100,.08)}
-
-/* ─── HERO minimalista tipo sello ─── */
+.coin-face.front{box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 0 4px #1a1a1a,0 0 0 8px #0d0d0d;transform:translateZ(-5px)}
+.coin-face.back{box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 0 4px #1a1a1a,0 0 0 8px #0d0d0d;transform:translateZ(5px) rotateY(180deg)}
+/* â”€â”€â”€ HERO minimalista tipo sello â”€â”€â”€ */
 .hero{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;text-align:center;pointer-events:none}
 .hero-websites{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(1.6rem,4.5vw,3.2rem);font-weight:800;text-transform:lowercase;letter-spacing:-.02em;color:#fff;margin-bottom:2.2rem;line-height:1}
 .hero-websites .line{display:block;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
@@ -104,8 +101,6 @@ nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:100;poin
 <div class="scene" id="scene">
   <canvas id="globeCanvas"></canvas>
   <div class="coin-3d" id="coin">
-    <div class="coin-edge-front" id="coinEdgeFront"></div>
-    <div class="coin-edge-back" id="coinEdgeBack"></div>
     <div class="coin-face front" id="coinFront"></div>
     <div class="coin-face back" id="coinBack"></div>
   </div>
