@@ -321,6 +321,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var s = document.body.style;
     s.overflow = 'hidden'; s.position = 'fixed'; s.top = -SY + 'px'; s.width = '100%';
     S.style.height = window.innerHeight + 'px';
+    var sc = document.getElementById('scene'); if (sc) sc.style.display = 'none';
   }
 
   function UL() {
@@ -328,6 +329,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var s = document.body.style;
     s.overflow = ''; s.position = ''; s.top = ''; s.width = '';
     S.style.height = '';
+    var sc = document.getElementById('scene'); if (sc) sc.style.display = '';
     window.scrollTo(0, SY);
     ScrollTrigger.refresh();
   }
