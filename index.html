@@ -10,7 +10,7 @@
 </script>
 <script src="https://d3js.org/d3.v7.min.js">
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&amp;family=Teko:wght@600;700&amp;display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0a0a;color:#e8e2d9;font-family:'Inter','Segoe UI',system-ui,sans-serif;height:700vh;overflow-x:hidden}
@@ -49,20 +49,22 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 .bg-text-title em{font-style:italic;font-weight:400;color:#c8bfad}
 .bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.3vw,1rem);font-weight:400;font-stretch:condensed;color:rgba(200,191,173,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
-.story-section{position:fixed;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0;display:flex}
-.story-panel{position:relative;width:33.333%;height:100%;display:flex;align-items:center;justify-content:center}
-.story-panel.p1{background:#B91C1C}
-.story-panel.p2{background:#FFD700}
-.story-panel.p3{background:#047857}
-.story-num{font-family:'Inter','Futura','Helvetica','Arial Black',sans-serif;font-size:clamp(12rem,45vw,55vh);font-weight:900;line-height:1;z-index:6;text-align:center;letter-spacing:-.06em;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.story-section{position:fixed;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0;overflow:hidden}
+.story-panel{position:absolute;top:0;height:100%;display:flex;align-items:center;justify-content:center}
+.story-panel.p1{left:-18%;width:48%;background:#B91C1C;filter:blur(5px);opacity:.7}
+.story-panel.p2{left:18%;width:64%;background:#FFD700;box-shadow:0 0 80px rgba(0,0,0,.25),0 0 30px rgba(0,0,0,.1);z-index:2}
+.story-panel.p3{left:70%;width:48%;background:#047857;filter:blur(5px);opacity:.7}
+.story-num{font-family:'Teko','Impact','Arial Black',sans-serif;font-weight:700;font-size:clamp(14rem,50vw,60vh);line-height:1;letter-spacing:-.04em;text-transform:uppercase;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
 .story-panel.p1 .story-num{color:#fff}
 .story-panel.p2 .story-num{color:#000}
 .story-panel.p3 .story-num{color:#fff}
-.story-nav{position:absolute;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:14px;z-index:7;white-space:nowrap;font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(6px,.7vw,9px);font-weight:500;color:#000;letter-spacing:.15em;text-transform:uppercase;opacity:.7}
-.story-body{position:absolute;bottom:clamp(3vh,5vh,7vh);right:clamp(2vw,4vw,5vw);z-index:7;font-family:'Inter','Helvetica','Segoe UI',sans-serif;font-size:clamp(.5rem,.9vw,.85rem);font-weight:400;color:#000;letter-spacing:.04em;text-align:right;max-width:clamp(120px,25vw,320px);line-height:1.4;opacity:.8}
-.story-arrow{position:absolute;top:50%;z-index:8;width:clamp(18px,2.2vw,32px);height:clamp(18px,2.2vw,32px);border-top:clamp(2px,.25vw,3px) solid;border-right:clamp(2px,.25vw,3px) solid;transform:rotate(45deg);opacity:.4}
-.story-arrow.a1{right:clamp(-.8vw,auto,-4px);border-color:#fff}
-.story-arrow.a2{right:clamp(-.8vw,auto,-4px);border-color:#000}
+.story-nav{position:absolute;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:clamp(6px,1.2vw,18px);z-index:7;white-space:nowrap;font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(5px,.65vw,9px);font-weight:500;color:#000;letter-spacing:.15em;text-transform:uppercase;opacity:.6}
+.story-body{position:absolute;bottom:clamp(3vh,5vh,7vh);right:clamp(2vw,4vw,5vw);z-index:7;font-family:'Inter','Helvetica','Segoe UI',sans-serif;font-size:clamp(.45rem,.85vw,.8rem);font-weight:400;color:#000;letter-spacing:.04em;text-align:right;max-width:clamp(100px,22vw,300px);line-height:1.4;opacity:.75}
+.story-dots{position:absolute;bottom:clamp(2vh,3.5vh,5vh);left:50%;transform:translateX(-50%);display:flex;gap:clamp(6px,.8vw,12px);z-index:8}
+.story-dot{width:clamp(5px,.6vw,9px);height:clamp(5px,.6vw,9px);border-radius:50%;background:#fff;opacity:.25}
+.story-dot.active{opacity:.9;background:#fff;width:clamp(12px,1.2vw,20px);border-radius:4px}
+.story-dot.active.d2{background:#000;opacity:.9}
+.story-dot.d2{border:1px solid #000;background:transparent;opacity:.4}
 
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#c8bfad,#a09888);box-shadow:0 0 8px rgba(200,191,173,.5)}
@@ -115,16 +117,19 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 <div class="story-section" id="storySection">
   <div class="story-panel p1">
     <div class="story-num">1</div>
-    <div class="story-arrow a1"></div>
   </div>
   <div class="story-panel p2">
     <div class="story-nav">HOME &nbsp; PRICING &nbsp; ABOUT &nbsp; SERVICES &nbsp; CONTACT</div>
     <div class="story-num">2</div>
     <div class="story-body">We are colorful,<br>we believe in great design.</div>
-    <div class="story-arrow a2"></div>
   </div>
   <div class="story-panel p3">
     <div class="story-num">3</div>
+  </div>
+  <div class="story-dots">
+    <div class="story-dot"></div>
+    <div class="story-dot active d2"></div>
+    <div class="story-dot"></div>
   </div>
 </div>
 
