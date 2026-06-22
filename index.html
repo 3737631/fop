@@ -318,14 +318,17 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 
   function LKscr() {
     LK = true; SY = window.scrollY;
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
+    var s = document.body.style;
+    s.overflow = 'hidden'; s.position = 'fixed'; s.top = -SY + 'px'; s.width = '100%';
+    S.style.height = window.innerHeight + 'px';
   }
 
   function UL() {
     LK = false; RP = false;
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    var s = document.body.style;
+    s.overflow = ''; s.position = ''; s.top = ''; s.width = '';
+    S.style.height = '';
+    window.scrollTo(0, SY);
     ScrollTrigger.refresh();
   }
 
