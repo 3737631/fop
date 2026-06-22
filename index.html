@@ -108,10 +108,10 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 <div class="hero" id="heroSection">
   <div class="hero-name">
     <span class="line"><span class="line-inner">Francisco</span></span>
-    <span class="line"><span class="line-inner"><em>Ortuño</em></span></span>
+    <span class="line"><span class="line-inner"><em>OrtuÃ±o</em></span></span>
   </div>
   <div class="hero-role">
-    <span class="line"><span class="line-inner">diseñador web</span></span>
+    <span class="line"><span class="line-inner">diseÃ±ador web</span></span>
   </div>
 </div>
 
@@ -291,23 +291,24 @@ gsap.set(cubeSec, { opacity:0 });
 gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.08, scrollTrigger:{ trigger:'body', start:'top top', end:'+=15%', scrub:1.2 } });
 gsap.to(canvas, { x:'4vw', opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=18%', scrub:1.2 } });
 
-gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power2.in', scrollTrigger:{ trigger:'body', start:'15% top', end:'35% top', scrub:1.5 } });
-gsap.to(coin, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'25% top', end:'35% top', scrub:1 } });
-gsap.to(heroS, { opacity:0, x:-80, filter:'blur(8px)', ease:'power3.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'28% top', scrub:1.2 } });
-gsap.to('#sideText', { opacity:1, scrollTrigger:{ trigger:'body', start:'25% top', end:'35% top', scrub:1 } });
-gsap.to('#sideText .line-inner', { y:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'25% top', end:'35% top', scrub:1 } });
+gsap.to(canvas, { x:'4vw', scale:0.85, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'15% top', end:'25% top', scrub:1.2 } });
+gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power2.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'40% top', scrub:1.8 } });
+gsap.to(coin, { opacity:1, scale:0.85, ease:'power2.inOut', scrollTrigger:{ trigger:'body', start:'30% top', end:'40% top', scrub:1.2 } });
+gsap.to(heroS, { opacity:0, x:-120, filter:'blur(10px)', ease:'power3.out', scrollTrigger:{ trigger:'body', start:'12% top', end:'25% top', scrub:1.2 } });
+gsap.to('#sideText', { opacity:1, scrollTrigger:{ trigger:'body', start:'18% top', end:'28% top', scrub:1 } });
+gsap.to('#sideText .line-inner', { y:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'18% top', end:'28% top', scrub:1 } });
 
-gsap.to(coin, { y:'65vh', scale:0.75, rotationX:1080, rotationY:1440, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'35% top', end:'70% top', scrub:2.5 } });
-gsap.to(canvas, { y:'-30vh', scale:0.4, opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'30% top', end:'45% top', scrub:1 } });
+gsap.to(coin, { x:'4vw', y:'60vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'40% top', end:'72% top', scrub:2.5 } });
+gsap.to(canvas, { y:'-40vh', scale:0.2, opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'48% top', scrub:1.2 } });
 gsap.to(gsGlobe, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'30% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'52% top', scrub:1 } });
 
-gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'70% top', end:'82% top', scrub:2 } });
-gsap.to(gsCoin, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'82% top', scrub:1.5 } });
-gsap.to('#sideText', { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'75% top', scrub:1 } });
+gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'72% top', end:'84% top', scrub:2 } });
+gsap.to(gsCoin, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'72% top', end:'84% top', scrub:1.5 } });
+gsap.to('#sideText', { opacity:0, y:-40, filter:'blur(6px)', ease:'power3.out', scrollTrigger:{ trigger:'body', start:'78% top', end:'88% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.3, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'90% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'90% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'85% top', end:'93% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'85% top', end:'93% top', scrub:1.5 } });
 gsap.to(cubeSec, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'85% top', end:'95% top', scrub:1.5 } });
 gsap.to('#footer', { opacity:1, scrollTrigger:{ trigger:'body', start:'92% top', end:'100% top', scrub:1 } });
 
