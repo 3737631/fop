@@ -9,7 +9,7 @@
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+html,body,div,span,section,h1,h2,h3,p,canvas{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
 body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1000vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 
@@ -301,13 +301,14 @@ gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', 
 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:1.2, ease:'power3.out', stagger:0.25, scrollTrigger:{ trigger:'.testimonials', start:'top bottom-=10%', end:'top center', toggleActions:'play none none none' } });
 
-;(function(){
+ScrollTrigger.create({ trigger:'body', start:'44% top', onEnter:function(){ var el=document.getElementById('scene'); if(el)el.style.display='none'; } });
+
+(function(){
   var S = document.getElementById('carousel-section');
   var C = document.getElementById('carousel');
   var PA = Array.from(C.querySelectorAll('.panel'));
   var LI = PA.length - 1;
-  var AI = 0, LK = false, AN = false, SY = 0;
-  var CD = 600;
+  var AI = 0, LK = false, SY = 0;
 
   function SA(i) {
     AI = i;
@@ -342,11 +343,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:1.2, ease:'power3.out', 
   }
 
   function SP(d) {
-    if (AN) return;
     if (d > 0) { if (AI >= LI) { UL(); return; } SA(AI + 1); }
     else if (d < 0) { if (AI <= 0) { UL(); return; } SA(AI - 1); }
-    else return;
-    AN = true; setTimeout(function(){ AN = false; }, CD);
   }
 
   window.addEventListener('wheel', function(e){
@@ -358,7 +356,13 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:1.2, ease:'power3.out', 
 
   var TY = null;
   window.addEventListener('touchstart', function(e){
-    TY = e.touches[0].clientY; if (LK) e.preventDefault();
+    TY = e.touches[0].clientY;
+    if (LK) { e.preventDefault(); return; }
+    var sp = window.scrollY - S.offsetTop;
+    if (sp > -window.innerHeight * 0.15 && sp < window.innerHeight * 0.25) {
+      if (AI >= LI) return;
+      window.scrollTo(0, S.offsetTop); LKscr(); e.preventDefault();
+    }
   }, { passive: false });
   window.addEventListener('touchmove', function(e){
     if (LK) e.preventDefault();
