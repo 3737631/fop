@@ -10,15 +10,17 @@
 </script>
 <script src="https://d3js.org/d3.v7.min.js">
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&amp;family=Inter:wght@300;600;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&amp;family=Inter:wght@200;300;600;800&amp;display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;color:#fff;font-family:'Inter','Segoe UI',system-ui,sans-serif;height:600vh;overflow-x:hidden}
 
-nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:auto}
-.nav-inner{position:relative;display:flex;border-radius:9999px;border:2px solid rgba(255,255,255,.15);background:rgba(0,0,0,.8);backdrop-filter:blur(12px);padding:4px}
-.nav-item{position:relative;z-index:10;display:block;cursor:pointer;padding:6px 16px;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#fff;mix-blend-mode:difference}@media(min-width:768px){.nav-item{padding:10px 24px;font-size:14px}}
-.nav-cursor{position:absolute;z-index:0;height:28px;border-radius:9999px;background:rgba(255,255,255,.9);pointer-events:none}@media(min-width:768px){.nav-cursor{height:44px}}
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:auto}
+.nav-inner{position:relative;display:flex;border-radius:9999px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.5);backdrop-filter:blur(8px);padding:2px}
+.nav-item{position:relative;z-index:10;display:block;cursor:pointer;padding:4px 12px;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:#fff;mix-blend-mode:difference}
+@media(min-width:768px){.nav-item{padding:6px 18px;font-size:11px}}
+.nav-cursor{position:absolute;z-index:0;height:22px;border-radius:9999px;background:rgba(255,255,255,.85);pointer-events:none}
+@media(min-width:768px){.nav-cursor{height:30px}}
 
 .scene{perspective:1400px;position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0}
 
@@ -29,21 +31,16 @@ nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:100;poin
 .ground-shadow-coin{position:absolute;width:300px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(150,150,150,.2) 0%,transparent 70%);bottom:5vh;opacity:0;filter:blur(12px);pointer-events:none;z-index:1}
 
 .coin-3d{width:300px;height:300px;transform-style:preserve-3d;will-change:transform;position:absolute;z-index:2;opacity:0}
-.coin-face{position:absolute;width:300px;height:300px;border-radius:50%;backface-visibility:hidden;background-size:cover;background-position:center;overflow:hidden}
+.coin-face{position:absolute;width:300px;height:300px;border-radius:50%;backface-visibility:hidden;background-size:cover;background-position:center}
 .coin-face.front{box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 0 4px #1a1a1a,0 0 0 8px #0d0d0d;transform:translateZ(-5px)}
 .coin-face.back{box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 0 4px #1a1a1a,0 0 0 8px #0d0d0d;transform:translateZ(5px) rotateY(180deg)}
-/* â”€â”€â”€ HERO minimalista tipo sello â”€â”€â”€ */
-.hero{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;text-align:center;pointer-events:none}
-.hero-websites{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(1.6rem,4.5vw,3.2rem);font-weight:800;text-transform:lowercase;letter-spacing:-.02em;color:#fff;margin-bottom:2.2rem;line-height:1}
-.hero-websites .line{display:block;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
-.hero-websites .line-inner{display:block;transform:translateY(100%)}
 
-.stamp{display:inline-block;padding:24px 52px;background:#F9F7F2;position:relative;border:2px solid #e8e4db;border-radius:3px}
-.stamp-content{text-align:center}
-.stamp-graphic{font-family:'Playfair Display','Palatino','Georgia',serif;font-size:clamp(2.4rem,6vw,5rem);font-weight:700;font-style:italic;color:#1a1a1a;line-height:1;letter-spacing:-.01em}
-.stamp-designer{font-family:'Inter','Helvetica','Segoe UI',sans-serif;font-size:clamp(.85rem,2.2vw,1.6rem);font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:#1a1a1a;margin-top:3px}
-.stamp .line{display:block;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
-.stamp .line-inner{display:block;transform:translateY(100%)}
+.hero{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;z-index:1;pointer-events:none;padding:0 6vw}
+.hero .line{display:block;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.hero .line-inner{display:block;transform:translateY(100%)}
+.hero-name{font-family:'Playfair Display','Palatino','Georgia',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:400;color:#fff;line-height:1.1;letter-spacing:-.01em}
+.hero-name em{font-style:italic;font-weight:700}
+.hero-role{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.75rem,1.4vw,1.1rem);font-weight:200;color:rgba(255,255,255,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem}
 
 .side-text{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none;opacity:0}
 .side-text p{font-size:clamp(1.1rem,2.8vw,2.2rem);font-weight:300;letter-spacing:.04em;max-width:700px;text-align:center;padding:0 1.5rem;color:rgba(255,255,255,.85)}
@@ -109,18 +106,12 @@ nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:100;poin
 </div>
 
 <div class="hero" id="heroSection">
-  <p class="hero-websites">
-    <span class="line"><span class="line-inner">websites every</span></span>
-  </p>
-  <div class="stamp">
-    <div class="stamp-content">
-      <div class="stamp-graphic">
-        <span class="line"><span class="line-inner">Graphic</span></span>
-      </div>
-      <div class="stamp-designer">
-        <span class="line"><span class="line-inner">designer</span></span>
-      </div>
-    </div>
+  <div class="hero-name">
+    <span class="line"><span class="line-inner">Francisco</span></span>
+    <span class="line"><span class="line-inner"><em>Ortuño</em></span></span>
+  </div>
+  <div class="hero-role">
+    <span class="line"><span class="line-inner">diseñador web</span></span>
   </div>
 </div>
 
@@ -161,10 +152,11 @@ navItems.forEach(function(item) {
   item.addEventListener('mouseenter', function() {
     var rect = this.getBoundingClientRect();
     var pr = navInner.getBoundingClientRect();
-    gsap.to(navCursor, { left: rect.left - pr.left, width: rect.width, opacity: 1, duration: 0.35, ease:'power2.out' });
+    gsap.to(navCursor, { left: rect.left - pr.left, width: rect.width, opacity: 1, duration: 0.45, ease:'power3.out' });
   });
 });
-navInner.addEventListener('mouseleave', function() { gsap.to(navCursor, { opacity: 0, duration: 0.25 }); });
+navInner.addEventListener('mouseleave', function() { gsap.to(navCursor, { opacity: 0, duration: 0.35 }); });
+gsap.set(navCursor, { opacity:0 });
 
 var canvas = document.getElementById('globeCanvas');
 var ctx = canvas.getContext('2d');
@@ -290,33 +282,33 @@ var coin = document.getElementById('coin');
 var gsGlobe = document.getElementById('groundShadowGlobe');
 var gsCoin = document.getElementById('groundShadowCoin');
 var cubeSec = document.getElementById('cubeSection');
+var heroS = document.getElementById('heroSection');
 
 gsap.set(coin, { opacity:0, y:0, scale:1, rotationY:0, rotationX:0 });
-gsap.set(canvas, { x:'30vw', y:'-5vh', scale:1, clipPath:'inset(0)', opacity:0.6 });
+gsap.set(canvas, { x:'0vw', y:'0vh', scale:1, clipPath:'inset(0)', opacity:0.6 });
 gsap.set(cubeSec, { opacity:0 });
 
-gsap.to('.hero-websites .line-inner', { y:0, duration:1.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=15%', scrub:1.2 } });
-gsap.to('.stamp .line-inner', { y:0, duration:1.2, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=18%', scrub:1.2 } });
-gsap.to(canvas, { x:0, y:0, opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=15%', scrub:1 } });
+gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.08, scrollTrigger:{ trigger:'body', start:'top top', end:'+=15%', scrub:1.2 } });
+gsap.to(canvas, { x:'4vw', opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=18%', scrub:1.2 } });
 
 gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power2.in', scrollTrigger:{ trigger:'body', start:'15% top', end:'35% top', scrub:1.5 } });
-gsap.to(coin, { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'25% top', end:'35% top', scrub:1 } });
-gsap.to('.hero', { opacity:0, y:-60, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'28% top', scrub:1 } });
+gsap.to(coin, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'25% top', end:'35% top', scrub:1 } });
+gsap.to(heroS, { opacity:0, x:-80, filter:'blur(8px)', ease:'power3.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'28% top', scrub:1.2 } });
 gsap.to('#sideText', { opacity:1, scrollTrigger:{ trigger:'body', start:'25% top', end:'35% top', scrub:1 } });
 gsap.to('#sideText .line-inner', { y:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'25% top', end:'35% top', scrub:1 } });
 
 gsap.to(coin, { y:'65vh', scale:0.75, rotationX:1080, rotationY:1440, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'35% top', end:'70% top', scrub:2.5 } });
-gsap.to(canvas, { y:'-30vh', scale:0.4, opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'30% top', end:'45% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'30% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
+gsap.to(canvas, { y:'-30vh', scale:0.4, opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'30% top', end:'45% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'30% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
 
 gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'70% top', end:'82% top', scrub:2 } });
-gsap.to(gsCoin, { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'82% top', scrub:1.5 } });
-gsap.to('#sideText', { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'75% top', scrub:1 } });
+gsap.to(gsCoin, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'82% top', scrub:1.5 } });
+gsap.to('#sideText', { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'75% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.3, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'90% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'90% top', scrub:1.5 } });
-gsap.to(cubeSec, { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'85% top', end:'95% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.3, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'90% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'90% top', scrub:1.5 } });
+gsap.to(cubeSec, { opacity:1, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'85% top', end:'95% top', scrub:1.5 } });
 gsap.to('#footer', { opacity:1, scrollTrigger:{ trigger:'body', start:'92% top', end:'100% top', scrub:1 } });
 
 ScrollTrigger.create({ trigger:'body', start:'70% top', end:'75% top', scrub:1, onEnter:function(){
