@@ -103,11 +103,15 @@ gsap.registerPlugin(ScrollTrigger);
 var navItems = document.querySelectorAll('.nav-item');
 var navCursor = document.getElementById('navCursor');
 var navInner = document.getElementById('navInner');
-navItems.forEach(function(item) {
+navItems.forEach(function(item, i) {
   item.addEventListener('mouseenter', function() {
     var rect = this.getBoundingClientRect();
     var pr = navInner.getBoundingClientRect();
     gsap.to(navCursor, { left: rect.left - pr.left, width: rect.width, opacity: 1, duration: 0.45, ease:'power3.out' });
+  });
+  item.addEventListener('click', function() {
+    var p = [0, 0.28, 0.55, 0.78, 0.95];
+    window.scrollTo({ top: p[i] * document.body.scrollHeight, behavior: 'smooth' });
   });
 });
 navInner.addEventListener('mouseleave', function() { gsap.to(navCursor, { opacity: 0, duration: 0.35 }); });
@@ -233,11 +237,8 @@ var gsGlobe = document.getElementById('groundShadowGlobe');
 var gsCoin = document.getElementById('groundShadowCoin');
 var heroS = document.getElementById('heroSection');
 
-gsap.set('body', { filter:'grayscale(1)' });
 gsap.set(coin, { opacity:0, y:0, scale:1, rotationY:0, rotationX:0 });
 gsap.set(canvas, { x:0, y:0, scale:1, clipPath:'inset(0)', opacity:0.6 });
-
-gsap.to('body', { filter:'grayscale(0)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'60% top', scrub:1.5 } });
 
 gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=20%', scrub:1.2 } });
 gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=20%', scrub:1.2 } });
