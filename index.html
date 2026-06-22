@@ -32,7 +32,7 @@ body{background:#050505;color:#fff;font-family:'Segoe UI',system-ui,-apple-syste
 .footer{position:fixed;bottom:0;left:0;width:100%;padding:2rem 1.5rem;z-index:1;text-align:center;pointer-events:none;opacity:0}
 .footer p{font-size:clamp(.75rem,1.2vw,1rem);color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase}
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
-.particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#fff, #6cf);box-shadow:0 0 8px rgba(100,200,255,.8)}
+.particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#fff,#6cf);box-shadow:0 0 8px rgba(100,200,255,.8)}
 .particle.shard{width:4px;height:7px;border-radius:1px;background:linear-gradient(135deg,#6cf,#2080b0);box-shadow:0 0 4px rgba(100,200,255,.5)}
 </style>
 </head>
@@ -78,7 +78,6 @@ var graticule = d3.geoGraticule();
 var landFeatures = null;
 var allDots = [];
 var rotation = [0, 0];
-var autoRotate = true;
 
 function pointInPolygon(px, py, polygon) {
   var inside = false;
@@ -131,26 +130,22 @@ function render() {
   ctx.arc(W/2, H/2, s, 0, Math.PI*2);
   ctx.fillStyle = '#0a0a1a';
   ctx.fill();
-
   ctx.beginPath();
   ctx.arc(W/2, H/2, s, 0, Math.PI*2);
   ctx.strokeStyle = 'rgba(100,200,255,0.3)';
   ctx.lineWidth = 2;
   ctx.stroke();
-
   if (landFeatures) {
     ctx.beginPath();
     path(graticule());
     ctx.strokeStyle = 'rgba(100,200,255,0.12)';
     ctx.lineWidth = 0.5;
     ctx.stroke();
-
     ctx.beginPath();
     landFeatures.features.forEach(function(f) { path(f); });
     ctx.strokeStyle = 'rgba(100,200,255,0.35)';
     ctx.lineWidth = 1;
     ctx.stroke();
-
     var sf = s / R;
     for (var i = 0; i < allDots.length; i++) {
       var p = projection([allDots[i][0], allDots[i][1]]);
@@ -165,7 +160,9 @@ function render() {
 }
 
 function animate() {
-  if (autoRotate) { rotation[0] += 0.3; projection.rotate(rotation); render(); }
+  rotation[0] += 0.3;
+  projection.rotate(rotation);
+  render();
   requestAnimationFrame(animate);
 }
 
@@ -177,24 +174,20 @@ fetch('https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs
       var dots = generateDots(f, 16);
       dots.forEach(function(d) { allDots.push(d); });
     });
-    render();
   });
 
 animate();
 
-var globeWrap = canvas;
-
-gsap.set(globeWrap, { rotationY:0, rotationX:0, y:0, scale:1 });
+gsap.set(canvas, { y:0, scale:1 });
 
 gsap.to('.hero-title .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.15, scrollTrigger:{ trigger:'body', start:'top top', end:'+=25%', scrub:1.2 } });
 gsap.to('.hero-sub .line-inner', { y:0, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=25%', scrub:1.2 } });
 
-gsap.to(globeWrap, { y:'70vh', scale:0.78, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'25% top', end:'80% top', scrub:2.5 } });
+gsap.to(canvas, { y:'72vh', scale:0.7, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'25% top', end:'80% top', scrub:2.5 } });
 
 gsap.to('.hero-text', { opacity:0, y:-60, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'25% top', end:'40% top', scrub:1 } });
 gsap.to('#sideText', { opacity:1, scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
 gsap.to('#sideText .line-inner', { y:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
-
 gsap.to('#groundShadow', { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'80% top', end:'92% top', scrub:1.5 } });
 gsap.to('#sideText', { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'80% top', scrub:1 } });
 gsap.to('#finalText', { opacity:1, scrollTrigger:{ trigger:'body', start:'82% top', end:'95% top', scrub:1 } });
