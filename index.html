@@ -13,11 +13,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&amp;family=Inter:wght@200;300;600;800&amp;display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#e8e2d9;font-family:'Inter','Segoe UI',system-ui,sans-serif;height:600vh;overflow-x:hidden}
+body{background:#0a0a0a;color:#e8e2d9;font-family:'Inter','Segoe UI',system-ui,sans-serif;height:400vh;overflow-x:hidden}
 
 nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:auto}
 .nav-inner{position:relative;display:flex;border-radius:9999px;border:1px solid rgba(200,191,173,.15);background:rgba(0,0,0,.7);backdrop-filter:blur(8px);padding:2px}
-.nav-item{position:relative;z-index:10;display:block;cursor:pointer;padding:4px 12px;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:#fff;mix-blend-mode:difference}
+.nav-item{position:relative;z-index:10;display:block;cursor:pointer;padding:4px 12px;font-size:9px;text-transform:uppercase;letter-spacing:.15em;mix-blend-mode:difference}
 @media(min-width:768px){.nav-item{padding:6px 18px;font-size:11px}}
 .nav-cursor{position:absolute;z-index:0;height:22px;border-radius:9999px;background:rgba(200,191,173,.85);pointer-events:none}
 @media(min-width:768px){.nav-cursor{height:30px}}
@@ -49,39 +49,9 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 .bg-text-title em{font-style:italic;font-weight:700;color:#c8bfad}
 .bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.3vw,1rem);font-weight:200;color:rgba(200,191,173,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
-.cube-section{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;opacity:0}
-.cube-wrap{width:1000px;height:562px;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 0 60px rgba(200,191,173,.08),0 0 120px rgba(200,191,173,.03)}
-.cube-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
-.cube-bg img{width:100%;height:100%;object-fit:cover}
-.cube-hue{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;animation:hueAnim 6s ease-in-out infinite;pointer-events:none}
-.cube-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;display:flex;align-items:center;justify-content:center}
-.cube-scene{width:300px;height:300px;perspective:800px;position:relative}
-.cube-3d{width:300px;height:300px;position:relative;transform-style:preserve-3d;animation:cubeRotate 12s linear infinite}
-.cube-3d .f{position:absolute;width:300px;height:300px;backface-visibility:hidden;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.88);border:1px solid rgba(200,191,173,.12)}
-.cube-3d .f .scroll-text{white-space:nowrap;font-size:13px;line-height:1.6;color:rgba(200,191,173,.5);padding:20px;position:absolute}
-.cube-3d .f .scroll-text span{color:rgba(232,226,217,.85);font-weight:600}
-.cube-3d .front{transform:translateZ(150px)}
-.cube-3d .back{transform:translateZ(-150px) rotateY(180deg)}
-.cube-3d .back .scroll-text{animation:scrollBack 18s linear infinite}
-.cube-3d .left{transform:translateX(-150px) rotateY(-90deg)}
-.cube-3d .left .scroll-text{animation:scrollLeft 18s linear infinite}
-.cube-3d .right{transform:translateX(150px) rotateY(90deg)}
-.cube-3d .right .scroll-text{animation:scrollRight 18s linear infinite}
-.cube-3d .top{transform:translateY(-150px) rotateX(90deg);background:rgba(200,191,173,.03);border-color:rgba(200,191,173,.06)}
-.cube-3d .bottom{transform:translateY(150px) rotateX(-90deg);background:rgba(255,255,255,.02);border-color:rgba(200,191,173,.04)}
-
-.footer{position:fixed;bottom:0;left:0;width:100%;padding:2rem 1.5rem;z-index:1;text-align:center;pointer-events:none;opacity:0}
-.footer p{font-size:clamp(.75rem,1.2vw,1rem);color:rgba(200,191,173,.25);letter-spacing:.1em;text-transform:uppercase}
-
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#c8bfad,#a09888);box-shadow:0 0 8px rgba(200,191,173,.5)}
 .particle.shard{width:4px;height:7px;border-radius:1px;background:linear-gradient(135deg,#c8bfad,#80786a);box-shadow:0 0 4px rgba(200,191,173,.3)}
-
-@keyframes hueAnim{0%,100%{filter:hue-rotate(-20deg)}50%{filter:hue-rotate(30deg)}}
-@keyframes cubeRotate{0%{transform:rotateY(0deg) rotateX(5deg)}50%{transform:rotateY(180deg) rotateX(-5deg)}100%{transform:rotateY(360deg) rotateX(5deg)}}
-@keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-5400px)}}
-@keyframes scrollRight{0%{transform:translateX(0)}100%{transform:translateX(-5574px)}}
-@keyframes scrollBack{0%{transform:translateX(0)}100%{transform:translateX(-5487px)}}
 </style>
 </head>
 <body>
@@ -125,29 +95,6 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
   <div class="bg-text-sub">
     <span class="line"><span class="line-inner">m&aacute;s de 35 proyectos</span></span>
   </div>
-</div>
-
-<div class="cube-section" id="cubeSection">
-  <div class="cube-wrap">
-    <div class="cube-bg"><img src="https://i.ibb.co/q3XSxR9W/20250831-120144.jpg" alt="" onerror="this.style.display='none';this.parentNode.style.background='#000'"></div>
-    <div class="cube-hue"></div>
-    <div class="cube-overlay">
-      <div class="cube-scene">
-        <div class="cube-3d" id="cube3d">
-          <div class="f front"></div>
-          <div class="f back"><div class="scroll-text" id="textBack"></div></div>
-          <div class="f left"><div class="scroll-text" id="textLeft"></div></div>
-          <div class="f right"><div class="scroll-text" id="textRight"></div></div>
-          <div class="f top"></div>
-          <div class="f bottom"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="footer" id="footer">
-  <p>(c) 2026 Francisco Ortu&ntilde;o &mdash; Dise&ntilde;o Web</p>
 </div>
 
 <script>
@@ -245,18 +192,18 @@ function generateMapTexture() {
   var g = cx.createRadialGradient(180, 180, 20, 300, 300, 260);
   g.addColorStop(0, '#151515'); g.addColorStop(0.4, '#0d0d0d'); g.addColorStop(1, '#080808');
   cx.beginPath(); cx.arc(300, 300, 260, 0, Math.PI*2); cx.fillStyle = g; cx.fill();
-  cx.beginPath(); cx.arc(300, 300, 258, 0, Math.PI*2); cx.strokeStyle = 'rgba(180,180,180,0.15)'; cx.lineWidth = 2; cx.stroke();
+  cx.beginPath(); cx.arc(300, 300, 258, 0, Math.PI*2); cx.strokeStyle = 'rgba(200,191,173,0.2)'; cx.lineWidth = 2; cx.stroke();
   if (landFeatures) {
     var gr = d3.geoGraticule();
-    cx.beginPath(); pa(gr()); cx.strokeStyle = 'rgba(180,180,180,0.06)'; cx.lineWidth = 0.5; cx.stroke();
-    cx.beginPath(); landFeatures.features.forEach(function(f) { pa(f); }); cx.strokeStyle = 'rgba(200,200,200,0.2)'; cx.lineWidth = 1; cx.stroke();
-    cx.beginPath(); landFeatures.features.forEach(function(f) { pa(f); }); cx.fillStyle = 'rgba(200,200,200,0.07)'; cx.fill();
+    cx.beginPath(); pa(gr()); cx.strokeStyle = 'rgba(200,191,173,0.08)'; cx.lineWidth = 0.5; cx.stroke();
+    cx.beginPath(); landFeatures.features.forEach(function(f) { pa(f); }); cx.strokeStyle = 'rgba(200,191,173,0.2)'; cx.lineWidth = 1; cx.stroke();
+    cx.beginPath(); landFeatures.features.forEach(function(f) { pa(f); }); cx.fillStyle = 'rgba(200,191,173,0.08)'; cx.fill();
     var dots = [];
     landFeatures.features.forEach(function(f) { var d = generateDots(f, 20); d.forEach(function(x) { dots.push(x); }); });
     for (var i = 0; i < dots.length; i++) {
       var p = pr([dots[i][0], dots[i][1]]);
       if (p && p[0] >= 0 && p[0] <= 600 && p[1] >= 0 && p[1] <= 600) {
-        cx.beginPath(); cx.arc(p[0], p[1], 1.5, 0, Math.PI*2); cx.fillStyle = 'rgba(200,200,200,0.3)'; cx.fill();
+        cx.beginPath(); cx.arc(p[0], p[1], 1.5, 0, Math.PI*2); cx.fillStyle = 'rgba(200,191,173,0.3)'; cx.fill();
       }
     }
   }
@@ -281,45 +228,39 @@ canvas.addEventListener('mousedown', function(e) { isDragging = true; autoRotate
 document.addEventListener('mousemove', function(e) { if (!isDragging) return; rotation[0] = dragStartRot[0] + (e.clientX - dragStartX) * 0.5; rotation[1] = dragStartRot[1] - (e.clientY - dragStartY) * 0.5; rotation[1] = Math.max(-90, Math.min(90, rotation[1])); projection.rotate(rotation); renderGlobe(); });
 document.addEventListener('mouseup', function() { isDragging = false; setTimeout(function() { autoRotate = true; }, 2000); });
 
-var T = '  <span>Dise&ntilde;o Web</span> Profesional  &bull;  <span>Next.js</span> &amp; React  &bull;  <span>UI/UX</span> Moderno  &bull;  Rendimiento <span>Extremo</span>  &bull;  SEO <span>Optimizado</span>  &bull;  Dise&ntilde;o <span>Responsive</span>  &bull;  Animaciones <span>3D</span>  &bull;  Desarrollo <span>Front-end</span>  &bull;  Experiencia de <span>Usuario</span>  &bull;  C&oacute;digo <span>Limpio</span>  &bull;  Transformaci&oacute;n <span>Digital</span>  &bull;  Soluciones <span>Web</span>  &bull;  ';
-document.getElementById('textLeft').innerHTML = T.repeat(20);
-document.getElementById('textRight').innerHTML = T.repeat(20);
-document.getElementById('textBack').innerHTML = T.repeat(20);
-
 var coin = document.getElementById('coin');
 var gsGlobe = document.getElementById('groundShadowGlobe');
 var gsCoin = document.getElementById('groundShadowCoin');
-var cubeSec = document.getElementById('cubeSection');
 var heroS = document.getElementById('heroSection');
 
+gsap.set('body', { filter:'grayscale(1)' });
 gsap.set(coin, { opacity:0, y:0, scale:1, rotationY:0, rotationX:0 });
 gsap.set(canvas, { x:0, y:0, scale:1, clipPath:'inset(0)', opacity:0.6 });
-gsap.set(cubeSec, { opacity:0 });
 
-gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=18%', scrub:1.2 } });
-gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=18%', scrub:1.2 } });
-gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'10% top', end:'20% top', scrub:1.2 } });
-gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'10% top', end:'20% top', scrub:1.2 } });
+gsap.to('body', { filter:'grayscale(0)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'60% top', scrub:1.5 } });
 
-gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'25% top', scrub:1.2 } });
+gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=20%', scrub:1.2 } });
+gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=20%', scrub:1.2 } });
 
-gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'38% top', scrub:1.8 } });
-gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'30% top', end:'42% top', scrub:1.4 } });
-gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'30% top', end:'42% top', scrub:1.4 } });
+gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'18% top', scrub:1.2 } });
+gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'8% top', end:'18% top', scrub:1.2 } });
+gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'12% top', end:'22% top', scrub:1.2 } });
 
-gsap.to(coin, { y:'60vh', scale:0.7, rotationX:1260, rotationY:1800, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'42% top', end:'75% top', scrub:2.5 } });
-gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'48% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'30% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'52% top', scrub:1 } });
+gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'20% top', end:'38% top', scrub:1.8 } });
+gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'28% top', end:'42% top', scrub:1.4 } });
+gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'28% top', end:'42% top', scrub:1.4 } });
 
-gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'75% top', end:'86% top', scrub:2 } });
-gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'75% top', end:'86% top', scrub:1.5 } });
-gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'80% top', end:'90% top', scrub:1 } });
+gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'42% top', end:'78% top', scrub:2.5 } });
+gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'12% top', end:'28% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'86% top', end:'93% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'86% top', end:'93% top', scrub:1.5 } });
-gsap.to(cubeSec, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'88% top', end:'96% top', scrub:1.5 } });
-gsap.to('#footer', { opacity:1, scrollTrigger:{ trigger:'body', start:'92% top', end:'100% top', scrub:1 } });
+gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'78% top', end:'88% top', scrub:2 } });
+gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'78% top', end:'88% top', scrub:1.5 } });
+gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'92% top', scrub:1 } });
+
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'90% top', end:'100% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'90% top', end:'100% top', scrub:1.5 } });
 
 ScrollTrigger.create({ trigger:'body', start:'75% top', end:'80% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
