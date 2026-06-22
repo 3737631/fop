@@ -49,17 +49,12 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 .bg-text-title em{font-style:italic;font-weight:700;color:#c8bfad}
 .bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.3vw,1rem);font-weight:200;color:rgba(200,191,173,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
-.expand-section{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;opacity:0}
-.expand-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden}
-.expand-bg img{width:100%;height:100%;object-fit:cover;will-change:opacity}
-.expand-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:rgba(0,0,0,.45);will-change:opacity}
-.expand-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%}
-.expand-media{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.5);will-change:transform,width,height}
-.expand-media img,.expand-media video{width:100%;height:100%;object-fit:cover;display:block}
-.expand-title{position:absolute;bottom:clamp(8vh,12vh,16vh);display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;z-index:3;pointer-events:none;width:100%}
-.expand-title .et-line{font-family:'Playfair Display','Palatino','Georgia',serif;font-size:clamp(2rem,5vw,4.5rem);font-weight:400;color:#e8e2d9;line-height:1.15;letter-spacing:-.01em;display:block;white-space:nowrap}
-.expand-title .et-line em{font-style:italic;font-weight:700;color:#c8bfad}
-.expand-scroll-hint{position:absolute;bottom:clamp(3vh,5vh,7vh);font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.6rem,1vw,.85rem);font-weight:200;color:rgba(200,191,173,.5);letter-spacing:.25em;text-transform:uppercase;z-index:3;pointer-events:none}
+.poster-section{position:fixed;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0}
+.poster-block{position:absolute;top:0;height:100%}
+.poster-block.left{left:0;width:33.333%;background:#B91C1C}
+.poster-block.right{left:33.333%;width:66.667%;background:#FFD700}
+.poster-number{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Inter','Futura','Helvetica','Arial Black',sans-serif;font-size:clamp(16rem,55vw,70vh);font-weight:900;color:#000;line-height:1;z-index:6;pointer-events:none;text-align:center;letter-spacing:-.06em}
+.poster-text{position:absolute;bottom:clamp(3vh,5vh,7vh);right:clamp(3vw,5vw,7vw);z-index:6;font-family:'Inter','Helvetica','Segoe UI',sans-serif;font-size:clamp(.55rem,1.2vw,1rem);font-weight:500;color:#000;letter-spacing:.04em;text-align:right;max-width:clamp(160px,30vw,400px);line-height:1.4}
 
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#c8bfad,#a09888);box-shadow:0 0 8px rgba(200,191,173,.5)}
@@ -109,21 +104,11 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
   </div>
 </div>
 
-<div class="expand-section" id="expandSection">
-  <div class="expand-bg">
-    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1920&auto=format&fit=crop" alt="" style="opacity:0" id="expandBgImg">
-  </div>
-  <div class="expand-overlay" id="expandOverlay"></div>
-  <div class="expand-content">
-    <div class="expand-media" id="expandMedia">
-      <img src="https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1280&auto=format&fit=crop" alt="" id="expandMediaImg">
-    </div>
-  </div>
-  <div class="expand-title" id="expandTitle">
-    <span class="et-line" id="etFirst">Immersive Video</span>
-    <span class="et-line" id="etRest"><em>Experience</em></span>
-  </div>
-  <div class="expand-scroll-hint" id="expandHint">Scroll to expand</div>
+<div class="poster-section" id="posterSection">
+  <div class="poster-block left"></div>
+  <div class="poster-block right"></div>
+  <div class="poster-number">2</div>
+  <div class="poster-text">We are colorful,<br>we believe in great design.</div>
 </div>
 
 <script>
@@ -265,18 +250,11 @@ var coin = document.getElementById('coin');
 var gsGlobe = document.getElementById('groundShadowGlobe');
 var gsCoin = document.getElementById('groundShadowCoin');
 var heroS = document.getElementById('heroSection');
-var expandSec = document.getElementById('expandSection');
-var expandMedia = document.getElementById('expandMedia');
-var expandBg = document.getElementById('expandBgImg');
-var expandOvl = document.getElementById('expandOverlay');
-var etFirst = document.getElementById('etFirst');
-var etRest = document.getElementById('etRest');
-var expandHint = document.getElementById('expandHint');
+var posterSec = document.getElementById('posterSection');
 
 gsap.set(coin, { opacity:0, y:0, scale:1, rotationY:0, rotationX:0 });
 gsap.set(canvas, { x:0, y:0, scale:1, clipPath:'inset(0)', opacity:0.6 });
-gsap.set(expandSec, { opacity:0 });
-gsap.set(expandMedia, { width:280, height:200, borderRadius:16 });
+gsap.set(posterSec, { opacity:0 });
 
 gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=12%', scrub:1.2 } });
 gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=12%', scrub:1.2 } });
@@ -301,21 +279,7 @@ gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', sc
 gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'62% top', end:'68% top', scrub:1.5 } });
 gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'62% top', end:'68% top', scrub:1.5 } });
 
-gsap.to(expandSec, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'70% top', scrub:1.5 } });
-gsap.to(expandBg, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'72% top', scrub:1.5 } });
-gsap.to(expandOvl, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'72% top', scrub:1.5 } });
-
-var isMobile = window.innerWidth < 768;
-var mw = isMobile ? 650 : 1250;
-var mh = isMobile ? 200 : 400;
-
-gsap.to(expandMedia, { width:280+mw, height:200+mh, borderRadius:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'95% top', scrub:2 } });
-gsap.to(expandBg, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'95% top', scrub:2 } });
-gsap.to(expandOvl, { opacity:0.3, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'95% top', scrub:2 } });
-gsap.to(expandHint, { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'80% top', scrub:1 } });
-
-gsap.to(etFirst, { x:isMobile?-60:-120, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'90% top', scrub:1.5 } });
-gsap.to(etRest, { x:isMobile?60:120, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'90% top', scrub:1.5 } });
+gsap.to(posterSec, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'70% top', scrub:1.5 } });
 
 ScrollTrigger.create({ trigger:'body', start:'52% top', end:'56% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
