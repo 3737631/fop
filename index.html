@@ -292,12 +292,12 @@ gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', 
 gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'20% top', scrub:1 } });
 gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'30% top', scrub:1 } });
 
-gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'35% top', end:'44% top', scrub:2 } });
-gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'44% top', scrub:1.5 } });
-gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'46% top', scrub:1 } });
+gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:2 } });
+gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:1.5 } });
+gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'43% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'41% top', end:'47% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'41% top', end:'47% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'44% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'44% top', scrub:1.5 } });
 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:1.2, ease:'power3.out', stagger:0.25, scrollTrigger:{ trigger:'.testimonials', start:'top bottom-=10%', end:'top center', toggleActions:'play none none none' } });
 
@@ -373,7 +373,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:1.2, ease:'power3.out', 
   }, { passive: true });
 })();
 
-ScrollTrigger.create({ trigger:'body', start:'35% top', end:'38% top', scrub:1, onEnter:function(){
+ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
   for(var i=0;i<12;i++){
     var p=document.createElement('div');
