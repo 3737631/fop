@@ -42,8 +42,12 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 .hero-name em{font-style:italic;font-weight:700}
 .hero-role{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.75rem,1.4vw,1.1rem);font-weight:200;color:rgba(255,255,255,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem}
 
-.bg-text{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:0;pointer-events:none;opacity:0}
-.bg-text p{font-size:clamp(1.1rem,2.8vw,2.2rem);font-weight:300;letter-spacing:.04em;max-width:700px;text-align:center;padding:0 1.5rem;color:rgba(255,255,255,.85)}
+.bg-text{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:0;pointer-events:none;opacity:0}
+.bg-text .line{display:block;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.bg-text .line-inner{display:block;transform:translateY(100%)}
+.bg-text-title{font-family:'Playfair Display','Palatino','Georgia',serif;font-size:clamp(2rem,5vw,4rem);font-weight:400;color:#fff;line-height:1.2;letter-spacing:-.01em;text-align:center}
+.bg-text-title em{font-style:italic;font-weight:700}
+.bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.3vw,1rem);font-weight:200;color:rgba(255,255,255,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
 .cube-section{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;opacity:0}
 .cube-wrap{width:1000px;height:562px;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 0 60px rgba(255,255,255,.08),0 0 120px rgba(255,255,255,.03)}
@@ -114,7 +118,13 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 </div>
 
 <div class="bg-text" id="bgText">
-  <p>Desarrollo moderno y rendimiento extremo con Next.js</p>
+  <div class="bg-text-title">
+    <span class="line"><span class="line-inner">Dise&ntilde;a a tu</span></span>
+    <span class="line"><span class="line-inner"><em>gusto</em></span></span>
+  </div>
+  <div class="bg-text-sub">
+    <span class="line"><span class="line-inner">m&aacute;s de 35 a&ntilde;os de experiencia</span></span>
+  </div>
 </div>
 
 <div class="cube-section" id="cubeSection">
@@ -289,6 +299,7 @@ gsap.set(cubeSec, { opacity:0 });
 gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=18%', scrub:1.2 } });
 gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=18%', scrub:1.2 } });
 gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'10% top', end:'20% top', scrub:1.2 } });
+gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'10% top', end:'20% top', scrub:1.2 } });
 
 gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'15% top', end:'25% top', scrub:1.2 } });
 
