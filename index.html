@@ -16,12 +16,12 @@ body{background:#050505;color:#fff;font-family:'Segoe UI',system-ui,-apple-syste
 .scene{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0}
 #globeCanvas{width:380px;height:380px;border-radius:50%;will-change:transform;display:block;position:absolute;z-index:3;clip-path:inset(0);cursor:grab}
 #globeCanvas:active{cursor:grabbing}
-.coin-3d{width:280px;height:280px;transform-style:preserve-3d;will-change:transform;position:absolute;z-index:2;opacity:0}
-.coin-face{position:absolute;width:280px;height:280px;border-radius:50%;backface-visibility:hidden;background-size:cover;background-position:center}
-.coin-face.front{transform:translateZ(-12px);box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 30px rgba(150,150,150,.12)}
-.coin-face.back{transform:translateZ(12px) rotateY(180deg);box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 30px rgba(150,150,150,.12)}
+.coin-3d{width:300px;height:300px;transform-style:preserve-3d;will-change:transform;position:absolute;z-index:2;opacity:0}
+.coin-face{position:absolute;width:280px;height:280px;border-radius:50%;backface-visibility:hidden;background-size:cover;background-position:center;top:10px;left:10px}
+.coin-face.front{transform:translateZ(-10px);box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 30px rgba(150,150,150,.12)}
+.coin-face.back{transform:translateZ(10px) rotateY(180deg);box-shadow:inset 0 -4px 12px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,255,255,.06),0 0 30px rgba(150,150,150,.12)}
 .ground-shadow-globe{position:absolute;width:300px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(150,150,150,.12) 0%,transparent 70%);bottom:5vh;opacity:0;filter:blur(14px);pointer-events:none;z-index:1}
-.ground-shadow-coin{position:absolute;width:300px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(150,150,150,.2) 0%,transparent 70%);bottom:5vh;opacity:0;filter:blur(12px);pointer-events:none;z-index:1}
+.ground-shadow-coin{position:absolute;width:320px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(150,150,150,.2) 0%,transparent 70%);bottom:5vh;opacity:0;filter:blur(12px);pointer-events:none;z-index:1}
 .hero-text{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;text-align:center;pointer-events:none}
 .hero-title{font-size:clamp(2.2rem,6vw,5rem);font-weight:800;letter-spacing:-.02em;line-height:1.1}
 .hero-sub{font-size:clamp(1rem,2.5vw,2rem);font-weight:300;letter-spacing:.15em;text-transform:uppercase;margin-top:.5rem;color:rgba(255,255,255,.7)}
@@ -77,7 +77,6 @@ body{background:#050505;color:#fff;font-family:'Segoe UI',system-ui,-apple-syste
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Globo D3 ─── */
 var canvas = document.getElementById('globeCanvas');
 var ctx = canvas.getContext('2d');
 var W = 380, H = 380, R = 160;
@@ -168,11 +167,11 @@ function generateMapTexture() {
   var cx = c.getContext('2d');
   var pr = d3.geoOrthographic().scale(240).translate([280, 280]).clipAngle(90);
   var pa = d3.geoPath().projection(pr).context(cx);
-  var g = cx.createRadialGradient(180, 180, 20, 280, 280, 240);
+  var g = cx.createRadialGradient(180, 180, 20, 280, 280, 248);
   g.addColorStop(0, '#1a1a1a'); g.addColorStop(0.5, '#0d0d0d'); g.addColorStop(1, '#080808');
-  cx.beginPath(); cx.arc(280, 280, 240, 0, Math.PI*2);
+  cx.beginPath(); cx.arc(280, 280, 248, 0, Math.PI*2);
   cx.fillStyle = g; cx.fill();
-  cx.beginPath(); cx.arc(280, 280, 238, 0, Math.PI*2);
+  cx.beginPath(); cx.arc(280, 280, 246, 0, Math.PI*2);
   cx.strokeStyle = 'rgba(180,180,180,0.2)'; cx.lineWidth = 2; cx.stroke();
   if (landFeatures) {
     var gr = d3.geoGraticule();
@@ -220,14 +219,13 @@ fetch('https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs
   });
 tick();
 
-/* ─── Canto estriado 24 laminas entre -12px y +12px ─── */
+/* ─── Canto estriado 12 laminas (300px, sobresale como reborde) ─── */
 var edgeEl = document.getElementById('coinEdge');
-var THICKNESS = 24;
-var SLICES = 24;
+var SLICES = 12;
 for (var i = 0; i < SLICES; i++) {
   var s = document.createElement('div');
-  var z = (i / (SLICES - 1) - 0.5) * THICKNESS;
-  s.style.cssText = 'position:absolute;width:280px;height:280px;border-radius:50%;transform:translateZ('+z+'px);background:repeating-linear-gradient(90deg,#2a2a2a 0px,#505050 1.5px,#707070 2.5px,#505050 3.5px,#2a2a2a 5px),linear-gradient(180deg,#606060,#2a2a2a);background-blend-mode:overlay;border:1px solid rgba(100,100,100,.2)';
+  var z = (i / (SLICES - 1) - 0.5) * 20;
+  s.style.cssText = 'position:absolute;width:300px;height:300px;border-radius:50%;transform:translateZ('+z+'px);background:repeating-linear-gradient(90deg,#2a2a2a 0px,#505050 1.5px,#707070 2.5px,#505050 3.5px,#2a2a2a 5px),linear-gradient(180deg,#555,#222);background-blend-mode:overlay;border:1px solid rgba(100,100,100,.15)';
   edgeEl.appendChild(s);
 }
 
@@ -252,7 +250,6 @@ document.addEventListener('mouseup', function() {
   }
 });
 
-/* ─── GSAP ─── */
 var coin = document.getElementById('coin');
 var gsGlobe = document.getElementById('groundShadowGlobe');
 var gsCoin = document.getElementById('groundShadowCoin');
@@ -270,7 +267,7 @@ gsap.to(coin, { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', st
 gsap.to('#sideText', { opacity:1, scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
 gsap.to('#sideText .line-inner', { y:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
 
-gsap.to(coin, { y:'72vh', scale:0.76, rotationX:1260, rotationY:1800, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'50% top', end:'80% top', scrub:2.5 } });
+gsap.to(coin, { y:'72vh', scale:0.76, rotationX:1080, rotationY:1440, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'50% top', end:'80% top', scrub:2.5 } });
 gsap.to(canvas, { y:'-30vh', scale:0.4, opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'45% top', end:'60% top', scrub:1 } });
 gsap.to(gsGlobe, { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'25% top', end:'40% top', scrub:1 } });
 gsap.to(gsGlobe, { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'50% top', end:'65% top', scrub:1 } });
