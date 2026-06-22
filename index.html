@@ -28,98 +28,230 @@ body {
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  z-index: 2;
+  z-index: 0; /* detrás del texto */
 }
 
-/* ─── Moneda ─── */
+/* ─── Sombra en el suelo (para el final) ─── */
+.ground-shadow {
+  position: absolute;
+  width: 220px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(212,175,55,.25) 0%, transparent 70%);
+  bottom: 6vh;
+  opacity: 0;
+  transform: scaleX(1.4);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* ─── Moneda ultra realista ─── */
 .coin-3d {
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   transform-style: preserve-3d;
   will-change: transform;
   position: absolute;
 }
+
+/* ─── Cara frontal ─── */
 .coin-face {
   position: absolute;
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   backface-visibility: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.coin-face.front {
-  background: radial-gradient(ellipse at 35% 35%, #f9e27a 0%, #d4af37 40%, #b8962e 65%, #8b6914 100%);
-  border: 3px solid #f9e27a;
-  box-shadow:
-    inset 0 -4px 12px rgba(0,0,0,.5),
-    inset 0 4px 8px rgba(255,215,0,.3),
-    0 0 30px rgba(212,175,55,.35);
-  transform: rotateY(0deg);
-}
-.coin-face.front .rim {
-  position: absolute;
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  border: 4px solid rgba(249,226,122,.35);
-  box-shadow: inset 0 0 6px rgba(212,175,55,.4);
-}
-.coin-face.front .initials {
-  font-family: 'Times New Roman', Georgia, serif;
-  font-size: 52px;
-  font-weight: 900;
-  color: #d4af37;
-  text-shadow:
-    1px 1px 0 rgba(255,215,0,.35),
-    -1px -1px 0 rgba(0,0,0,.5),
-    0 0 4px rgba(139,105,20,.3);
-  letter-spacing: 2px;
-  z-index: 1;
-}
-.coin-face.back {
-  background: radial-gradient(ellipse at 65% 65%, #f9e27a 0%, #d4af37 40%, #b8962e 65%, #8b6914 100%);
-  border: 3px solid #f9e27a;
-  box-shadow:
-    inset 0 -4px 12px rgba(0,0,0,.5),
-    inset 0 4px 8px rgba(255,215,0,.3),
-    0 0 30px rgba(212,175,55,.35);
-  transform: rotateY(180deg);
-}
-.coin-face.back .rim {
-  position: absolute;
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  border: 4px solid rgba(249,226,122,.35);
-  box-shadow: inset 0 0 6px rgba(212,175,55,.4);
-}
-.coin-face.back .star {
-  font-size: 60px;
-  color: #f9e27a;
-  text-shadow: 0 0 8px rgba(212,175,55,.5);
-  z-index: 1;
+  overflow: hidden;
 }
 
-/* ─── Canto (20 láminas) ─── */
+.coin-face.front {
+  /* Gradiente metálico multilayered */
+  background:
+    radial-gradient(ellipse at 30% 28%, rgba(255,245,200,.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 65%, rgba(180,140,60,.4) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, #f9e27a 0%, #d4af37 30%, #b8962e 55%, #7a5c10 85%, #5a3f08 100%);
+  border: 2px solid #c9a030;
+  box-shadow:
+    /* rim bevel */
+    inset 0 -6px 16px rgba(0,0,0,.6),
+    inset 0 6px 12px rgba(255,215,0,.25),
+    /* outer glow */
+    0 0 40px rgba(212,175,55,.3),
+    0 0 80px rgba(212,175,55,.1);
+  transform: rotateY(0deg);
+}
+
+/* ─── Anillo exterior elevado (rim) ─── */
+.coin-face.front .rim-outer {
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 5px solid rgba(249,226,122,.2);
+  box-shadow:
+    inset 0 0 10px rgba(212,175,55,.3),
+    0 0 6px rgba(255,215,0,.15);
+  top: 5px; left: 5px;
+  pointer-events: none;
+}
+
+/* ─── Anillo interior decorativo ─── */
+.coin-face.front .rim-inner {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid rgba(180,140,60,.35);
+  top: 25px; left: 25px;
+  pointer-events: none;
+}
+
+/* ─── Puntos perimetrales (como monedas reales) ─── */
+.coin-face.front .dots {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  top: 15px; left: 15px;
+  pointer-events: none;
+}
+.coin-face.front .dots::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    rgba(249,226,122,.25) 0deg,
+    rgba(249,226,122,.25) 2deg,
+    transparent 2deg,
+    transparent 7deg
+  );
+  mask: radial-gradient(circle at center, transparent 50%, #000 50%);
+  -webkit-mask: radial-gradient(circle at center, transparent 50%, #000 50%);
+}
+
+/* ─── Iniciales grabadas con relieve profundo ─── */
+.coin-face.front .initials {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 56px;
+  font-weight: 900;
+  color: #c9a030;
+  z-index: 2;
+  letter-spacing: 3px;
+  /* relieve: luz arriba-izq, sombra abajo-der */
+  text-shadow:
+    0 0 4px rgba(139,105,20,.3),
+    /* relieve superior */
+    1px 1px 0 rgba(255,245,200,.4),
+    2px 2px 0 rgba(255,245,200,.15),
+    /* profundidad inferior */
+    -1px -1px 0 rgba(0,0,0,.5),
+    -2px -2px 0 rgba(0,0,0,.3),
+    /* borde acuñado */
+    0 0 8px rgba(180,140,60,.2);
+  transform: translateZ(2px);
+}
+
+/* ─── Cara posterior ─── */
+.coin-face.back {
+  background:
+    radial-gradient(ellipse at 65% 68%, rgba(255,245,200,.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 35%, rgba(180,140,60,.35) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, #f9e27a 0%, #d4af37 30%, #b8962e 55%, #7a5c10 85%, #5a3f08 100%);
+  border: 2px solid #c9a030;
+  box-shadow:
+    inset 0 -6px 16px rgba(0,0,0,.6),
+    inset 0 6px 12px rgba(255,215,0,.25),
+    0 0 40px rgba(212,175,55,.3);
+  transform: rotateY(180deg);
+}
+
+.coin-face.back .rim-outer {
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 5px solid rgba(249,226,122,.2);
+  box-shadow: inset 0 0 10px rgba(212,175,55,.3);
+  top: 5px; left: 5px;
+  pointer-events: none;
+}
+
+.coin-face.back .rim-inner {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid rgba(180,140,60,.35);
+  top: 25px; left: 25px;
+  pointer-events: none;
+}
+
+.coin-face.back .dots {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  top: 15px; left: 15px;
+  pointer-events: none;
+}
+.coin-face.back .dots::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    rgba(249,226,122,.25) 0deg,
+    rgba(249,226,122,.25) 2deg,
+    transparent 2deg,
+    transparent 7deg
+  );
+  mask: radial-gradient(circle at center, transparent 50%, #000 50%);
+  -webkit-mask: radial-gradient(circle at center, transparent 50%, #000 50%);
+}
+
+.coin-face.back .year {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #c9a030;
+  z-index: 2;
+  text-shadow:
+    1px 1px 0 rgba(255,245,200,.35),
+    -1px -1px 0 rgba(0,0,0,.4);
+}
+
+/* ─── Canto con estriado (reeded edge) ─── */
 .coin-edge {
   position: absolute;
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   top: 0; left: 0;
   transform-style: preserve-3d;
 }
 .edge-slice {
   position: absolute;
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at 35% 35%, #c9a030, #8b6914);
-  border: 1px solid #b8962e;
-  box-shadow: inset 0 0 4px rgba(0,0,0,.3);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #8b6914 0px,
+      #c9a030 2px,
+      #8b6914 4px,
+      #5a3f08 5px,
+      #8b6914 6px
+    ),
+    radial-gradient(ellipse at 50% 50%, #c9a030, #6b4f0e);
+  background-blend-mode: overlay;
+  border: 1px solid rgba(180,140,60,.2);
 }
-/* Se posicionan con translateZ vía JS */
 
 /* ─── Hero text ─── */
 .hero-text {
@@ -216,17 +348,42 @@ body {
   transform: translateY(100%);
 }
 
+/* ─── Footer (donde cae la moneda) ─── */
+.footer {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  padding: 2rem 1.5rem;
+  z-index: 1;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+}
+.footer p {
+  font-size: clamp(.75rem, 1.2vw, 1rem);
+  color: rgba(255,255,255,.3);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
 /* ─── Partículas ─── */
 .particle {
   position: fixed;
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: radial-gradient(circle, #f9e27a, #d4af37);
-  box-shadow: 0 0 6px rgba(212,175,55,.8);
   pointer-events: none;
   z-index: 10;
   will-change: transform, opacity;
+}
+.particle.spark {
+  background: radial-gradient(circle, #fff 0%, #f9e27a 40%, #d4af37 100%);
+  box-shadow: 0 0 8px rgba(212,175,55,.9), 0 0 20px rgba(212,175,55,.4);
+}
+.particle.shard {
+  background: linear-gradient(135deg, #d4af37, #8b6914);
+  border-radius: 2px;
+  box-shadow: 0 0 4px rgba(212,175,55,.5);
 }
 </style>
 </head>
@@ -236,15 +393,20 @@ body {
 <div class="scene" id="scene">
   <div class="coin-3d" id="coin">
     <div class="coin-face front">
-      <div class="rim"></div>
+      <div class="rim-outer"></div>
+      <div class="dots"></div>
+      <div class="rim-inner"></div>
       <span class="initials">FO</span>
     </div>
     <div class="coin-edge" id="coinEdge"></div>
     <div class="coin-face back">
-      <div class="rim"></div>
-      <span class="star">✦</span>
+      <div class="rim-outer"></div>
+      <div class="dots"></div>
+      <div class="rim-inner"></div>
+      <span class="year">2026</span>
     </div>
   </div>
+  <div class="ground-shadow" id="groundShadow"></div>
 </div>
 
 <!-- Hero text (Fase 1) -->
@@ -271,115 +433,122 @@ body {
   </h2>
 </div>
 
+<!-- Footer -->
+<div class="footer" id="footer">
+  <p>© 2026 Francisco Ortuño — Diseño Web</p>
+</div>
+
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Construir canto de la moneda (20 láminas) ─── */
+/* ─── Construir canto estriado de la moneda (30 láminas) ─── */
 const edgeEl = document.getElementById('coinEdge');
-const SLICES = 20;
+const SLICES = 30;
+const EDGE_DEPTH = 22; // grosor total en px
 for (let i = 0; i < SLICES; i++) {
   const slice = document.createElement('div');
   slice.className = 'edge-slice';
-  // Apilar en eje Z: desde -z/2 hasta +z/2
-  const z = (i / (SLICES - 1) - 0.5) * 18; // grosor total ~18px
+  const z = (i / (SLICES - 1) - 0.5) * EDGE_DEPTH;
   slice.style.transform = 'translateZ(' + z + 'px)';
   edgeEl.appendChild(slice);
 }
 
 const coin = document.getElementById('coin');
+const groundShadow = document.getElementById('groundShadow');
+
+/* ─── Estado inicial: moneda centrada, rotación Y lenta ─── */
+gsap.set(coin, {
+  rotationY: 0,
+  rotationX: 5,
+  y: 0,
+  scale: 1
+});
 
 /* ─── Loop infinito de rotación Y superpuesto ─── */
 gsap.to(coin, {
   rotationY: 360,
-  duration: 8,
+  duration: 10,
   repeat: -1,
   ease: 'none'
 });
 
 /* ─── FASE 1: Hero reveal (0-25%) ─── */
-// Animación de entrada del texto con clip-path
+// El texto del hero se revela con clip-path
 gsap.to('.hero-title .line-inner', {
   y: 0,
-  duration: 1.2,
-  ease: 'power3.out',
-  stagger: 0.2,
+  duration: 1.5,
+  ease: 'power4.out',
+  stagger: 0.15,
   scrollTrigger: {
     trigger: 'body',
     start: 'top top',
     end: '+=25%',
-    scrub: 1
+    scrub: 1.2
   }
 });
 gsap.to('.hero-sub .line-inner', {
   y: 0,
-  duration: 1.2,
-  ease: 'power3.out',
-  stagger: 0.2,
+  duration: 1.5,
+  ease: 'power4.out',
   scrollTrigger: {
     trigger: 'body',
     start: 'top top',
     end: '+=25%',
-    scrub: 1
+    scrub: 1.2
   }
 });
 
 /* ─── FASE 2: Caída de la moneda (25-70%) ─── */
-// La moneda cae desde el centro hasta el borde inferior, escala 1→0.85
-// Rotación agresiva con múltiples keyframes para simular tambaleo real
+// La moneda cae con tambaleo realista y escala progresiva
+// Primer tramo: giro rápido en X
 gsap.to(coin, {
-  // Se mueve desde el centro (0,0) hasta cerca del borde inferior
-  y: '45vh',
-  scale: 0.85,
-  // Rotación X e Y con keyframes para tambaleo realista
-  rotationX: 720,
-  rotationY: 1080,
-  ease: 'power2.in',
+  y: '20vh',
+  rotationX: 540,
+  rotationY: 720,
+  scale: 0.95,
+  ease: 'power1.in',
   scrollTrigger: {
     trigger: 'body',
     start: '25% top',
+    end: '40% top',
+    scrub: 1.5
+  }
+});
+
+// Segundo tramo: cambia dirección de giro (tambaleo)
+gsap.to(coin, {
+  y: '35vh',
+  rotationX: -360,
+  rotationY: 1080,
+  scale: 0.9,
+  ease: 'power2.in',
+  scrollTrigger: {
+    trigger: 'body',
+    start: '40% top',
+    end: '55% top',
+    scrub: 1.5
+  }
+});
+
+// Tercer tramo: se acerca al suelo, giro más lento
+gsap.to(coin, {
+  y: '50vh',
+  rotationX: 180,
+  rotationY: 1440,
+  scale: 0.85,
+  ease: 'power3.in',
+  scrollTrigger: {
+    trigger: 'body',
+    start: '55% top',
     end: '70% top',
     scrub: 1.5
   }
 });
 
-// Keyframes adicionales para tambaleo en X
-gsap.to(coin, {
-  rotationX: 360,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: 'body',
-    start: '25% top',
-    end: '40% top',
-    scrub: 1
-  }
-});
-gsap.to(coin, {
-  rotationX: -180,
-  rotationY: 540,
-  ease: 'power1.in',
-  scrollTrigger: {
-    trigger: 'body',
-    start: '40% top',
-    end: '55% top',
-    scrub: 1
-  }
-});
-gsap.to(coin, {
-  rotationX: 270,
-  rotationY: 900,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: 'body',
-    start: '55% top',
-    end: '70% top',
-    scrub: 1
-  }
-});
-
-// Hero text fade out + subir ligeramente
+// Hero text fade out + subir
 gsap.to('.hero-text', {
   opacity: 0,
-  y: -40,
+  y: -60,
   ease: 'power2.out',
   scrollTrigger: {
     trigger: 'body',
@@ -392,7 +561,6 @@ gsap.to('.hero-text', {
 // Side text reveal
 gsap.to('#sideText', {
   opacity: 1,
-  duration: 0.5,
   scrollTrigger: {
     trigger: 'body',
     start: '35% top',
@@ -402,7 +570,7 @@ gsap.to('#sideText', {
 });
 gsap.to('#sideText .line-inner', {
   y: 0,
-  ease: 'power3.out',
+  ease: 'power4.out',
   scrollTrigger: {
     trigger: 'body',
     start: '35% top',
@@ -411,17 +579,52 @@ gsap.to('#sideText .line-inner', {
   }
 });
 
-/* ─── FASE 3: Impacto (70-100%) ─── */
-// La moneda se estabiliza con efecto elástico
+/* ─── FASE 3: Impacto y caída al suelo (70-100%) ─── */
+// La moneda cae hasta el borde inferior (como si cayera al suelo)
 gsap.to(coin, {
-  rotationX: 0,
-  rotationY: 0,
+  y: '70vh',
+  scale: 0.8,
   ease: 'elastic.out(1, 0.3)',
   scrollTrigger: {
     trigger: 'body',
     start: '70% top',
     end: '85% top',
     scrub: 1.5
+  }
+});
+
+// Se aplana al caer al suelo (rotationX → 80° para simular que yace en el piso)
+gsap.to(coin, {
+  rotationX: 80,
+  rotationY: 180,
+  ease: 'elastic.out(0.8, 0.25)',
+  scrollTrigger: {
+    trigger: 'body',
+    start: '78% top',
+    end: '92% top',
+    scrub: 2
+  }
+});
+
+// Sombra en el suelo aparece cuando la moneda llega abajo
+gsap.to('#groundShadow', {
+  opacity: 1,
+  scaleX: 1.6,
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: 'body',
+    start: '78% top',
+    end: '90% top',
+    scrub: 1.5
+  }
+});
+
+// El loop de rotación Y se frena (lo matamos)
+ScrollTrigger.create({
+  trigger: 'body',
+  start: '78% top',
+  onEnter: () => {
+    gsap.killTweensOf(coin, 'rotationY');
   }
 });
 
@@ -440,21 +643,31 @@ gsap.to('#sideText', {
 // Final text reveal
 gsap.to('#finalText', {
   opacity: 1,
-  duration: 0.8,
   scrollTrigger: {
     trigger: 'body',
-    start: '80% top',
+    start: '82% top',
     end: '95% top',
     scrub: 1
   }
 });
 gsap.to('#finalText .line-inner', {
   y: 0,
-  ease: 'power3.out',
+  ease: 'power4.out',
   scrollTrigger: {
     trigger: 'body',
-    start: '80% top',
+    start: '82% top',
     end: '95% top',
+    scrub: 1
+  }
+});
+
+// Footer aparece
+gsap.to('#footer', {
+  opacity: 1,
+  scrollTrigger: {
+    trigger: 'body',
+    start: '88% top',
+    end: '100% top',
     scrub: 1
   }
 });
@@ -469,28 +682,32 @@ ScrollTrigger.create({
 });
 
 function spawnParticles() {
-  const COUNT = 20;
-  for (let i = 0; i < COUNT; i++) {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight * 0.72;
+  const types = ['spark', 'shard'];
+
+  for (let i = 0; i < 22; i++) {
     const p = document.createElement('div');
-    p.className = 'particle';
-    // Posición base: centro inferior de la pantalla (donde impacta)
-    const cx = window.innerWidth / 2;
-    const cy = window.innerHeight * 0.85;
-    p.style.left = cx + 'px';
-    p.style.top = cy + 'px';
+    const type = types[Math.floor(Math.random() * types.length)];
+    p.className = 'particle ' + type;
+    p.style.left = (cx + (Math.random() - 0.5) * 30) + 'px';
+    p.style.top = (cy + (Math.random() - 0.5) * 20) + 'px';
+    p.style.width = (4 + Math.random() * 6) + 'px';
+    p.style.height = (4 + Math.random() * 6) + 'px';
     document.body.appendChild(p);
 
-    const angle = (i / COUNT) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
-    const dist = 80 + Math.random() * 180;
+    const angle = (i / 22) * Math.PI * 2 + (Math.random() - 0.5) * 0.8;
+    const dist = 60 + Math.random() * 220;
     const dx = Math.cos(angle) * dist;
-    const dy = Math.sin(angle) * dist;
+    const dy = Math.sin(angle) * dist - 40;
 
     gsap.to(p, {
       x: dx,
       y: dy,
+      rotation: Math.random() * 720 - 360,
       scale: 0,
       opacity: 0,
-      duration: 0.8 + Math.random() * 0.6,
+      duration: 0.7 + Math.random() * 0.8,
       ease: 'power2.out',
       onComplete: () => p.remove()
     });
