@@ -11,6 +11,13 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#050505;color:#fff;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;height:500vh;overflow-x:hidden}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:auto}
+.nav-inner{position:relative;display:flex;border-radius:9999px;border:2px solid rgba(212,175,55,.3);background:rgba(5,5,5,.8);backdrop-filter:blur(12px);padding:4px}
+.nav-item{position:relative;z-index:10;display:block;cursor:pointer;padding:6px 16px;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#fff;mix-blend-mode:difference;transition:color .2s}@media(min-width:768px){.nav-item{padding:10px 24px;font-size:14px}}
+.nav-cursor{position:absolute;z-index:0;height:28px;border-radius:9999px;background:rgba(212,175,55,.9);box-shadow:0 0 20px rgba(212,175,55,.3);pointer-events:none}@media(min-width:768px){.nav-cursor{height:44px}}
+
 .scene{perspective:1400px;position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0}
 .ground-shadow{position:absolute;width:340px;height:80px;border-radius:50%;background:radial-gradient(ellipse,rgba(212,175,55,.25) 0%,transparent 70%);bottom:5vh;opacity:0;filter:blur(14px);pointer-events:none;z-index:1}
 .coin-3d{width:320px;height:320px;transform-style:preserve-3d;will-change:transform;position:absolute;z-index:2}
@@ -60,9 +67,6 @@ body{background:#050505;color:#fff;font-family:'Segoe UI',system-ui,-apple-syste
 .cube-3d .right .scroll-text{animation:scrollRight 18s linear infinite}
 .cube-3d .top{transform:translateY(-150px) rotateX(90deg);background:rgba(212,175,55,.05);border-color:rgba(212,175,55,.08)}
 .cube-3d .bottom{transform:translateY(150px) rotateX(-90deg);background:rgba(212,175,55,.03);border-color:rgba(212,175,55,.05)}
-.cube-reflect{width:300px;height:300px;perspective:800px;position:absolute;bottom:-320px;opacity:.25;transform:scaleY(-1)}
-.cube-reflect .cube-3d{animation:cubeRotate 12s linear infinite}
-.cube-reflect .cube-3d .f{background:rgba(10,5,5,.5)}
 @keyframes hueAnim{0%,100%{filter:hue-rotate(-20deg)}50%{filter:hue-rotate(30deg)}}
 @keyframes cubeRotate{0%{transform:rotateY(0deg) rotateX(5deg)}50%{transform:rotateY(180deg) rotateX(-5deg)}100%{transform:rotateY(360deg) rotateX(5deg)}}
 @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-5400px)}}
@@ -71,6 +75,18 @@ body{background:#050505;color:#fff;font-family:'Segoe UI',system-ui,-apple-syste
 </style>
 </head>
 <body>
+
+<nav>
+  <div class="nav-inner" id="navInner">
+    <div class="nav-cursor" id="navCursor"></div>
+    <span class="nav-item" data-tab="home">Home</span>
+    <span class="nav-item" data-tab="pricing">Pricing</span>
+    <span class="nav-item" data-tab="about">About</span>
+    <span class="nav-item" data-tab="services">Services</span>
+    <span class="nav-item" data-tab="contact">Contact</span>
+  </div>
+</nav>
+
 <div class="scene" id="scene">
   <div class="coin-3d" id="coin">
     <div class="coin-face front">
@@ -116,11 +132,38 @@ body{background:#050505;color:#fff;font-family:'Segoe UI',system-ui,-apple-syste
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-var CUBE_TEXT = '  <span>Diseno Web</span> Profesional  &bull;  <span>Next.js</span> &amp; React  &bull;  <span>UI/UX</span> Moderno  &bull;  Rendimiento <span>Extremo</span>  &bull;  SEO <span>Optimizado</span>  &bull;  Diseno <span>Responsive</span>  &bull;  Animaciones <span>3D</span>  &bull;  Desarrollo <span>Front-end</span>  &bull;  Experiencia de <span>Usuario</span>  &bull;  Codigo <span>Limpio</span>  &bull;  Transformacion <span>Digital</span>  &bull;  Soluciones <span>Web</span>  &bull; ';
+/* ─── NAV CURSOR ─── */
+var navItems = document.querySelectorAll('.nav-item');
+var navCursor = document.getElementById('navCursor');
+var navInner = document.getElementById('navInner');
+var cursorPos = { left: 0, width: 0 };
+
+function moveCursor(el) {
+  var rect = el.getBoundingClientRect();
+  var parentRect = navInner.getBoundingClientRect();
+  gsap.to(navCursor, {
+    left: rect.left - parentRect.left,
+    width: rect.width,
+    opacity: 1,
+    duration: 0.35,
+    ease: 'power2.out'
+  });
+}
+
+navItems.forEach(function(item) {
+  item.addEventListener('mouseenter', function() { moveCursor(this); });
+});
+navInner.addEventListener('mouseleave', function() {
+  gsap.to(navCursor, { opacity: 0, duration: 0.25 });
+});
+
+/* ─── CUBE TEXT ─── */
+var CUBE_TEXT = '  <span>Diseno Web</span> Profesional  &bull;  <span>Next.js</span> &amp; React  &bull;  <span>UI/UX</span> Moderno  &bull;  Rendimiento <span>Extremo</span>  &bull;  SEO <span>Optimizado</span>  &bull;  Diseno <span>Responsive</span>  &bull;  Animaciones <span>3D</span>  &bull;  Desarrollo <span>Front-end</span>  &bull;  Experiencia de <span>Usuario</span>  &bull;  Codigo <span>Limpio</span>  &bull;  Transformacion <span>Digital</span>  &bull;  Soluciones <span>Web</span>  &bull;  ';
 document.getElementById('textLeft').innerHTML = CUBE_TEXT.repeat(20);
 document.getElementById('textRight').innerHTML = CUBE_TEXT.repeat(20);
 document.getElementById('textBack').innerHTML = CUBE_TEXT.repeat(20);
 
+/* ─── COIN EDGE ─── */
 var edgeEl = document.getElementById('coinEdge');
 for (var i = 0; i < 30; i++) {
   var s = document.createElement('div');
@@ -138,16 +181,13 @@ gsap.set(cubeSec, { opacity:0 });
 
 gsap.to('.hero-title .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.15, scrollTrigger:{ trigger:'body', start:'top top', end:'+=20%', scrub:1.2 } });
 gsap.to('.hero-sub .line-inner', { y:0, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=20%', scrub:1.2 } });
-
 gsap.to(coin, { y:'70vh', scale:0.7, rotationX:1260, rotationY:1800, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'20% top', end:'65% top', scrub:2.5 } });
 gsap.to('.hero-text', { opacity:0, y:-60, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'20% top', end:'35% top', scrub:1 } });
 gsap.to('#sideText', { opacity:1, scrollTrigger:{ trigger:'body', start:'30% top', end:'45% top', scrub:1 } });
 gsap.to('#sideText .line-inner', { y:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'30% top', end:'45% top', scrub:1 } });
 gsap.to('#sideText', { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'60% top', end:'70% top', scrub:1 } });
-
 gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'65% top', end:'78% top', scrub:2 } });
 gsap.to(gs, { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'78% top', scrub:1.5 } });
-
 gsap.to(coin, { opacity:0, scale:0.3, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'78% top', end:'88% top', scrub:1.5 } });
 gsap.to(gs, { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'78% top', end:'88% top', scrub:1.5 } });
 gsap.to(cubeSec, { opacity:1, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'95% top', scrub:1.5 } });
