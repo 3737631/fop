@@ -39,11 +39,11 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 .carousel-section{position:relative;width:100%;height:100vh}
 .carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden}
-.panel{position:relative;height:100%;flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex-basis .55s cubic-bezier(.65,0,.35,1)}
+.panel{position:relative;height:100%;flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex-basis 1s cubic-bezier(.65,0,.35,1)}
 .panel[data-color=red]{background:#B91C1C}
 .panel[data-color=yellow]{background:#FFD300}
 .panel[data-color=green]{background:#0F7A3D}
-.panel .num{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;line-height:1;letter-spacing:-.06em;transition:font-size .55s cubic-bezier(.65,0,.35,1),opacity .35s ease;white-space:nowrap;order:1}
+.panel .num{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;line-height:1;letter-spacing:-.06em;transition:font-size 1s cubic-bezier(.65,0,.35,1),opacity .6s ease;white-space:nowrap;order:1}
 .panel[data-color=yellow] .num,.panel[data-color=yellow] .caption{color:#000}
 .panel[data-color=red] .num,.panel[data-color=red] .caption,.panel[data-color=green] .num,.panel[data-color=green] .caption{color:#fff}
 .panel.active{flex-basis:60%}
@@ -51,7 +51,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .panel.inactive{flex-basis:20%}
 .panel.inactive .num{font-size:clamp(2rem,6vw,5rem);opacity:.55}
 .panel.inactive .caption{display:none}
-.caption{order:2;max-width:12ch;font-size:.7rem;font-weight:400;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.caption{order:2;max-width:12ch;font-size:.7rem;font-weight:400;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .6s ease;pointer-events:none}
 .panel.active .caption{opacity:.75}
 
 @media(prefers-reduced-motion:reduce){.panel,.panel .num,.caption{transition:none!important}}
