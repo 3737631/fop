@@ -10,7 +10,7 @@
 </script>
 <script src="https://d3js.org/d3.v7.min.js">
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&amp;family=Inter:wght@200;300;600;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&amp;display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0a0a;color:#e8e2d9;font-family:'Inter','Segoe UI',system-ui,sans-serif;height:700vh;overflow-x:hidden}
@@ -38,23 +38,23 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 .hero{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;z-index:3;pointer-events:none;padding:0 6vw}
 .hero .line{display:block;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
 .hero .line-inner{display:block;transform:translateY(100%)}
-.hero-name{font-family:'Playfair Display','Palatino','Georgia',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:400;color:#e8e2d9;line-height:1.1;letter-spacing:-.01em}
-.hero-name em{font-style:italic;font-weight:700;color:#c8bfad}
-.hero-role{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.75rem,1.4vw,1.1rem);font-weight:200;color:rgba(200,191,173,.6);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem}
+.hero-name{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:100;font-stretch:condensed;color:#e8e2d9;line-height:1.1;letter-spacing:-.01em}
+.hero-name em{font-style:italic;font-weight:400;color:#c8bfad}
+.hero-role{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.75rem,1.4vw,1.1rem);font-weight:100;font-stretch:condensed;color:rgba(200,191,173,.6);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem}
 
 .bg-text{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:0;pointer-events:none;opacity:0}
 .bg-text .line{display:block;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
 .bg-text .line-inner{display:block;transform:translateY(100%)}
-.bg-text-title{font-family:'Playfair Display','Palatino','Georgia',serif;font-size:clamp(2rem,5vw,4rem);font-weight:400;color:#e8e2d9;line-height:1.2;letter-spacing:-.01em;text-align:center}
-.bg-text-title em{font-style:italic;font-weight:700;color:#c8bfad}
-.bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.3vw,1rem);font-weight:200;color:rgba(200,191,173,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem;text-align:center}
+.bg-text-title{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:100;font-stretch:expanded;color:#e8e2d9;line-height:1.2;letter-spacing:-.01em;text-align:center}
+.bg-text-title em{font-style:italic;font-weight:400;color:#c8bfad}
+.bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.3vw,1rem);font-weight:400;font-stretch:condensed;color:rgba(200,191,173,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
 .poster-section{position:fixed;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0}
 .poster-block{position:absolute;top:0;height:100%}
 .poster-block.left{left:0;width:33.333%;background:#B91C1C}
 .poster-block.right{left:33.333%;width:66.667%;background:#FFD700}
 .poster-number{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Inter','Futura','Helvetica','Arial Black',sans-serif;font-size:clamp(16rem,55vw,70vh);font-weight:900;color:#000;line-height:1;z-index:6;pointer-events:none;text-align:center;letter-spacing:-.06em}
-.poster-text{position:absolute;bottom:clamp(3vh,5vh,7vh);right:clamp(3vw,5vw,7vw);z-index:6;font-family:'Inter','Helvetica','Segoe UI',sans-serif;font-size:clamp(.55rem,1.2vw,1rem);font-weight:500;color:#000;letter-spacing:.04em;text-align:right;max-width:clamp(160px,30vw,400px);line-height:1.4}
+.poster-text{position:absolute;bottom:clamp(3vh,5vh,7vh);right:clamp(3vw,5vw,7vw);z-index:6;font-family:'Inter','Helvetica','Segoe UI',sans-serif;font-size:clamp(.55rem,1.2vw,1rem);font-weight:400;color:#000;letter-spacing:.04em;text-align:right;max-width:clamp(160px,30vw,400px);line-height:1.4}
 
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#c8bfad,#a09888);box-shadow:0 0 8px rgba(200,191,173,.5)}
