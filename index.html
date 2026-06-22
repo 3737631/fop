@@ -320,12 +320,24 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     LK = true; SY = window.scrollY;
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
+    S.style.position = 'fixed';
+    S.style.top = '0';
+    S.style.left = '0';
+    S.style.width = '100%';
+    S.style.height = '100%';
+    S.style.zIndex = '100';
   }
 
   function UL() {
     LK = false; RP = false;
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
+    S.style.position = '';
+    S.style.top = '';
+    S.style.left = '';
+    S.style.width = '';
+    S.style.height = '';
+    S.style.zIndex = '';
     ScrollTrigger.refresh();
   }
 
