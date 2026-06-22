@@ -49,22 +49,19 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 .bg-text-title em{font-style:italic;font-weight:400;color:#c8bfad}
 .bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.3vw,1rem);font-weight:400;font-stretch:condensed;color:rgba(200,191,173,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
-.story-section{position:fixed;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0;overflow:hidden}
-.story-panel{position:absolute;top:0;height:100%;display:flex;align-items:center;justify-content:center}
-.story-panel.p1{left:-18%;width:48%;background:#B91C1C;filter:blur(5px);opacity:.7}
-.story-panel.p2{left:18%;width:64%;background:#FFD700;box-shadow:0 0 80px rgba(0,0,0,.25),0 0 30px rgba(0,0,0,.1);z-index:2}
-.story-panel.p3{left:70%;width:48%;background:#047857;filter:blur(5px);opacity:.7}
-.story-num{font-family:'Teko','Impact','Arial Black',sans-serif;font-weight:700;font-size:clamp(14rem,50vw,60vh);line-height:1;letter-spacing:-.04em;text-transform:uppercase;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
-.story-panel.p1 .story-num{color:#fff}
-.story-panel.p2 .story-num{color:#000}
-.story-panel.p3 .story-num{color:#fff}
-.story-nav{position:absolute;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:clamp(6px,1.2vw,18px);z-index:7;white-space:nowrap;font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(5px,.65vw,9px);font-weight:500;color:#000;letter-spacing:.15em;text-transform:uppercase;opacity:.6}
-.story-body{position:absolute;bottom:clamp(3vh,5vh,7vh);right:clamp(2vw,4vw,5vw);z-index:7;font-family:'Inter','Helvetica','Segoe UI',sans-serif;font-size:clamp(.45rem,.85vw,.8rem);font-weight:400;color:#000;letter-spacing:.04em;text-align:right;max-width:clamp(100px,22vw,300px);line-height:1.4;opacity:.75}
-.story-dots{position:absolute;bottom:clamp(2vh,3.5vh,5vh);left:50%;transform:translateX(-50%);display:flex;gap:clamp(6px,.8vw,12px);z-index:8}
-.story-dot{width:clamp(5px,.6vw,9px);height:clamp(5px,.6vw,9px);border-radius:50%;background:#fff;opacity:.25}
-.story-dot.active{opacity:.9;background:#fff;width:clamp(12px,1.2vw,20px);border-radius:4px}
-.story-dot.active.d2{background:#000;opacity:.9}
-.story-dot.d2{border:1px solid #000;background:transparent;opacity:.4}
+.transition-section{position:fixed;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0;display:flex}
+.frame{position:relative;width:50%;height:100%;overflow:hidden}
+.frame-bg-left{position:absolute;top:0;left:0;width:33.333%;height:100%;background:#B91C1C}
+.frame-bg-right{position:absolute;top:0;left:33.333%;width:66.667%;height:100%;background:#FFD700}
+.frame-label{position:absolute;top:clamp(8px,1.5vh,16px);left:50%;transform:translateX(-50%);z-index:8;font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(7px,.6vw,10px);font-weight:600;color:#fff;letter-spacing:.2em;background:rgba(0,0,0,.3);padding:clamp(3px,.3vw,6px) clamp(8px,.8vw,14px);border-radius:3px}
+.frame .num{position:absolute;font-family:'Inter','Helvetica','Arial Black',sans-serif;font-weight:900;color:#000;line-height:1;z-index:6;text-align:center;letter-spacing:-.05em}
+.frame .num.big{font-size:clamp(22rem,46vw,68vh);top:50%;left:33.333%;transform:translate(-50%,-50%)}
+.frame .num.sml{font-size:clamp(4rem,8vw,14vh);top:50%;transform:translateY(-50%)}
+.frame .num.s1{left:52%}
+.frame .num.s2{left:68%}
+.frame .num.l1{left:18%}
+.frame-a .num.big{z-index:7}
+.frame-caption{position:absolute;bottom:clamp(2.5vh,4vh,6vh);left:33.333%;z-index:7;font-family:'Inter','Helvetica','Segoe UI',sans-serif;font-size:clamp(.4rem,.7vw,.7rem);font-weight:500;color:#000;letter-spacing:.03em;text-align:center;width:50%;transform:translateX(-50%);line-height:1.3}
 
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#c8bfad,#a09888);box-shadow:0 0 8px rgba(200,191,173,.5)}
@@ -114,22 +111,24 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
   </div>
 </div>
 
-<div class="story-section" id="storySection">
-  <div class="story-panel p1">
-    <div class="story-num">1</div>
+<div class="transition-section" id="transitionSection">
+  <div class="frame frame-a">
+    <div class="frame-bg-left"></div>
+    <div class="frame-bg-right"></div>
+    <div class="frame-label">STATE A</div>
+    <div class="num big" style="left:33.333%">1</div>
+    <div class="num sml" style="left:52%">2</div>
+    <div class="num sml" style="left:70%">3</div>
+    <div class="frame-caption">We are colorful, we believe in great design.</div>
   </div>
-  <div class="story-panel p2">
-    <div class="story-nav">HOME &nbsp; PRICING &nbsp; ABOUT &nbsp; SERVICES &nbsp; CONTACT</div>
-    <div class="story-num">2</div>
-    <div class="story-body">We are colorful,<br>we believe in great design.</div>
-  </div>
-  <div class="story-panel p3">
-    <div class="story-num">3</div>
-  </div>
-  <div class="story-dots">
-    <div class="story-dot"></div>
-    <div class="story-dot active d2"></div>
-    <div class="story-dot"></div>
+  <div class="frame frame-b">
+    <div class="frame-bg-left"></div>
+    <div class="frame-bg-right"></div>
+    <div class="frame-label">STATE B</div>
+    <div class="num sml" style="left:15%">1</div>
+    <div class="num big" style="left:33.333%">2</div>
+    <div class="num sml" style="left:52%">3</div>
+    <div class="frame-caption">We are colorful, we believe in great design.</div>
   </div>
 </div>
 
@@ -272,11 +271,11 @@ var coin = document.getElementById('coin');
 var gsGlobe = document.getElementById('groundShadowGlobe');
 var gsCoin = document.getElementById('groundShadowCoin');
 var heroS = document.getElementById('heroSection');
-var storySec = document.getElementById('storySection');
+var transSec = document.getElementById('transitionSection');
 
 gsap.set(coin, { opacity:0, y:0, scale:1, rotationY:0, rotationX:0 });
 gsap.set(canvas, { x:0, y:0, scale:1, clipPath:'inset(0)', opacity:0.6 });
-gsap.set(storySec, { opacity:0 });
+gsap.set(transSec, { opacity:0 });
 
 gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=12%', scrub:1.2 } });
 gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=12%', scrub:1.2 } });
@@ -301,7 +300,7 @@ gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', sc
 gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'62% top', end:'68% top', scrub:1.5 } });
 gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'62% top', end:'68% top', scrub:1.5 } });
 
-gsap.to(storySec, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'70% top', scrub:1.5 } });
+gsap.to(transSec, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'70% top', scrub:1.5 } });
 
 ScrollTrigger.create({ trigger:'body', start:'52% top', end:'56% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
