@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&amp;family=Inter:wght@200;300;600;800&amp;display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#e8e2d9;font-family:'Inter','Segoe UI',system-ui,sans-serif;height:400vh;overflow-x:hidden}
+body{background:#0a0a0a;color:#e8e2d9;font-family:'Inter','Segoe UI',system-ui,sans-serif;height:700vh;overflow-x:hidden}
 
 nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:auto}
 .nav-inner{position:relative;display:flex;border-radius:9999px;border:1px solid rgba(200,191,173,.15);background:rgba(0,0,0,.7);backdrop-filter:blur(8px);padding:2px}
@@ -48,6 +48,18 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
 .bg-text-title{font-family:'Playfair Display','Palatino','Georgia',serif;font-size:clamp(2rem,5vw,4rem);font-weight:400;color:#e8e2d9;line-height:1.2;letter-spacing:-.01em;text-align:center}
 .bg-text-title em{font-style:italic;font-weight:700;color:#c8bfad}
 .bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.3vw,1rem);font-weight:200;color:rgba(200,191,173,.5);letter-spacing:.35em;text-transform:uppercase;margin-top:.6rem;text-align:center}
+
+.expand-section{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;opacity:0}
+.expand-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden}
+.expand-bg img{width:100%;height:100%;object-fit:cover;will-change:opacity}
+.expand-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:rgba(0,0,0,.45);will-change:opacity}
+.expand-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%}
+.expand-media{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.5);will-change:transform,width,height}
+.expand-media img,.expand-media video{width:100%;height:100%;object-fit:cover;display:block}
+.expand-title{position:absolute;bottom:clamp(8vh,12vh,16vh);display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;z-index:3;pointer-events:none;width:100%}
+.expand-title .et-line{font-family:'Playfair Display','Palatino','Georgia',serif;font-size:clamp(2rem,5vw,4.5rem);font-weight:400;color:#e8e2d9;line-height:1.15;letter-spacing:-.01em;display:block;white-space:nowrap}
+.expand-title .et-line em{font-style:italic;font-weight:700;color:#c8bfad}
+.expand-scroll-hint{position:absolute;bottom:clamp(3vh,5vh,7vh);font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.6rem,1vw,.85rem);font-weight:200;color:rgba(200,191,173,.5);letter-spacing:.25em;text-transform:uppercase;z-index:3;pointer-events:none}
 
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#c8bfad,#a09888);box-shadow:0 0 8px rgba(200,191,173,.5)}
@@ -97,6 +109,23 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;poin
   </div>
 </div>
 
+<div class="expand-section" id="expandSection">
+  <div class="expand-bg">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1920&auto=format&fit=crop" alt="" style="opacity:0" id="expandBgImg">
+  </div>
+  <div class="expand-overlay" id="expandOverlay"></div>
+  <div class="expand-content">
+    <div class="expand-media" id="expandMedia">
+      <img src="https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1280&auto=format&fit=crop" alt="" id="expandMediaImg">
+    </div>
+  </div>
+  <div class="expand-title" id="expandTitle">
+    <span class="et-line" id="etFirst">Immersive Video</span>
+    <span class="et-line" id="etRest"><em>Experience</em></span>
+  </div>
+  <div class="expand-scroll-hint" id="expandHint">Scroll to expand</div>
+</div>
+
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
@@ -110,7 +139,7 @@ navItems.forEach(function(item, i) {
     gsap.to(navCursor, { left: rect.left - pr.left, width: rect.width, opacity: 1, duration: 0.45, ease:'power3.out' });
   });
   item.addEventListener('click', function() {
-    var p = [0, 0.28, 0.55, 0.78, 0.95];
+    var p = [0, 0.25, 0.45, 0.65, 0.85];
     window.scrollTo({ top: p[i] * document.body.scrollHeight, behavior: 'smooth' });
   });
 });
@@ -236,34 +265,59 @@ var coin = document.getElementById('coin');
 var gsGlobe = document.getElementById('groundShadowGlobe');
 var gsCoin = document.getElementById('groundShadowCoin');
 var heroS = document.getElementById('heroSection');
+var expandSec = document.getElementById('expandSection');
+var expandMedia = document.getElementById('expandMedia');
+var expandBg = document.getElementById('expandBgImg');
+var expandOvl = document.getElementById('expandOverlay');
+var etFirst = document.getElementById('etFirst');
+var etRest = document.getElementById('etRest');
+var expandHint = document.getElementById('expandHint');
 
 gsap.set(coin, { opacity:0, y:0, scale:1, rotationY:0, rotationX:0 });
 gsap.set(canvas, { x:0, y:0, scale:1, clipPath:'inset(0)', opacity:0.6 });
+gsap.set(expandSec, { opacity:0 });
+gsap.set(expandMedia, { width:280, height:200, borderRadius:16 });
 
-gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=20%', scrub:1.2 } });
-gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=20%', scrub:1.2 } });
+gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=12%', scrub:1.2 } });
+gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=12%', scrub:1.2 } });
 
-gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'18% top', scrub:1.2 } });
-gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'8% top', end:'18% top', scrub:1.2 } });
-gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'12% top', end:'22% top', scrub:1.2 } });
+gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'6% top', end:'12% top', scrub:1.2 } });
+gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.08, scrollTrigger:{ trigger:'body', start:'6% top', end:'12% top', scrub:1.2 } });
+gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'16% top', scrub:1.2 } });
 
-gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'20% top', end:'38% top', scrub:1.8 } });
-gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'28% top', end:'42% top', scrub:1.4 } });
-gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'28% top', end:'42% top', scrub:1.4 } });
+gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'14% top', end:'26% top', scrub:1.8 } });
+gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'20% top', end:'30% top', scrub:1.4 } });
+gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'20% top', end:'30% top', scrub:1.4 } });
 
-gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'42% top', end:'78% top', scrub:2.5 } });
-gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'12% top', end:'28% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1 } });
+gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.in', scrollTrigger:{ trigger:'body', start:'30% top', end:'52% top', scrub:2.5 } });
+gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'26% top', end:'36% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'20% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'26% top', end:'36% top', scrub:1 } });
 
-gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'78% top', end:'88% top', scrub:2 } });
-gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'78% top', end:'88% top', scrub:1.5 } });
-gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'82% top', end:'92% top', scrub:1 } });
+gsap.to(coin, { rotationX:85, rotationY:360, ease:'elastic.out(1,0.25)', scrollTrigger:{ trigger:'body', start:'52% top', end:'60% top', scrub:2 } });
+gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'52% top', end:'60% top', scrub:1.5 } });
+gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'56% top', end:'64% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'90% top', end:'100% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'90% top', end:'100% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'62% top', end:'68% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'62% top', end:'68% top', scrub:1.5 } });
 
-ScrollTrigger.create({ trigger:'body', start:'75% top', end:'80% top', scrub:1, onEnter:function(){
+gsap.to(expandSec, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'70% top', scrub:1.5 } });
+gsap.to(expandBg, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'72% top', scrub:1.5 } });
+gsap.to(expandOvl, { opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'65% top', end:'72% top', scrub:1.5 } });
+
+var isMobile = window.innerWidth < 768;
+var mw = isMobile ? 650 : 1250;
+var mh = isMobile ? 200 : 400;
+
+gsap.to(expandMedia, { width:280+mw, height:200+mh, borderRadius:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'95% top', scrub:2 } });
+gsap.to(expandBg, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'95% top', scrub:2 } });
+gsap.to(expandOvl, { opacity:0.3, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'95% top', scrub:2 } });
+gsap.to(expandHint, { opacity:0, ease:'power2.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'80% top', scrub:1 } });
+
+gsap.to(etFirst, { x:isMobile?-60:-120, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'90% top', scrub:1.5 } });
+gsap.to(etRest, { x:isMobile?60:120, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'70% top', end:'90% top', scrub:1.5 } });
+
+ScrollTrigger.create({ trigger:'body', start:'52% top', end:'56% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
   for(var i=0;i<20;i++){
     var p=document.createElement('div');
