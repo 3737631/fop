@@ -327,6 +327,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     S.style.zIndex = '100';
     var sc = document.getElementById('scene'); if (sc) sc.style.display = 'none';
     var hr = document.getElementById('heroSection'); if (hr) hr.style.display = 'none';
+    var bg = document.getElementById('bgText'); if (bg) bg.style.display = 'none';
   }
 
   function UL() {
@@ -337,6 +338,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     S.style.top = ''; S.style.left = ''; S.style.width = ''; S.style.height = ''; S.style.zIndex = '';
     var sc = document.getElementById('scene'); if (sc) sc.style.display = '';
     var hr = document.getElementById('heroSection'); if (hr) hr.style.display = '';
+    var bg = document.getElementById('bgText'); if (bg) bg.style.display = '';
     window.scrollTo(0, SY);
     ScrollTrigger.refresh();
   }
@@ -350,6 +352,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (d < 0 && AI <= 0) return false;
     var sc = document.getElementById('scene'); if (sc) sc.style.display = 'none';
     var hr = document.getElementById('heroSection'); if (hr) hr.style.display = 'none';
+    var bg = document.getElementById('bgText'); if (bg) bg.style.display = 'none';
     window.scrollTo(0, S.offsetTop); LKscr();
     return true;
   }
@@ -394,6 +397,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
       if (AI >= LI) return;
       var sc = document.getElementById('scene'); if (sc) sc.style.display = 'none';
       var hr = document.getElementById('heroSection'); if (hr) hr.style.display = 'none';
+      var bg = document.getElementById('bgText'); if (bg) bg.style.display = 'none';
       LKscr(); e.preventDefault();
     }
   }, { passive: false });
@@ -404,6 +408,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
       if (AI >= LI) return;
       var sc = document.getElementById('scene'); if (sc) sc.style.display = 'none';
       var hr = document.getElementById('heroSection'); if (hr) hr.style.display = 'none';
+      var bg = document.getElementById('bgText'); if (bg) bg.style.display = 'none';
       window.scrollTo(0, S.offsetTop); LKscr(); e.preventDefault();
     }
   }, { passive: false });
