@@ -319,12 +319,12 @@ gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigg
 gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'15% top', end:'22% top', scrub:1.4 } });
 gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'15% top', end:'22% top', scrub:1.4 } });
 
-gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'40% top', scrub:2.5 } });
+gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'40% top', scrub:1.5 } });
 gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'30% top', scrub:1 } });
 gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'20% top', scrub:1 } });
 gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'30% top', scrub:1 } });
 
-gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:2 } });
+gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:1 } });
 gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:1.5 } });
 gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'43% top', scrub:1 } });
 
@@ -387,7 +387,6 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     } else {
       window.scrollTo(0, SY);
     }
-    ScrollTrigger.refresh();
   }
 
   function EG(d) {
@@ -443,13 +442,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (LK) e.preventDefault();
   }, { passive: false });
   window.addEventListener('touchmove', function(e){
-    if (LK) { e.preventDefault(); return; }
-    if (TY === null) return;
-    var dy = TY - e.touches[0].clientY;
-    if (dy > 20 && window.scrollY > S.offsetTop - window.innerHeight * 0.55 && window.scrollY < S.offsetTop + window.innerHeight * 0.2) {
-      if (AI >= LI) return;
-      window.scrollTo(0, S.offsetTop); LKscr(); e.preventDefault();
-    }
+    if (LK) e.preventDefault();
   }, { passive: false });
   window.addEventListener('touchend', function(e){
     if (TY === null) return;
