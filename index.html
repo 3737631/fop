@@ -392,7 +392,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   window.addEventListener('touchstart', function(e){
     TY = e.touches[0].clientY;
     if (LK) { e.preventDefault(); return; }
-    if (window.scrollY < S.offsetTop - window.innerHeight * 0.3) {
+    if (window.scrollY > window.innerHeight * 4.4 && window.scrollY < S.offsetTop - window.innerHeight * 0.3) {
       if (AI >= LI) return;
       window.scrollTo(0, S.offsetTop); LKscr(); e.preventDefault();
     }
