@@ -57,10 +57,10 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 @media(prefers-reduced-motion:reduce){.panel,.panel .num,.caption{transition:none!important}}
 
-.testimonials{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0D0D0D;padding:4rem 2rem}
+.testimonials-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:4rem 2rem;position:relative;z-index:1}
 .testimonial-card{opacity:0;transform:translateY(40px)}
-.testimonials h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;margin-bottom:clamp(1.5rem,4vh,3rem);text-align:center}
-.testimonials h2 span{color:#B0B0B0}
+.testimonials-wrap h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;margin-bottom:clamp(1.5rem,4vh,3rem);text-align:center}
+.testimonials-wrap h2 span{color:#B0B0B0}
 .testimonial-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(1rem,2vw,2.5rem);max-width:1000px;width:100%}
 .testimonial-card{background:rgba(255,255,255,.04);border-radius:8px;padding:clamp(1rem,2vw,2rem);flex:1 1 280px;max-width:320px}
 .testimonial-card p{font-family:'Inter',sans-serif;font-size:clamp(.75rem,1vw,.9rem);font-weight:300;color:#B0B0B0;line-height:1.6;margin-bottom:.6rem}
@@ -73,9 +73,9 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#F5F5F5,#888);box-shadow:0 0 8px rgba(245,245,245,.4)}
 .particle.shard{width:4px;height:7px;border-radius:1px;background:linear-gradient(135deg,#F5F5F5,#666);box-shadow:0 0 4px rgba(245,245,245,.2)}
 
-.shader-section{position:relative;width:100%;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.shader-section{position:relative;width:100%;min-height:200vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 #shaderCanvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block}
-.shader-content{position:relative;z-index:2;text-align:center;max-width:800px;padding:2rem}
+.shader-content{position:relative;z-index:1;text-align:center;max-width:800px;padding:2rem;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:100vh}
 .shader-content h1{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;color:#F5F5F5;font-size:clamp(2rem,8vw,7rem);margin-bottom:1rem}
 .shader-content p{font-family:'Inter',sans-serif;font-weight:300;color:rgba(245,245,245,.6);font-size:clamp(.75rem,1.1vw,1.1rem);line-height:1.7;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
 .shader-content .status{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:2rem}
@@ -139,30 +139,29 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
   </div>
 </section>
 
-<section class="testimonials">
-  <h2>Lo que dicen <span>mis clientes</span></h2>
-  <div class="testimonial-grid">
-    <div class="testimonial-card">
-      <p>&ldquo;Transform&oacute; nuestra web por completo. Resultados profesionales y un trato excelente.&rdquo;</p>
-      <div class="author">Mar&iacute;a G.</div>
-      <div class="role">CEO, Agencia Crece</div>
-    </div>
-    <div class="testimonial-card">
-      <p>&ldquo;Capt&oacute; exactamente lo que necesit&aacute;bamos. Dise&ntilde;o moderno y funcional.&rdquo;</p>
-      <div class="author">Carlos R.</div>
-      <div class="role">Director de Marketing</div>
-    </div>
-    <div class="testimonial-card">
-      <p>&ldquo;El proceso fue fluido y el resultado super&oacute; nuestras expectativas. 100% recomendado.&rdquo;</p>
-      <div class="author">Ana L.</div>
-      <div class="role">Founder, Studio Naranja</div>
-    </div>
-  </div>
-  <div class="t-scroll-hint">desliza hacia arriba</div>
-</section>
-
-<section class="shader-section">
+<section class="shader-section" id="shaderSection">
   <canvas id="shaderCanvas"></canvas>
+  <div class="testimonials-wrap">
+    <h2>Lo que dicen <span>mis clientes</span></h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>&ldquo;Transform&oacute; nuestra web por completo. Resultados profesionales y un trato excelente.&rdquo;</p>
+        <div class="author">Mar&iacute;a G.</div>
+        <div class="role">CEO, Agencia Crece</div>
+      </div>
+      <div class="testimonial-card">
+        <p>&ldquo;Capt&oacute; exactamente lo que necesit&aacute;bamos. Dise&ntilde;o moderno y funcional.&rdquo;</p>
+        <div class="author">Carlos R.</div>
+        <div class="role">Director de Marketing</div>
+      </div>
+      <div class="testimonial-card">
+        <p>&ldquo;El proceso fue fluido y el resultado super&oacute; nuestras expectativas. 100% recomendado.&rdquo;</p>
+        <div class="author">Ana L.</div>
+        <div class="role">Founder, Studio Naranja</div>
+      </div>
+    </div>
+    <div class="t-scroll-hint">desliza hacia arriba</div>
+  </div>
   <div class="shader-content">
     <h1>Design is Everything</h1>
     <p>Unleashing creativity through bold visuals, seamless interfaces, and limitless possibilities.</p>
@@ -332,7 +331,7 @@ gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', sc
 gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'44% top', scrub:1.5 } });
 gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'44% top', scrub:1.5 } });
 
-gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
+gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
 (function(){
   var S = document.getElementById('carousel-section');
@@ -384,6 +383,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var sp = window.scrollY - S.offsetTop;
     if (sp < -window.innerHeight * 0.5) return false;
     if (sp > window.innerHeight * 0.8 && d > 0) return false;
+    if (sp > window.innerHeight * 0.3 && d < 0) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
     var sc = document.getElementById('scene'); if (sc) sc.style.visibility = 'hidden';
@@ -449,7 +449,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 })();
 
 ScrollTrigger.create({
-  trigger:'.testimonials',
+  trigger:'.testimonials-wrap',
+  start:'top bottom',
   start:'top bottom',
   onEnter:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility='hidden'; },
   onLeaveBack:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility=''; }
