@@ -328,8 +328,8 @@ gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ 
 gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:1.5 } });
 gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'43% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'44% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'44% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'47% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'47% top', scrub:1.5 } });
 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
@@ -382,7 +382,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (LK || d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
     if (sp < -window.innerHeight * 0.5) return false;
-    if (sp > window.innerHeight * 0.8 && d > 0) return false;
+    if (sp > window.innerHeight * 1.2 && d > 0) return false;
     if (sp > window.innerHeight * 0.3 && d < 0) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
@@ -430,7 +430,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   window.addEventListener('touchstart', function(e){
     TY = e.touches[0].clientY;
     if (LK) { e.preventDefault(); return; }
-    if (window.scrollY > window.innerHeight * 4.4 && window.scrollY < S.offsetTop - window.innerHeight * 0.3) {
+    if (window.scrollY > window.innerHeight * 4.2 && window.scrollY < S.offsetTop - window.innerHeight * 0.2) {
       if (AI >= LI) return;
       window.scrollTo(0, S.offsetTop); LKscr(); e.preventDefault();
     }
@@ -456,14 +456,17 @@ ScrollTrigger.create({
   onLeaveBack:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility=''; }
 });
 
-window.addEventListener('scroll',function(){
-  if(window.scrollY<window.innerHeight*4.2){
-    ['scene','heroSection','bgText'].forEach(function(id){
+['scene','heroSection','bgText'].forEach(function(id){
+  var pct = id==='scene'?'44':'43';
+  if(id==='heroSection') pct='14';
+  ScrollTrigger.create({
+    trigger:'body', start:pct+'% top',
+    onEnterBack:function(){
       var el=document.getElementById(id);
       if(el&&el.style.visibility==='hidden')el.style.visibility='';
-    });
-  }
-},{passive:true});
+    }
+  });
+});
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
