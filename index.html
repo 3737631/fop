@@ -336,11 +336,13 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     s.overflow = ''; s.position = ''; s.top = ''; s.width = '';
     S.style.position = '';
     S.style.top = ''; S.style.left = ''; S.style.width = ''; S.style.height = ''; S.style.zIndex = '';
-    var sc = document.getElementById('scene'); if (sc) sc.style.display = '';
-    var hr = document.getElementById('heroSection'); if (hr) hr.style.display = '';
-    var bg = document.getElementById('bgText'); if (bg) bg.style.display = '';
     window.scrollTo(0, SY);
     ScrollTrigger.refresh();
+    requestAnimationFrame(function(){
+      var sc = document.getElementById('scene'); if (sc) sc.style.display = '';
+      var hr = document.getElementById('heroSection'); if (hr) hr.style.display = '';
+      var bg = document.getElementById('bgText'); if (bg) bg.style.display = '';
+    });
   }
 
   function EG(d) {
@@ -391,7 +393,11 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var TY = null;
   window.addEventListener('touchstart', function(e){
     TY = e.touches[0].clientY;
-    if (LK) e.preventDefault();
+    if (LK) { e.preventDefault(); return; }
+    if (window.scrollY < S.offsetTop - window.innerHeight * 0.3) {
+      if (AI >= LI) return;
+      LKscr(); e.preventDefault();
+    }
   }, { passive: false });
   window.addEventListener('touchmove', function(e){
     if (LK) e.preventDefault();
@@ -401,7 +407,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var dy = TY - e.changedTouches[0].clientY; TY = null;
     if (Math.abs(dy) < 20) return;
     var d = dy > 0 ? 1 : -1;
-    if (!LK) { EG(d); return; }
+    if (!LK) { if (EG(d)) { SP(d); } return; }
     SP(d);
   }, { passive: true });
 })();
