@@ -350,7 +350,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (LK || d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
     if (sp < -window.innerHeight * 0.5) return false;
-    if (sp > window.innerHeight * 0.5 && d > 0) return false;
+    if (sp > window.innerHeight * 0.8 && d > 0) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
     var sc = document.getElementById('scene'); if (sc) sc.style.visibility = 'hidden';
@@ -367,13 +367,13 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     TH = true;
     if (d > 0) {
       if (AI >= LI) {
-        if (RP) { RP = false; UL(d); return; }
-        RP = true; TQ = null; return;
+        if (RP) { RP = false; TH = false; UL(d); return; }
+        RP = true; TH = false; TQ = null; return;
       }
       SA(AI + 1);
     }
     else if (d < 0) {
-      if (AI <= 0) { UL(d); return; }
+      if (AI <= 0) { TH = false; UL(d); return; }
       SA(AI - 1);
     }
     setTimeout(function(){ TH = false; if(TQ !== null){ var q = TQ; TQ = null; SP(q); } }, 800);
