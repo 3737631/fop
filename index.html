@@ -330,13 +330,19 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var bg = document.getElementById('bgText'); if (bg) bg.style.visibility = 'hidden';
   }
 
-  function UL() {
+  function UL(d) {
     LK = false; RP = false;
     var s = document.body.style;
     s.overflow = ''; s.position = ''; s.top = ''; s.width = '';
     S.style.position = '';
     S.style.top = ''; S.style.left = ''; S.style.width = ''; S.style.height = ''; S.style.zIndex = '';
-    window.scrollTo(0, SY);
+    if (d > 0) {
+      window.scrollTo(0, Math.min(document.body.scrollHeight - window.innerHeight, SY + window.innerHeight * 0.6));
+    } else if (d < 0) {
+      window.scrollTo(0, Math.max(0, SY - window.innerHeight * 0.6));
+    } else {
+      window.scrollTo(0, SY);
+    }
     ScrollTrigger.refresh();
   }
 
@@ -354,21 +360,23 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     return true;
   }
 
+  var TQ = null;
+
   function SP(d) {
-    if (TH) return;
+    if (TH) { TQ = d; return; }
+    TH = true;
     if (d > 0) {
       if (AI >= LI) {
-        if (RP) { RP = false; UL(); return; }
-        RP = true; return;
+        if (RP) { RP = false; UL(d); return; }
+        RP = true; TQ = null; return;
       }
-      TH = true; setTimeout(function(){ TH = false; }, 800);
       SA(AI + 1);
     }
     else if (d < 0) {
-      if (AI <= 0) { UL(); return; }
-      TH = true; setTimeout(function(){ TH = false; }, 800);
+      if (AI <= 0) { UL(d); return; }
       SA(AI - 1);
     }
+    setTimeout(function(){ TH = false; if(TQ !== null){ var q = TQ; TQ = null; SP(q); } }, 800);
   }
 
   var obs = new IntersectionObserver(function(entries){
