@@ -338,9 +338,6 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     S.style.top = ''; S.style.left = ''; S.style.width = ''; S.style.height = ''; S.style.zIndex = '';
     window.scrollTo(0, SY);
     ScrollTrigger.refresh();
-    var sc = document.getElementById('scene'); if (sc) { sc.style.opacity = '0'; sc.style.visibility = ''; }
-    var hr = document.getElementById('heroSection'); if (hr) { hr.style.opacity = '0'; hr.style.visibility = ''; }
-    var bg = document.getElementById('bgText'); if (bg) { bg.style.opacity = '0'; bg.style.visibility = ''; }
   }
 
   function EG(d) {
@@ -416,6 +413,15 @@ ScrollTrigger.create({
   onEnter:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility='hidden'; },
   onLeaveBack:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility=''; }
 });
+
+window.addEventListener('scroll',function(){
+  if(window.scrollY<window.innerHeight*4.2){
+    ['scene','heroSection','bgText'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el&&el.style.visibility==='hidden')el.style.visibility='';
+    });
+  }
+},{passive:true});
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
