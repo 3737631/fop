@@ -325,9 +325,9 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     S.style.width = '100%';
     S.style.height = window.innerHeight + 'px';
     S.style.zIndex = '100';
-    var sc = document.getElementById('scene'); if (sc) sc.style.display = 'none';
-    var hr = document.getElementById('heroSection'); if (hr) hr.style.display = 'none';
-    var bg = document.getElementById('bgText'); if (bg) bg.style.display = 'none';
+    var sc = document.getElementById('scene'); if (sc) sc.style.visibility = 'hidden';
+    var hr = document.getElementById('heroSection'); if (hr) hr.style.visibility = 'hidden';
+    var bg = document.getElementById('bgText'); if (bg) bg.style.visibility = 'hidden';
   }
 
   function UL() {
@@ -338,11 +338,9 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     S.style.top = ''; S.style.left = ''; S.style.width = ''; S.style.height = ''; S.style.zIndex = '';
     window.scrollTo(0, SY);
     ScrollTrigger.refresh();
-    requestAnimationFrame(function(){
-      var sc = document.getElementById('scene'); if (sc) sc.style.display = '';
-      var hr = document.getElementById('heroSection'); if (hr) hr.style.display = '';
-      var bg = document.getElementById('bgText'); if (bg) bg.style.display = '';
-    });
+    var sc = document.getElementById('scene'); if (sc) sc.style.visibility = '';
+    var hr = document.getElementById('heroSection'); if (hr) hr.style.visibility = '';
+    var bg = document.getElementById('bgText'); if (bg) bg.style.visibility = '';
   }
 
   function EG(d) {
@@ -352,9 +350,9 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (sp > window.innerHeight * 0.5 && d > 0) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
-    var sc = document.getElementById('scene'); if (sc) sc.style.display = 'none';
-    var hr = document.getElementById('heroSection'); if (hr) hr.style.display = 'none';
-    var bg = document.getElementById('bgText'); if (bg) bg.style.display = 'none';
+    var sc = document.getElementById('scene'); if (sc) sc.style.visibility = 'hidden';
+    var hr = document.getElementById('heroSection'); if (hr) hr.style.visibility = 'hidden';
+    var bg = document.getElementById('bgText'); if (bg) bg.style.visibility = 'hidden';
     window.scrollTo(0, S.offsetTop); LKscr();
     return true;
   }
@@ -396,7 +394,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (LK) { e.preventDefault(); return; }
     if (window.scrollY < S.offsetTop - window.innerHeight * 0.3) {
       if (AI >= LI) return;
-      LKscr(); e.preventDefault();
+      window.scrollTo(0, S.offsetTop); LKscr(); e.preventDefault();
     }
   }, { passive: false });
   window.addEventListener('touchmove', function(e){
@@ -415,8 +413,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 ScrollTrigger.create({
   trigger:'.testimonials',
   start:'top bottom',
-  onEnter:function(){ var el=document.getElementById('bgText'); if(el) el.style.display='none'; },
-  onLeaveBack:function(){ var el=document.getElementById('bgText'); if(el) el.style.display=''; }
+  onEnter:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility='hidden'; },
+  onLeaveBack:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility=''; }
 });
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
