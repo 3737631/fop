@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
 <style>
 html,body,div,span,section,h1,h2,h3,p,canvas{margin:0;padding:0;box-sizing:border-box}
@@ -71,6 +72,21 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#F5F5F5,#888);box-shadow:0 0 8px rgba(245,245,245,.4)}
 .particle.shard{width:4px;height:7px;border-radius:1px;background:linear-gradient(135deg,#F5F5F5,#666);box-shadow:0 0 4px rgba(245,245,245,.2)}
+
+.shader-section{position:relative;width:100%;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#shaderCanvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block}
+.shader-content{position:relative;z-index:2;text-align:center;max-width:800px;padding:2rem}
+.shader-content h1{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;color:#F5F5F5;font-size:clamp(2rem,8vw,7rem);margin-bottom:1rem}
+.shader-content p{font-family:'Inter',sans-serif;font-weight:300;color:rgba(245,245,245,.6);font-size:clamp(.75rem,1.1vw,1.1rem);line-height:1.7;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+.shader-content .status{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:2rem}
+.shader-content .status-dot{position:relative;width:12px;height:12px}
+.shader-content .status-dot .ping{position:absolute;inset:0;border-radius:50%;background:#22c55e;animation:ping 2s cubic-bezier(0,0,.2,1) infinite;opacity:.75}
+.shader-content .status-dot .solid{position:relative;width:8px;height:8px;border-radius:50%;background:#22c55e;display:block;margin:2px}
+.shader-content .status-text{font-family:'Inter',sans-serif;font-size:clamp(.6rem,.75vw,.75rem);color:#22c55e;letter-spacing:.08em;text-transform:uppercase}
+.liquid-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:14px 40px;border-radius:9999px;font-family:'Inter',sans-serif;font-size:clamp(.75rem,.9vw,.95rem);font-weight:500;color:#F5F5F5;background:transparent;border:1px solid rgba(245,245,245,.2);cursor:pointer;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease;z-index:1}
+.liquid-btn:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
+.liquid-btn .btn-glass{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border-radius:9999px;box-shadow:0 0 6px rgba(0,0,0,.03),0 2px 6px rgba(0,0,0,.08),inset 3px 3px .5px -3px rgba(0,0,0,.6),inset -3px -3px .5px -3px rgba(0,0,0,.55),inset 0 0 12px rgba(255,255,255,.08)}
+.liquid-btn .btn-displace{position:absolute;top:0;left:0;z-index:-2;width:100%;height:100%;overflow:hidden;border-radius:9999px;filter:url('#glass')}
 </style>
 </head>
 <body>
@@ -143,6 +159,23 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
     </div>
   </div>
   <div class="t-scroll-hint">desliza hacia arriba</div>
+</section>
+
+<section class="shader-section">
+  <canvas id="shaderCanvas"></canvas>
+  <div class="shader-content">
+    <h1>Design is Everything</h1>
+    <p>Unleashing creativity through bold visuals, seamless interfaces, and limitless possibilities.</p>
+    <div class="status">
+      <span class="status-dot"><span class="ping"></span><span class="solid"></span></span>
+      <span class="status-text">Available for New Projects</span>
+    </div>
+    <button class="liquid-btn">
+      <span class="btn-glass"></span>
+      <span class="btn-displace"></span>
+      Let's Go
+    </button>
+  </div>
 </section>
 
 <script>
@@ -444,6 +477,84 @@ ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, 
     gsap.to(p,{ x:Math.cos(a)*d, y:Math.sin(a)*d-40, rotation:Math.random()*720-360, scale:0, opacity:0, duration:0.6+Math.random()*0.8, ease:'power2.out', onComplete:function(){p.remove()} });
   }
 }});
+
+(function(){
+  var canvas = document.getElementById('shaderCanvas');
+  if (!canvas || !THREE) return;
+  var vertexShader = [
+    'attribute vec3 position;',
+    'void main() {',
+    '  gl_Position = vec4(position, 1.0);',
+    '}'
+  ].join('\n');
+  var fragmentShader = [
+    'precision highp float;',
+    'uniform vec2 resolution;',
+    'uniform float time;',
+    'uniform float xScale;',
+    'uniform float yScale;',
+    'uniform float distortion;',
+    'void main() {',
+    '  vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);',
+    '  float d = length(p) * distortion;',
+    '  float rx = p.x * (1.0 + d);',
+    '  float gx = p.x;',
+    '  float bx = p.x * (1.0 - d);',
+    '  float r = 0.05 / abs(p.y + sin((rx + time) * xScale) * yScale);',
+    '  float g = 0.05 / abs(p.y + sin((gx + time) * xScale) * yScale);',
+    '  float b = 0.05 / abs(p.y + sin((bx + time) * xScale) * yScale);',
+    '  gl_FragColor = vec4(r, g, b, 1.0);',
+    '}'
+  ].join('\n');
+  var scene = new THREE.Scene();
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(new THREE.Color(0x0D0D0D));
+  var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, -1);
+  var uniforms = {
+    resolution: { value: [canvas.clientWidth, canvas.clientHeight] },
+    time: { value: 0.0 },
+    xScale: { value: 3.0 },
+    yScale: { value: 0.5 },
+    distortion: { value: 0.05 }
+  };
+  var pos = [-1,-1,0, 1,-1,0, -1,1,0, 1,-1,0, -1,1,0, 1,1,0];
+  var geom = new THREE.BufferGeometry();
+  geom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3));
+  var mat = new THREE.RawShaderMaterial({ vertexShader:vertexShader, fragmentShader:fragmentShader, uniforms:uniforms, side:THREE.DoubleSide });
+  var mesh = new THREE.Mesh(geom, mat);
+  scene.add(mesh);
+  function resize() {
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w, h, false);
+    uniforms.resolution.value = [w, h];
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  var animId;
+  function animate() {
+    uniforms.time.value += 0.01;
+    renderer.render(scene, camera);
+    animId = requestAnimationFrame(animate);
+  }
+  var st = ScrollTrigger.create({
+    trigger:'.shader-section',
+    start:'top bottom',
+    onEnter:animate,
+    onLeave:function(){ if(animId) cancelAnimationFrame(animId); },
+    onEnterBack:animate,
+    onLeaveBack:function(){ if(animId) cancelAnimationFrame(animId); }
+  });
+})();
 </script>
+
+<svg style="display:none"><defs><filter id="glass" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="turbulence"/>
+  <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise"/>
+  <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="70" xChannelSelector="R" yChannelSelector="B" result="displaced"/>
+  <feGaussianBlur in="displaced" stdDeviation="4" result="finalBlur"/>
+  <feComposite in="finalBlur" in2="finalBlur" operator="over"/>
+</filter></defs></svg>
+
 </body>
 </html>
