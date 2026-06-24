@@ -38,9 +38,9 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .bg-text-title em{color:#B0B0B0;font-weight:400}
 .bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.1vw,.9rem);font-weight:300;color:#B0B0B0;letter-spacing:.3em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
-.carousel-section{position:relative;width:100%;height:100vh;touch-action:none}
-.carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden}
-.panel{position:relative;height:100%;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex-grow 0.7s cubic-bezier(.65,0,.35,1)}
+.carousel-section{position:relative;width:100%;height:100vh;height:100dvh;touch-action:none}
+.carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden;align-items:stretch}
+.panel{position:relative;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex-grow 0.7s cubic-bezier(.65,0,.35,1);min-height:0}
 .panel[data-color=red]{background:#B91C1C}
 .panel[data-color=yellow]{background:#FFD300}
 .panel[data-color=green]{background:#0F7A3D}
@@ -73,7 +73,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#F5F5F5,#888);box-shadow:0 0 8px rgba(245,245,245,.4)}
 .particle.shard{width:4px;height:7px;border-radius:1px;background:linear-gradient(135deg,#F5F5F5,#666);box-shadow:0 0 4px rgba(245,245,245,.2)}
 
-.shader-section{position:relative;width:100%;min-height:200vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.shader-section{position:relative;width:100%;min-height:200vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;transition:background .7s cubic-bezier(.65,0,.35,1)}
 #shaderCanvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block}
 .shader-content{position:relative;z-index:1;text-align:center;max-width:800px;padding:2rem;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:100vh}
 .shader-content h1{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;color:#F5F5F5;font-size:clamp(2rem,8vw,7rem);margin-bottom:1rem}
@@ -328,8 +328,8 @@ gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ 
 gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:1.5 } });
 gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'43% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'47% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'38% top', end:'47% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'40% top', end:'47% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'40% top', end:'47% top', scrub:1.5 } });
 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
@@ -339,6 +339,20 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var PA = Array.from(C.querySelectorAll('.panel'));
   var LI = PA.length - 1;
   var AI = 0, LK = false, SY = 0, TH = false, RP = false;
+  var pnlClrs = ['#B91C1C','#FFD300','#0F7A3D'];
+  var SS = document.getElementById('shaderSection');
+  function setPnlBg(){
+    if (!SS) return;
+    var pcts = PA.map(function(p,j){ return j===AI ? 6 : 2; });
+    var total = pcts.reduce(function(s,w){return s+w;},0);
+    var stops = [], cur=0;
+    pcts.forEach(function(w,i){
+      var p = w/total*100;
+      stops.push(pnlClrs[i]+' '+cur+'%', pnlClrs[i]+' '+(cur+p)+'%');
+      cur += p;
+    });
+    SS.style.background = 'linear-gradient(90deg,'+stops.join(',')+')';
+  }
 
   function SA(i) {
     AI = i;
@@ -346,6 +360,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
       p.classList.toggle('active', j === AI);
       p.classList.toggle('inactive', j !== AI);
     });
+    setPnlBg();
   }
 
   function LKscr() {
@@ -357,9 +372,6 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     S.style.width = '100%';
     S.style.height = window.innerHeight + 'px';
     S.style.zIndex = '100';
-    var sc = document.getElementById('scene'); if (sc) sc.style.visibility = 'hidden';
-    var hr = document.getElementById('heroSection'); if (hr) hr.style.visibility = 'hidden';
-    var bg = document.getElementById('bgText'); if (bg) bg.style.visibility = 'hidden';
   }
 
   function UL(d) {
@@ -382,18 +394,17 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (LK || d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
     if (sp < -window.innerHeight * 0.5) return false;
-    if (sp > window.innerHeight * 1.2 && d > 0) return false;
     if (sp > window.innerHeight * 0.3 && d < 0) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
-    var sc = document.getElementById('scene'); if (sc) sc.style.visibility = 'hidden';
-    var hr = document.getElementById('heroSection'); if (hr) hr.style.visibility = 'hidden';
-    var bg = document.getElementById('bgText'); if (bg) bg.style.visibility = 'hidden';
     window.scrollTo(0, S.offsetTop); LKscr();
     return true;
   }
 
   var TQ = null;
+
+  function sizeCS(){ S.style.minHeight = window.innerHeight+'px'; }
+  sizeCS(); window.addEventListener('resize', sizeCS);
 
   function SP(d) {
     if (TH) { TQ = d; return; }
@@ -429,14 +440,16 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var TY = null;
   window.addEventListener('touchstart', function(e){
     TY = e.touches[0].clientY;
+    if (LK) e.preventDefault();
+  }, { passive: false });
+  window.addEventListener('touchmove', function(e){
     if (LK) { e.preventDefault(); return; }
-    if (window.scrollY > window.innerHeight * 4.2 && window.scrollY < S.offsetTop - window.innerHeight * 0.2) {
+    if (TY === null) return;
+    var dy = TY - e.touches[0].clientY;
+    if (dy > 20 && window.scrollY > S.offsetTop - window.innerHeight * 0.55 && window.scrollY < S.offsetTop + window.innerHeight * 0.2) {
       if (AI >= LI) return;
       window.scrollTo(0, S.offsetTop); LKscr(); e.preventDefault();
     }
-  }, { passive: false });
-  window.addEventListener('touchmove', function(e){
-    if (LK) e.preventDefault();
   }, { passive: false });
   window.addEventListener('touchend', function(e){
     if (TY === null) return;
@@ -446,27 +459,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (!LK) { if (EG(d)) { SP(d); } return; }
     SP(d);
   }, { passive: true });
+  setPnlBg();
 })();
-
-ScrollTrigger.create({
-  trigger:'.testimonials-wrap',
-  start:'top bottom',
-  start:'top bottom',
-  onEnter:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility='hidden'; },
-  onLeaveBack:function(){ var el=document.getElementById('bgText'); if(el) el.style.visibility=''; }
-});
-
-['scene','heroSection','bgText'].forEach(function(id){
-  var pct = id==='scene'?'44':'43';
-  if(id==='heroSection') pct='14';
-  ScrollTrigger.create({
-    trigger:'body', start:pct+'% top',
-    onEnterBack:function(){
-      var el=document.getElementById(id);
-      if(el&&el.style.visibility==='hidden')el.style.visibility='';
-    }
-  });
-});
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
@@ -507,13 +501,13 @@ ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, 
     '  float r = 0.05 / abs(p.y + sin((rx + time) * xScale) * yScale);',
     '  float g = 0.05 / abs(p.y + sin((gx + time) * xScale) * yScale);',
     '  float b = 0.05 / abs(p.y + sin((bx + time) * xScale) * yScale);',
-    '  gl_FragColor = vec4(r, g, b, 1.0);',
+    '  gl_FragColor = vec4(r, g, b, 0.2);',
     '}'
   ].join('\n');
   var scene = new THREE.Scene();
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: false });
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(new THREE.Color(0x0D0D0D));
+  renderer.setClearColor(0x0D0D0D, 0);
   var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, -1);
   var uniforms = {
     resolution: { value: [canvas.clientWidth, canvas.clientHeight] },
