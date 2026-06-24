@@ -348,8 +348,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     });
   }
 
-  function LKscr() {
-    LK = true; SY = window.scrollY;
+  function LKscr(target) {
+    LK = true; SY = target || window.scrollY;
     var s = document.body.style;
     s.overflow = 'hidden'; s.position = 'fixed'; s.top = -SY + 'px'; s.width = '100%';
     S.style.position = 'fixed';
@@ -382,7 +382,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (sp > window.innerHeight * 0.3 && d < 0) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
-    window.scrollTo(0, S.offsetTop); LKscr();
+    LKscr(S.offsetTop);
     return true;
   }
 
