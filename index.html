@@ -449,7 +449,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var d = dy > 0 ? 1 : -1;
     if (!LK) { if (EG(d)) { SP(d); } return; }
     SP(d);
-  }, { passive: true });
+  }, { passive: false });
 })();
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
