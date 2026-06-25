@@ -339,7 +339,6 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var PA = Array.from(document.getElementById('carousel').querySelectorAll('.panel'));
   var LI = PA.length - 1;
   var AI = 0;
-  var lastStep = 0;
 
   function SA(i) {
     if (i < 0 || i > LI) return;
@@ -356,14 +355,11 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     end:'+=200vh',
     scrub:true,
     onUpdate:function(self){
-      var now = Date.now();
-      if (now - lastStep < 300) return;
       var p = self.progress;
       var t = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
       if (t === AI) return;
       if (t > AI) AI = AI + 1;
       else AI = AI - 1;
-      lastStep = now;
       SA(AI);
     }
   });
