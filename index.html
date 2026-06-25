@@ -321,17 +321,17 @@ gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigg
 gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'15% top', end:'22% top', scrub:1.4 } });
 gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'15% top', end:'22% top', scrub:1.4 } });
 
-gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'40% top', scrub:1.5 } });
+gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'45% top', scrub:1.5 } });
 gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'30% top', scrub:1 } });
 gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'20% top', scrub:1 } });
 gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'30% top', scrub:1 } });
 
-gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:1 } });
-gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:1.5 } });
+gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'48% top', scrub:1 } });
+gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'48% top', scrub:1.5 } });
 gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'43% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'40% top', end:'47% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'40% top', end:'47% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'42% top', end:'55% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'42% top', end:'55% top', scrub:1.5 } });
 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
@@ -353,7 +353,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   function EG(d) {
     if (d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
-    if (sp < -window.innerHeight * 0.5) return false;
+    if (sp < -16) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
     return true;
