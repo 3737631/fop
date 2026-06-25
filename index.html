@@ -352,18 +352,26 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 
   var TH = false;
   var TQ = [];
+  var ready = false;
+  var wasTop = false;
 
-  function topOK() { return Math.abs(S.getBoundingClientRect().top) <= 1; }
+  function topOK() {
+    var t = S.getBoundingClientRect().top;
+    var atTop = Math.abs(t) <= 1;
+    if (atTop && !wasTop) ready = false;
+    wasTop = atTop;
+    return atTop;
+  }
 
   function SP(d) {
     if (TH) { TQ.push(d); return; }
     TH = true;
     if (d > 0) {
-      if (AI >= LI) { TH = false; TQ = []; return; }
+      if (AI >= LI) { TH = false; TQ = []; ready = true; return; }
       SA(AI + 1);
     }
     else if (d < 0) {
-      if (AI <= 0) { TH = false; TQ = []; return; }
+      if (AI <= 0) { TH = false; TQ = []; ready = true; return; }
       SA(AI - 1);
     }
     setTimeout(function(){
@@ -374,7 +382,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 
   var TY = null;
   window.addEventListener('touchstart', function(e){
-    if (topOK() && (AI > 0 || AI < LI)) { e.preventDefault(); }
+    if (topOK() && !ready) { e.preventDefault(); }
     TY = e.touches[0].clientY; TQ = [];
   }, { passive: false });
   window.addEventListener('touchmove', function(e){
@@ -382,7 +390,11 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var dy = TY - e.touches[0].clientY;
     if (Math.abs(dy) > 10) {
       var d = dy > 0 ? 1 : -1;
-      if (topOK() && !(d > 0 && AI >= LI) && !(d < 0 && AI <= 0)) { e.preventDefault(); SP(d); }
+      if (topOK() && !(d > 0 && AI >= LI) && !(d < 0 && AI <= 0)) {
+        ready = false;
+        e.preventDefault();
+        SP(d);
+      }
     }
   }, { passive: false });
   window.addEventListener('touchend', function(e){
@@ -390,7 +402,11 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var dy = TY - e.changedTouches[0].clientY; TY = null;
     if (Math.abs(dy) < 20) return;
     var d = dy > 0 ? 1 : -1;
-    if (topOK() && !(d > 0 && AI >= LI) && !(d < 0 && AI <= 0)) { e.preventDefault(); SP(d); }
+    if (topOK() && !(d > 0 && AI >= LI) && !(d < 0 && AI <= 0)) {
+      ready = false;
+      e.preventDefault();
+      SP(d);
+    }
   }, { passive: false });
 
   window.addEventListener('wheel', function(e){
