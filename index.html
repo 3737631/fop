@@ -122,7 +122,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 </div>
 
 <div style="height:470vh"></div>
-<div id="carousel-wrapper" style="position:relative;height:200vh;z-index:10">
+<div id="carousel-wrapper" style="position:relative;height:300vh;z-index:10">
 <section class="carousel-section" id="carousel-section">
   <div class="carousel" id="carousel">
     <div class="panel active" data-color="red" data-index="0">
@@ -352,10 +352,11 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   ScrollTrigger.create({
     trigger:'#carousel-wrapper',
     start:'top top',
-    end:'+=100vh',
-    scrub:1.5,
+    end:'+=200vh',
+    scrub:2.5,
     onUpdate:function(self){
-      var i = Math.round(self.progress * LI);
+      var i = Math.floor(self.progress * (LI + 1));
+      if (i > LI) i = LI;
       if (i !== AI) SA(i);
     }
   });
