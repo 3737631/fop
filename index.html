@@ -343,10 +343,12 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var AI = 0;
   var busy = false;
   var Q = [];
+  var idle = false;
 
   function SA(i) {
     if (i < 0 || i > LI) return;
     AI = i;
+    idle = false;
     PA.forEach(function(p, j) {
       p.classList.toggle('active', j === AI);
       p.classList.toggle('inactive', j !== AI);
@@ -354,33 +356,35 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   }
 
   function tryAdvance(d) {
-    if (Math.abs(S.getBoundingClientRect().top) > 1) { Q = []; return; }
-    if (d > 0 && AI >= LI) return;
-    if (d < 0 && AI <= 0) return;
-    if (busy) { Q.push(d); return; }
+    if (Math.abs(S.getBoundingClientRect().top) > 1) { Q = []; return false; }
+    if (d > 0 && AI >= LI) { idle = true; return false; }
+    if (d < 0 && AI <= 0) { idle = true; return false; }
+    if (busy) { Q.push(d); return true; }
     busy = true;
     SA(AI + d);
     setTimeout(function(){
       busy = false;
       if (Q.length > 0) { var dd = Q.shift(); Q = []; tryAdvance(dd); }
     }, 900);
+    return true;
   }
 
   var TY = null;
   window.addEventListener('touchstart', function(e){
+    if (Math.abs(S.getBoundingClientRect().top) <= 1 && !idle) e.preventDefault();
     TY = e.touches[0].clientY; Q = [];
-  });
+  }, { passive: false });
   window.addEventListener('touchmove', function(e){
     if (TY === null) return;
     var dy = TY - e.touches[0].clientY; TY = e.touches[0].clientY;
-    if (Math.abs(dy) > 10) tryAdvance(dy > 0 ? 1 : -1);
-  }, { passive: true });
+    if (Math.abs(dy) > 10) { var d = dy > 0 ? 1 : -1; if (tryAdvance(d)) e.preventDefault(); }
+  }, { passive: false });
   window.addEventListener('touchend', function(){ TY = null; });
 
   window.addEventListener('wheel', function(e){
     var d = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
-    if (d !== 0) tryAdvance(d);
-  }, { passive: true });
+    if (d !== 0 && tryAdvance(d)) e.preventDefault();
+  }, { passive: false });
 })();
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
