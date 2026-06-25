@@ -353,7 +353,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     trigger:'#carousel-wrapper',
     start:'top top',
     end:'+=200vh',
-    scrub:2.5,
+    scrub:true,
     onUpdate:function(self){
       var i = Math.floor(self.progress * (LI + 1));
       if (i > LI) i = LI;
