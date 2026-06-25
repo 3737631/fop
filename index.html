@@ -122,7 +122,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 </div>
 
 <div style="height:470vh"></div>
-<div id="carousel-wrapper" style="position:relative;height:200vh">
+<div id="carousel-wrapper" style="position:relative;height:200vh;z-index:10">
 <section class="carousel-section" id="carousel-section">
   <div class="carousel" id="carousel">
     <div class="panel active" data-color="red" data-index="0">
@@ -336,61 +336,29 @@ gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
 (function(){
-  var S = document.getElementById('carousel-section');
-  var C = document.getElementById('carousel');
-  var PA = Array.from(C.querySelectorAll('.panel'));
+  var PA = Array.from(document.getElementById('carousel').querySelectorAll('.panel'));
   var LI = PA.length - 1;
   var AI = 0;
-  var busy = false;
-  var Q = [];
-  var idle = false;
 
   function SA(i) {
     if (i < 0 || i > LI) return;
     AI = i;
-    idle = false;
     PA.forEach(function(p, j) {
       p.classList.toggle('active', j === AI);
       p.classList.toggle('inactive', j !== AI);
     });
   }
 
-  function tryAdvance(d) {
-    var top = S.getBoundingClientRect().top;
-    if (top > 50) { Q = []; return false; }
-    if (top > 1) return true;
-    if (d > 0 && AI >= LI) { idle = true; return false; }
-    if (d < 0 && AI <= 0) { idle = true; return false; }
-    if (busy) { Q.push(d); return true; }
-    busy = true;
-    SA(AI + d);
-    setTimeout(function(){
-      busy = false;
-      if (Q.length > 0) { var dd = Q.shift(); Q = []; tryAdvance(dd); }
-    }, 900);
-    return true;
-  }
-
-  var TY = null;
-  window.addEventListener('touchstart', function(e){
-    if (S.getBoundingClientRect().top <= 1 && !idle) e.preventDefault();
-    TY = e.touches[0].clientY; Q = [];
-  }, { passive: false });
-  window.addEventListener('touchmove', function(e){
-    if (TY === null) return;
-    if (S.getBoundingClientRect().top > 1) { Q = []; TY = e.touches[0].clientY; return; }
-    var dy = TY - e.touches[0].clientY; TY = e.touches[0].clientY;
-    if (Math.abs(dy) > 10) { var d = dy > 0 ? 1 : -1; if (tryAdvance(d)) e.preventDefault(); }
-  }, { passive: false });
-  window.addEventListener('touchend', function(){ TY = null; });
-
-  window.addEventListener('wheel', function(e){
-    var top = S.getBoundingClientRect().top;
-    if (top > 50) { Q = []; return; }
-    if (top > 1) { e.preventDefault(); window.scrollBy(0, e.deltaY); return; }
-    var d = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
-    if (d !== 0 && tryAdvance(d)) e.preventDefault();
-  }, { passive: false });
+  ScrollTrigger.create({
+    trigger:'#carousel-wrapper',
+    start:'top top',
+    end:'+=100vh',
+    scrub:1.5,
+    onUpdate:function(self){
+      var i = Math.round(self.progress * LI);
+      if (i !== AI) SA(i);
+    }
+  });
 })();
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
