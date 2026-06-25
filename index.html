@@ -352,8 +352,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 
   function EG(d) {
     if (d === 0) return false;
-    var sp = window.scrollY - S.offsetTop;
-    if (sp < 0) return false;
+    var sp = S.getBoundingClientRect().top;
+    if (Math.abs(sp) > 1) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
     return true;
