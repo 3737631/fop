@@ -40,7 +40,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 .carousel-section{position:sticky;top:0;width:100%;height:100vh;height:100dvh;z-index:100}
 .carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden;align-items:stretch}
-.panel{position:relative;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex 1.2s cubic-bezier(.65,0,.35,1);min-height:0}
+.panel{position:relative;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex 1.5s cubic-bezier(.65,0,.35,1);min-height:0}
 .panel.active{flex:6 0 0%}
 .panel.inactive{flex:2 0 0%}
 .panel[data-color=red]{background:#B91C1C}
@@ -353,7 +353,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   function EG(d) {
     if (d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
-    if (sp < -window.innerHeight * 2) return false;
+    if (sp < -window.innerHeight * 0.5) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
     return true;
@@ -376,7 +376,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     setTimeout(function(){
       TH = false;
       if (TQ.length > 0) { var q = TQ.shift(); SP(q); }
-    }, 1200);
+    }, 1800);
   }
 
   var TY = null;
