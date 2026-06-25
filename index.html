@@ -350,17 +350,10 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     });
   }
 
-  function EG(d) {
-    if (d === 0) return false;
-    var sp = S.getBoundingClientRect().top;
-    if (Math.abs(sp) > 1) return false;
-    if (d > 0 && AI >= LI) return false;
-    if (d < 0 && AI <= 0) return false;
-    return true;
-  }
-
   var TH = false;
   var TQ = [];
+
+  function topOK() { return Math.abs(S.getBoundingClientRect().top) <= 1; }
 
   function SP(d) {
     if (TH) { TQ.push(d); return; }
@@ -381,6 +374,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 
   var TY = null;
   window.addEventListener('touchstart', function(e){
+    if (topOK() && (AI > 0 || AI < LI)) { e.preventDefault(); }
     TY = e.touches[0].clientY; TQ = [];
   }, { passive: false });
   window.addEventListener('touchmove', function(e){
@@ -388,7 +382,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var dy = TY - e.touches[0].clientY;
     if (Math.abs(dy) > 10) {
       var d = dy > 0 ? 1 : -1;
-      if (EG(d)) { e.preventDefault(); SP(d); }
+      if (topOK() && !(d > 0 && AI >= LI) && !(d < 0 && AI <= 0)) { e.preventDefault(); SP(d); }
     }
   }, { passive: false });
   window.addEventListener('touchend', function(e){
@@ -396,13 +390,13 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     var dy = TY - e.changedTouches[0].clientY; TY = null;
     if (Math.abs(dy) < 20) return;
     var d = dy > 0 ? 1 : -1;
-    if (EG(d)) { e.preventDefault(); SP(d); }
+    if (topOK() && !(d > 0 && AI >= LI) && !(d < 0 && AI <= 0)) { e.preventDefault(); SP(d); }
   }, { passive: false });
 
   window.addEventListener('wheel', function(e){
     var d = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
     if (d === 0) return;
-    if (EG(d)) { e.preventDefault(); SP(d); }
+    if (topOK() && !(d > 0 && AI >= LI) && !(d < 0 && AI <= 0)) { e.preventDefault(); SP(d); }
   }, { passive: false });
 })();
 
