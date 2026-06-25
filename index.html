@@ -354,7 +354,6 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     if (d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
     if (sp < -window.innerHeight * 2) return false;
-    if (sp > window.innerHeight * 2) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
     return true;
@@ -403,8 +402,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   window.addEventListener('wheel', function(e){
     var d = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
     if (d === 0) return;
-    if (EG(d)) { e.preventDefault(); SP(d); }
-  }, { passive: false });
+    if (EG(d)) { SP(d); }
+  }, { passive: true });
 })();
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
