@@ -38,7 +38,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .bg-text-title em{color:#B0B0B0;font-weight:400}
 .bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.1vw,.9rem);font-weight:300;color:#B0B0B0;letter-spacing:.3em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
-.carousel-section{position:relative;width:100%;height:100vh;height:100dvh;touch-action:none}
+.carousel-section{position:sticky;top:0;width:100%;height:100vh;height:100dvh;z-index:100}
 .carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden;align-items:stretch}
 .panel{position:relative;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex .7s cubic-bezier(.65,0,.35,1);min-height:0}
 .panel.active{flex:6 0 0%}
@@ -49,9 +49,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .panel .num{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;line-height:1;letter-spacing:-.06em;white-space:nowrap;order:1;transition:font-size 0.7s cubic-bezier(.65,0,.35,1),opacity .6s ease}
 .panel[data-color=yellow] .num,.panel[data-color=yellow] .caption{color:#000}
 .panel[data-color=red] .num,.panel[data-color=red] .caption,.panel[data-color=green] .num,.panel[data-color=green] .caption{color:#fff}
-.panel.active{flex-grow:6}
 .panel.active .num{font-size:clamp(6rem,22vw,22rem)}
-.panel.inactive{flex-grow:2}
 .panel.inactive .num{font-size:clamp(2rem,6vw,5rem);opacity:.55}
 .panel.inactive .caption{opacity:0;pointer-events:none}
 .caption{order:2;max-width:12ch;font-size:.7rem;font-weight:400;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .7s ease;pointer-events:none}
@@ -124,6 +122,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 </div>
 
 <div style="height:470vh"></div>
+<div id="carousel-wrapper" style="position:relative;height:200vh">
 <section class="carousel-section" id="carousel-section">
   <div class="carousel" id="carousel">
     <div class="panel active" data-color="red" data-index="0">
@@ -140,6 +139,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
     </div>
   </div>
 </section>
+</div>
 
 <section class="shader-section" id="shaderSection">
   <canvas id="shaderCanvas"></canvas>
@@ -337,10 +337,11 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 
 (function(){
   var S = document.getElementById('carousel-section');
+  var W = document.getElementById('carousel-wrapper');
   var C = document.getElementById('carousel');
   var PA = Array.from(C.querySelectorAll('.panel'));
   var LI = PA.length - 1;
-  var AI = 0, LK = false, SY = 0, TH = false, RP = false;
+  var AI = 0;
 
   function SA(i) {
     AI = i;
@@ -350,106 +351,60 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     });
   }
 
-  function LKscr(target) {
-    LK = true; SY = target || window.scrollY;
-    var s = document.body.style;
-    s.overflow = 'hidden'; s.position = 'fixed'; s.top = -SY + 'px'; s.width = '100%';
-    S.style.position = 'fixed';
-    S.style.top = '0'; S.style.left = '0';
-    S.style.width = '100%';
-    S.style.height = window.innerHeight + 'px';
-    S.style.zIndex = '100';
-  }
-
-  function UL(d) {
-    LK = false; RP = false;
-    var s = document.body.style;
-    s.overflow = ''; s.position = ''; s.top = ''; s.width = '';
-    S.style.position = '';
-    S.style.top = ''; S.style.left = ''; S.style.width = ''; S.style.height = ''; S.style.zIndex = '';
-    if (d > 0) {
-      window.scrollTo(0, Math.min(document.body.scrollHeight - window.innerHeight, SY + window.innerHeight * 0.6));
-    } else if (d < 0) {
-      window.scrollTo(0, Math.max(0, SY - window.innerHeight * 0.6));
-    } else {
-      window.scrollTo(0, SY);
-    }
-    ScrollTrigger.refresh();
-  }
-
   function EG(d) {
-    if (LK || d === 0) return false;
+    if (d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
     if (sp < -window.innerHeight * 2) return false;
-    if (sp > window.innerHeight * 0.3 && d < 0) return false;
+    if (sp <= 0 && AI === 0 && d > 0) return false; // stay on panel 1 until carousel top passes
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
-    LKscr(S.offsetTop);
     return true;
   }
 
-  var TQ = null;
-
-  function sizeCS(){ S.style.minHeight = window.innerHeight+'px'; }
-  sizeCS(); window.addEventListener('resize', sizeCS);
+  var TH = false;
+  var TQ = [];
 
   function SP(d) {
-    if (TH) { TQ = d; return; }
+    if (TH) { TQ.push(d); return; }
     TH = true;
     if (d > 0) {
-      if (AI >= LI) {
-        if (RP) { RP = false; TH = false; UL(d); return; }
-        RP = true; TH = false; TQ = null; return;
-      }
+      if (AI >= LI) { TH = false; TQ = []; return; }
       SA(AI + 1);
     }
     else if (d < 0) {
-      if (AI <= 0) { TH = false; UL(d); return; }
+      if (AI <= 0) { TH = false; TQ = []; return; }
       SA(AI - 1);
     }
-    setTimeout(function(){ TH = false; if(TQ !== null){ var q = TQ; TQ = null; SP(q); } }, 800);
+    setTimeout(function(){
+      TH = false;
+      if (TQ.length > 0) { var q = TQ.shift(); SP(q); }
+    }, 700);
   }
 
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if (!entry.isIntersecting && LK) UL();
-    });
-  }, { threshold:[0,0.25,0.5,0.75,1] });
-  obs.observe(S);
-
-  window.addEventListener('wheel', function(e){
-    var d = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
-    if (d === 0) return;
-    if (!LK) { if (!EG(d)) return; e.preventDefault(); return; }
-    e.preventDefault(); SP(d);
-  }, { passive: false });
+  window.addEventListener('scroll', function(){
+    if (EG(1)) { SP(1); }
+    else if (EG(-1)) { SP(-1); }
+  }, { passive: true });
 
   var TY = null;
   window.addEventListener('touchstart', function(e){
     TY = e.touches[0].clientY;
-    if (LK) { e.preventDefault(); return; }
-    if (window.scrollY > S.offsetTop - window.innerHeight * 2 && window.scrollY < S.offsetTop + window.innerHeight * 0.3) {
-      if (AI >= LI) return;
-      LKscr(S.offsetTop); e.preventDefault();
-    }
-  }, { passive: false });
+  });
   window.addEventListener('touchmove', function(e){
-    if (LK) { e.preventDefault(); return; }
     if (TY === null) return;
     var dy = TY - e.touches[0].clientY;
-    if (dy > 10 && window.scrollY > S.offsetTop - window.innerHeight * 2 && window.scrollY < S.offsetTop + window.innerHeight * 0.3) {
-      if (AI >= LI) return;
-      LKscr(S.offsetTop); e.preventDefault();
+    if (Math.abs(dy) > 10) {
+      var d = dy > 0 ? 1 : -1;
+      if (EG(d)) { SP(d); }
     }
-  }, { passive: false });
+  }, { passive: true });
   window.addEventListener('touchend', function(e){
     if (TY === null) return;
     var dy = TY - e.changedTouches[0].clientY; TY = null;
     if (Math.abs(dy) < 20) return;
     var d = dy > 0 ? 1 : -1;
-    if (!LK) { if (EG(d)) { SP(d); } return; }
-    SP(d);
-  }, { passive: false });
+    if (EG(d)) { SP(d); }
+  }, { passive: true });
 })();
 
 ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
