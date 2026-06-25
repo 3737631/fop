@@ -329,8 +329,8 @@ gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ 
 gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'41% top', scrub:1.5 } });
 gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'43% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'50% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'40% top', end:'47% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'40% top', end:'47% top', scrub:1.5 } });
 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
@@ -381,9 +381,9 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   ScrollTrigger.create({
     trigger: S,
     start: 'top top',
-    end: '+=80vh',
+    end: '+=130vh',
     pin: true,
-    pinSpacing: false
+    pinSpacing: true
   });
 
   var TY = null;
