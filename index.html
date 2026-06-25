@@ -363,7 +363,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var TQ = [];
 
   function SP(d) {
-    if (TH) { if (TQ.length === 0) TQ[0] = d; return; }
+    if (TH) { TQ.push(d); return; }
     TH = true;
     if (d > 0) {
       if (AI >= LI) { TH = false; TQ = []; return; }
@@ -376,7 +376,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     setTimeout(function(){
       TH = false;
       if (TQ.length > 0) { var q = TQ.shift(); SP(q); }
-    }, 800);
+    }, 900);
   }
 
   var TY = null;
