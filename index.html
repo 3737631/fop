@@ -38,7 +38,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .bg-text-title em{color:#B0B0B0;font-weight:400}
 .bg-text-sub{font-family:'Inter','Segoe UI',sans-serif;font-size:clamp(.65rem,1.1vw,.9rem);font-weight:300;color:#B0B0B0;letter-spacing:.3em;text-transform:uppercase;margin-top:.6rem;text-align:center}
 
-.carousel-section{position:relative;width:100%;height:100vh}
+.carousel-section{position:sticky;top:0;width:100%;height:100vh;z-index:100}
 .carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden;align-items:stretch}
 .panel{position:relative;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex .6s cubic-bezier(.65,0,.35,1);min-height:0}
 .panel.active{flex:6 0 0%}
@@ -123,6 +123,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 <div style="height:470vh"></div>
 <div style="height:470vh"></div>
+<div id="carousel-wrapper" style="position:relative;height:200vh">
 <section class="carousel-section" id="carousel-section">
   <div class="carousel" id="carousel">
     <div class="panel active" data-color="red" data-index="0">
@@ -139,6 +140,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
     </div>
   </div>
 </section>
+</div>
 
 <section class="shader-section" id="shaderSection">
   <canvas id="shaderCanvas"></canvas>
@@ -377,14 +379,6 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
       if (TQ.length > 0) { var q = TQ.shift(); SP(q); }
     }, 800);
   }
-
-  ScrollTrigger.create({
-    trigger: S,
-    start: 'top top',
-    end: '+=130vh',
-    pin: true,
-    pinSpacing: true
-  });
 
   var TY = null;
   window.addEventListener('touchstart', function(e){
