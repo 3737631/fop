@@ -382,7 +382,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var TY = null;
   window.addEventListener('touchstart', function(e){
     TY = e.touches[0].clientY; TQ = [];
-  });
+  }, { passive: false });
   window.addEventListener('touchmove', function(e){
     if (TY === null) return;
     var dy = TY - e.touches[0].clientY;
