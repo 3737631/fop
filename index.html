@@ -378,7 +378,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   function EG(d) {
     if (LK || d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
-    if (sp < -window.innerHeight * 0.5) return false;
+    if (sp < -window.innerHeight * 2) return false;
     if (sp > window.innerHeight * 0.3 && d < 0) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
@@ -425,13 +425,17 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var TY = null;
   window.addEventListener('touchstart', function(e){
     TY = e.touches[0].clientY;
-    if (LK) e.preventDefault();
+    if (LK) { e.preventDefault(); return; }
+    if (window.scrollY > S.offsetTop - window.innerHeight * 2 && window.scrollY < S.offsetTop + window.innerHeight * 0.3) {
+      if (AI >= LI) return;
+      LKscr(S.offsetTop); e.preventDefault();
+    }
   }, { passive: false });
   window.addEventListener('touchmove', function(e){
     if (LK) { e.preventDefault(); return; }
     if (TY === null) return;
     var dy = TY - e.touches[0].clientY;
-    if (dy > 30 && window.scrollY > S.offsetTop - window.innerHeight * 2 && window.scrollY < S.offsetTop + window.innerHeight * 0.3) {
+    if (dy > 10 && window.scrollY > S.offsetTop - window.innerHeight * 2 && window.scrollY < S.offsetTop + window.innerHeight * 0.3) {
       if (AI >= LI) return;
       LKscr(S.offsetTop); e.preventDefault();
     }
