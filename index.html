@@ -40,7 +40,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 .carousel-section{position:sticky;top:0;width:100%;height:100vh;z-index:100;background:#0D0D0D}
 .carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden;align-items:stretch}
-.panel{position:relative;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex-grow .6s cubic-bezier(.65,0,.35,1);min-height:0}
+.panel{position:relative;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex-grow .9s cubic-bezier(.65,0,.35,1);min-height:0}
 .panel.active{flex-grow:6}
 .panel.inactive{flex-grow:2}
 .panel[data-color=red]{background:#B91C1C}
@@ -315,23 +315,23 @@ gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1
 gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=10%', scrub:1.2 } });
 gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'5% top', end:'10% top', scrub:1.2 } });
 gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.08, scrollTrigger:{ trigger:'body', start:'5% top', end:'10% top', scrub:1.2 } });
-gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'14% top', scrub:1.2 } });
+gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'16% top', scrub:1.2 } });
 
-gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'12% top', end:'22% top', scrub:1.8 } });
-gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'15% top', end:'22% top', scrub:1.4 } });
-gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'15% top', end:'22% top', scrub:1.4 } });
+gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'12% top', end:'25% top', scrub:1.8 } });
+gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'13% top', end:'22% top', scrub:1.4 } });
+gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'13% top', end:'22% top', scrub:1.4 } });
 
-gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'45% top', scrub:1.5 } });
-gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'30% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'20% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'30% top', scrub:1 } });
+gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'52% top', scrub:1.5 } });
+gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'32% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'22% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'32% top', scrub:1 } });
 
-gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'48% top', scrub:1 } });
-gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'48% top', scrub:1.5 } });
-gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'43% top', scrub:1 } });
+gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'55% top', scrub:1 } });
+gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'55% top', scrub:1.5 } });
+gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'47% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'42% top', end:'55% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'42% top', end:'55% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'50% top', end:'62% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'50% top', end:'62% top', scrub:1.5 } });
 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
@@ -353,7 +353,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   function EG(d) {
     if (d === 0) return false;
     var sp = window.scrollY - S.offsetTop;
-    if (sp < -16) return false;
+    if (sp < 0) return false;
     if (d > 0 && AI >= LI) return false;
     if (d < 0 && AI <= 0) return false;
     return true;
@@ -363,7 +363,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var TQ = [];
 
   function SP(d) {
-    if (TH) { TQ.push(d); return; }
+    if (TH) { if (TQ.length === 0) TQ[0] = d; return; }
     TH = true;
     if (d > 0) {
       if (AI >= LI) { TH = false; TQ = []; return; }
@@ -381,7 +381,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 
   var TY = null;
   window.addEventListener('touchstart', function(e){
-    TY = e.touches[0].clientY;
+    TY = e.touches[0].clientY; TQ = [];
   });
   window.addEventListener('touchmove', function(e){
     if (TY === null) return;
