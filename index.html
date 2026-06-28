@@ -301,8 +301,8 @@ canvas.addEventListener('mousedown', function(e) { startDrag(e.clientX, e.client
 document.addEventListener('mousemove', function(e) { moveDrag(e.clientX, e.clientY); });
 document.addEventListener('mouseup', endDrag);
 canvas.addEventListener('touchstart', function(e) { var t = e.touches[0]; startDrag(t.clientX, t.clientY); }, { passive: true });
-document.addEventListener('touchmove', function(e) { if (!isDragging) return; e.preventDefault(); var t = e.touches[0]; moveDrag(t.clientX, t.clientY); }, { passive: false });
-document.addEventListener('touchend', endDrag, { passive: false });
+document.addEventListener('touchmove', function(e) { if (!isDragging) return; var t = e.touches[0]; moveDrag(t.clientX, t.clientY); }, { passive: true });
+document.addEventListener('touchend', endDrag, { passive: true });
 
 var coin = document.getElementById('coin');
 var gsGlobe = document.getElementById('groundShadowGlobe');
