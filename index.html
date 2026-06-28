@@ -337,13 +337,23 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
 (function(){
   var panels = Array.from(document.getElementById('carousel').querySelectorAll('.panel'));
   var n = panels.length;
+  var AI = 0;
+  var catchTimer = 0;
 
   function show(i) {
+    AI = i;
     panels.forEach(function(el, j) {
       el.classList.toggle('active', j === i);
     });
   }
   show(0);
+
+  function stepToward(t) {
+    var d = t - AI;
+    if (!d) return;
+    if (Math.abs(d) > 1) show(AI + (d > 0 ? 1 : -1));
+    else show(t);
+  }
 
   ScrollTrigger.create({
     trigger  : '#carousel-wrapper',
@@ -352,8 +362,16 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     scrub    : true,
     onUpdate : function(self) {
       var p = self.progress;
-      var i = p < 1 / n ? 0 : p < 2 / n ? 1 : 2;
-      show(i);
+      var t = p < 1 / n ? 0 : p < 2 / n ? 1 : 2;
+      if (catchTimer) { clearTimeout(catchTimer); catchTimer = 0; }
+      if (t === AI) return;
+      stepToward(t);
+      if (AI !== t) catchTimer = setTimeout(function tick(){
+        catchTimer = 0;
+        if (AI === t) return;
+        stepToward(t);
+        if (AI !== t) catchTimer = setTimeout(tick, 200);
+      }, 200);
     }
   });
 })();
