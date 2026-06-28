@@ -12,7 +12,7 @@
 <style>
 html,body,div,span,section,h1,h2,h3,p,canvas{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
-body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1000vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 
 .scene{perspective:1400px;position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;will-change:transform}
 #globeCanvas{width:380px;height:380px;border-radius:50%;will-change:transform,clip-path;display:block;position:absolute;z-index:3;clip-path:inset(0);cursor:grab;touch-action:none}
@@ -68,6 +68,17 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .t-scroll-hint{text-align:center;font-family:'Inter',sans-serif;font-size:clamp(.55rem,.7vw,.7rem);font-weight:300;color:#666;letter-spacing:.2em;text-transform:uppercase;margin-top:clamp(1rem,2vh,2rem);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.7}}
 
+@keyframes scroll-right{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.infinite-scroll{animation:scroll-right 25s linear infinite}
+.scroll-mask{mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%)}
+.slider-img{transition:transform .3s ease,filter .3s ease}
+.slider-img:hover{transform:scale(1.05);filter:brightness(1.1)}
+.zoom-section{position:relative;z-index:9}
+.zoom-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#0D0D0D}
+.zoom-layer{position:absolute;display:flex;align-items:center;justify-content:center}
+.zoom-layer img{object-fit:cover;width:100%;height:100%}
+.zoom-card{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+
 .particle{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#F5F5F5,#888);box-shadow:0 0 8px rgba(245,245,245,.4)}
 .particle.shard{width:4px;height:7px;border-radius:1px;background:linear-gradient(135deg,#F5F5F5,#666);box-shadow:0 0 4px rgba(245,245,245,.2)}
@@ -120,7 +131,13 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
   </div>
 </div>
 
-<div style="height:470vh"></div>
+<div style="height:170vh"></div>
+
+<div id="zoom-parallax-wrap" style="position:relative;height:300vh;z-index:9">
+  <div class="zoom-sticky">
+    <div id="zoom-container" style="position:relative;width:100%;height:100%"></div>
+  </div>
+</div>
 <div id="carousel-wrapper" style="position:relative;height:300vh;z-index:10">
 <section class="carousel-section" id="carousel-section">
   <div class="carousel" id="carousel">
@@ -175,6 +192,13 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
       <span class="btn-displace"></span>
       Solicitar prototipo
     </button>
+  </div>
+</section>
+
+<section style="position:relative;z-index:1;padding:4rem 0;background:#0D0D0D;overflow:hidden">
+  <div class="scroll-mask" style="max-width:1200px;margin:0 auto">
+    <div class="infinite-scroll" style="display:flex;gap:1.5rem;width:max-content" id="sliderTrack">
+    </div>
   </div>
 </section>
 
@@ -310,27 +334,27 @@ var heroS = document.getElementById('heroSection');
 gsap.set(coin, { opacity:0, y:0, scale:1, rotationY:0, rotationX:0 });
 gsap.set(canvas, { x:0, y:0, scale:1, clipPath:'inset(0)', opacity:0.6 });
 
-gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=10%', scrub:1.2 } });
-gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=10%', scrub:1.2 } });
-gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'5% top', end:'10% top', scrub:1.2 } });
-gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.08, scrollTrigger:{ trigger:'body', start:'5% top', end:'10% top', scrub:1.2 } });
-gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'16% top', scrub:1.2 } });
+gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1, scrollTrigger:{ trigger:'body', start:'top top', end:'+=9%', scrub:1.2 } });
+gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=9%', scrub:1.2 } });
+gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'4.5% top', end:'9% top', scrub:1.2 } });
+gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.08, scrollTrigger:{ trigger:'body', start:'4.5% top', end:'9% top', scrub:1.2 } });
+gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'7.5% top', end:'14.5% top', scrub:1.2 } });
 
-gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'12% top', end:'25% top', scrub:1.8 } });
-gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'13% top', end:'22% top', scrub:1.4 } });
-gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'13% top', end:'22% top', scrub:1.4 } });
+gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'11% top', end:'22.5% top', scrub:1.8 } });
+gsap.to(coin, { opacity:1, scale:1, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'12% top', end:'20% top', scrub:1.4 } });
+gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'12% top', end:'20% top', scrub:1.4 } });
 
-gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.inOut', scrollTrigger:{ trigger:'body', start:'22% top', end:'52% top', scrub:1.5 } });
-gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'32% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'8% top', end:'22% top', scrub:1 } });
-gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'22% top', end:'32% top', scrub:1 } });
+gsap.to(coin, { y:'55vh', scale:0.65, rotationX:1260, rotationY:1800, ease:'power1.inOut', scrollTrigger:{ trigger:'body', start:'20% top', end:'47% top', scrub:1.5 } });
+gsap.to(canvas, { opacity:0, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'20% top', end:'29% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'7.5% top', end:'20% top', scrub:1 } });
+gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'20% top', end:'29% top', scrub:1 } });
 
-gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'55% top', scrub:1 } });
-gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'55% top', scrub:1.5 } });
-gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'35% top', end:'47% top', scrub:1 } });
+gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'29% top', end:'50% top', scrub:1 } });
+gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'29% top', end:'50% top', scrub:1.5 } });
+gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'42.5% top', scrub:1 } });
 
-gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'50% top', end:'62% top', scrub:1.5 } });
-gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'50% top', end:'62% top', scrub:1.5 } });
+gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'45.5% top', end:'56.5% top', scrub:1.5 } });
+gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'45.5% top', end:'56.5% top', scrub:1.5 } });
 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
@@ -376,7 +400,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   });
 })();
 
-ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, onEnter:function(){
+ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, onEnter:function(){
   var cx=window.innerWidth/2, cy=window.innerHeight*0.82;
   for(var i=0;i<12;i++){
     var p=document.createElement('div');
@@ -452,6 +476,76 @@ ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, 
     renderer.render(scene, camera);
     requestAnimationFrame(loop);
   })();
+})();
+
+(function(){
+  var images = [
+    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=600&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=600&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&h=600&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&auto=format'
+  ];
+  var positions = [
+    { t:0, l:0, w:25, h:25 },
+    { t:-30, l:5, w:35, h:30 },
+    { t:-10, l:-25, w:20, h:45 },
+    { t:0, l:27.5, w:25, h:25 },
+    { t:27.5, l:5, w:20, h:25 },
+    { t:27.5, l:-22.5, w:30, h:25 },
+    { t:22.5, l:25, w:15, h:15 }
+  ];
+  var scales = [4,5,6,5,6,8,9];
+  var c = document.getElementById('zoom-container');
+  var els = [];
+  images.forEach(function(src, i){
+    var p = positions[i];
+    var div = document.createElement('div');
+    div.className = 'zoom-layer';
+    div.style.cssText = 'top:0;left:0;width:100%;height:100%';
+    var card = document.createElement('div');
+    card.className = 'zoom-card';
+    card.style.cssText = 'position:absolute;width:'+p.w+'vw;height:'+p.h+'vh;top:'+p.t+'vh;left:calc(50% + '+p.l+'vw);transform:translate(-50%,-50%)';
+    if(i===0) card.style.cssText = 'position:absolute;width:25vw;height:25vh;top:50%;left:50%;transform:translate(-50%,-50%)';
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Parallax '+(i+1);
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+    card.appendChild(img);
+    div.appendChild(card);
+    c.appendChild(div);
+    els.push(card);
+    gsap.fromTo(card, { scale:0.01 }, { scale:scales[i], ease:'none', scrollTrigger:{ trigger:'#zoom-parallax-wrap', start:'top top', end:'bottom bottom', scrub:true } });
+  });
+})();
+
+(function(){
+  var sliderSrcs = [
+    'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=400&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=400&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=400&h=400&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=400&h=400&fit=crop&auto=format',
+    'https://plus.unsplash.com/premium_photo-1673264933212-d78737f38e48?w=400&h=400&fit=crop&auto=format',
+    'https://plus.unsplash.com/premium_photo-1711434824963-ca894373272e?w=400&h=400&fit=crop&auto=format',
+    'https://plus.unsplash.com/premium_photo-1675705721263-0bbeec261c49?w=400&h=400&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1524799526615-766a9833dec0?w=400&h=400&fit=crop&auto=format'
+  ];
+  var track = document.getElementById('sliderTrack');
+  var all = sliderSrcs.concat(sliderSrcs);
+  all.forEach(function(src, i){
+    var wrap = document.createElement('div');
+    wrap.className = 'slider-img';
+    wrap.style.cssText = 'flex-shrink:0;width:clamp(10rem,20vw,18rem);height:clamp(10rem,20vw,18rem);border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5)';
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Slide '+(i%sliderSrcs.length+1);
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+    img.loading = 'lazy';
+    wrap.appendChild(img);
+    track.appendChild(wrap);
+  });
 })();
 </script>
 
