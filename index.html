@@ -339,6 +339,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var PA = Array.from(document.getElementById('carousel').querySelectorAll('.panel'));
   var LI = PA.length - 1;
   var AI = 0;
+  var cooldown = 0;
+  var stepDir = 0;
 
   function SA(i) {
     if (i < 0 || i > LI) return;
@@ -357,12 +359,14 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     scrub:true,
     onUpdate:function(self){
       var p = self.progress;
-      var newAI = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
-      if (newAI === AI) return;
-      if (Math.abs(newAI - AI) > 1) {
-        SA(AI + (newAI > AI ? 1 : -1));
-      } else {
-        SA(newAI);
+      var target = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
+      if (target === AI) { cooldown = 0; stepDir = 0; return; }
+      var now = Date.now();
+      var dir = target > AI ? 1 : -1;
+      if (dir !== stepDir || now >= cooldown) {
+        stepDir = dir;
+        cooldown = now + 500;
+        SA(AI + dir);
       }
     }
   });
