@@ -184,7 +184,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
     @keyframes slide-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .slider-wrap{mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%)}
     .site-track{display:flex;gap:1.5rem;width:max-content;animation:slide-left 40s linear infinite;padding:.5rem 0 1.5rem}
-    .site-track:hover{animation-play-state:paused}
+    .site-track.paused{animation-play-state:paused}
     .site-card{--card-w:clamp(200px,18vw,300px);flex-shrink:0;width:var(--card-w);height:var(--card-w);border-radius:18px;overflow:hidden;position:relative;background:#0D0D0D;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:height .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),border-radius .45s ease;z-index:1;border:1.5px solid rgba(255,255,255,.06)}
     .site-card .preview{width:100%;height:100%;overflow:hidden;position:relative}
     .site-card iframe{width:375px;height:667px;border:none;pointer-events:none;display:block;transform-origin:top left;transition:transform .55s cubic-bezier(.22,1,.36,1)}
@@ -218,6 +218,9 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
       ];
       var track = document.getElementById('siteTrack');
       var all = sites.concat(sites);
+      function syncPause(){
+        track.classList.toggle('paused', !!document.querySelector('.site-card.hover'));
+      }
       all.forEach(function(s,i){
         var card = document.createElement('div');
         card.className = 'site-card';
@@ -233,11 +236,12 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
         card.appendChild(preview);
         card.appendChild(label);
         track.appendChild(card);
-        card.addEventListener('mouseenter',function(){ this.classList.add('hover'); });
-        card.addEventListener('mouseleave',function(){ this.classList.remove('hover'); });
+        card.addEventListener('mouseenter',function(){ this.classList.add('hover'); syncPause(); });
+        card.addEventListener('mouseleave',function(){ this.classList.remove('hover'); syncPause(); });
         card.addEventListener('touchstart',function(e){
           if(this.classList.contains('hover')){ this.classList.remove('hover'); }
           else { this.classList.add('hover'); }
+          syncPause();
         },{passive:true});
         rescale(card);
       });
