@@ -340,7 +340,6 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var LI = PA.length - 1;
   var AI = 0;
   var stepTimer = 0;
-  var pendingT = 0;
 
   function SA(i) {
     if (i < 0 || i > LI) return;
@@ -365,6 +364,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     }
   }
 
+  var pendingT = 0;
   ScrollTrigger.create({
     trigger:'#carousel-wrapper',
     start:'top top',
@@ -373,6 +373,7 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     onUpdate:function(self){
       var p = self.progress;
       pendingT = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
+      if (stepTimer) { clearTimeout(stepTimer); stepTimer = 0; }
       scheduleStep();
     }
   });
