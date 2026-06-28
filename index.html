@@ -339,8 +339,8 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var PA = Array.from(document.getElementById('carousel').querySelectorAll('.panel'));
   var LI = PA.length - 1;
   var AI = 0;
-  var cooldown = 0;
-  var stepDir = 0;
+  var target = 0;
+  var catchTimer = 0;
 
   function SA(i) {
     if (i < 0 || i > LI) return;
@@ -352,6 +352,17 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   }
   SA(0);
 
+  function catchUp() {
+    catchTimer = 0;
+    if (target === AI) return;
+    if (Math.abs(target - AI) > 1) {
+      SA(AI + (target > AI ? 1 : -1));
+    } else {
+      SA(target);
+    }
+    if (target !== AI) catchTimer = setTimeout(catchUp, 16);
+  }
+
   ScrollTrigger.create({
     trigger:'#carousel-wrapper',
     start:'top top',
@@ -359,15 +370,15 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     scrub:true,
     onUpdate:function(self){
       var p = self.progress;
-      var target = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
-      if (target === AI) { cooldown = 0; stepDir = 0; return; }
-      var now = Date.now();
-      var dir = target > AI ? 1 : -1;
-      if (dir !== stepDir || now >= cooldown) {
-        stepDir = dir;
-        cooldown = now + 500;
-        SA(AI + dir);
+      target = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
+      if (catchTimer) { clearTimeout(catchTimer); catchTimer = 0; }
+      if (target === AI) return;
+      if (Math.abs(target - AI) > 1) {
+        SA(AI + (target > AI ? 1 : -1));
+      } else {
+        SA(target);
       }
+      if (target !== AI) catchTimer = setTimeout(catchUp, 16);
     }
   });
 })();
