@@ -447,20 +447,11 @@ ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, 
   }
   resize();
   window.addEventListener('resize', resize);
-  var animId;
-  function animate() {
-    uniforms.time.value += 0.01;
+  (function loop() {
+    uniforms.time.value += 0.012;
     renderer.render(scene, camera);
-    animId = requestAnimationFrame(animate);
-  }
-  var st = ScrollTrigger.create({
-    trigger:'.shader-section',
-    start:'top bottom',
-    onEnter:animate,
-    onLeave:function(){ if(animId) cancelAnimationFrame(animId); },
-    onEnterBack:animate,
-    onLeaveBack:function(){ if(animId) cancelAnimationFrame(animId); }
-  });
+    requestAnimationFrame(loop);
+  })();
 })();
 </script>
 
