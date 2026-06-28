@@ -339,6 +339,9 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   var PA = Array.from(document.getElementById('carousel').querySelectorAll('.panel'));
   var LI = PA.length - 1;
   var AI = 0;
+  var stepTimer = 0;
+  var forceDirect = true;
+  var pendingAI = 0;
 
   function SA(i) {
     if (i < 0 || i > LI) return;
@@ -350,15 +353,48 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
   }
   SA(0);
 
+  function stepOne() {
+    stepTimer = 0;
+    var dir = pendingAI > AI ? 1 : pendingAI < AI ? -1 : 0;
+    if (dir) SA(AI + dir);
+    if (AI !== pendingAI) stepTimer = setTimeout(stepOne, 600);
+  }
+
+  function boundaryEnter() {
+    if (stepTimer) { clearTimeout(stepTimer); stepTimer = 0; }
+    forceDirect = true;
+  }
+
   ScrollTrigger.create({
     trigger:'#carousel-wrapper',
     start:'top top',
     end:'+=200vh',
     scrub:true,
+    onEnter:boundaryEnter,
+    onLeave:boundaryEnter,
+    onEnterBack:boundaryEnter,
+    onLeaveBack:boundaryEnter,
     onUpdate:function(self){
       var p = self.progress;
-      var newAI = p < 0.35 ? 0 : p < 0.65 ? 1 : 2;
-      if (newAI !== AI) SA(newAI);
+      pendingAI = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
+
+      if (forceDirect) {
+        forceDirect = false;
+        if (pendingAI !== AI) SA(pendingAI);
+        return;
+      }
+
+      if (stepTimer) return;
+      if (pendingAI === AI) return;
+
+      if (Math.abs(pendingAI - AI) === 1) {
+        SA(pendingAI);
+        return;
+      }
+
+      var d = pendingAI > AI ? 1 : -1;
+      SA(AI + d);
+      stepTimer = setTimeout(stepOne, 600);
     }
   });
 })();
