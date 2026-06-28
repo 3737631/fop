@@ -40,18 +40,17 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 .carousel-section{position:sticky;top:0;width:100%;height:100vh;z-index:100;background:#0D0D0D}
 .carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden;align-items:stretch}
-.panel{position:relative;flex:1 0 0%;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex-grow .9s cubic-bezier(.65,0,.35,1);min-height:0}
-.panel.active{flex-grow:6}
-.panel.inactive{flex-grow:2}
+.panel{position:relative;flex:2;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex .9s cubic-bezier(.65,0,.35,1);min-height:0}
+.panel.active{flex:6}
 .panel[data-color=red]{background:#B91C1C}
 .panel[data-color=yellow]{background:#FFD300}
 .panel[data-color=green]{background:#0F7A3D}
 .panel .num{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;line-height:1;letter-spacing:-.06em;white-space:nowrap;order:1;transition:font-size .6s cubic-bezier(.65,0,.35,1),opacity .5s ease}
 .panel[data-color=yellow] .num,.panel[data-color=yellow] .caption{color:#000}
 .panel[data-color=red] .num,.panel[data-color=red] .caption,.panel[data-color=green] .num,.panel[data-color=green] .caption{color:#fff}
-.panel.active .num{font-size:clamp(6rem,22vw,22rem)}
-.panel.inactive .num{font-size:clamp(2rem,6vw,5rem);opacity:.55}
-.panel.inactive .caption{opacity:0;pointer-events:none}
+.panel.active .num{font-size:clamp(6rem,22vw,22rem);opacity:1}
+.panel:not(.active) .num{font-size:clamp(2rem,6vw,5rem);opacity:.45}
+.panel:not(.active) .caption{opacity:0;pointer-events:none}
 .caption{order:2;max-width:12ch;font-size:.7rem;font-weight:400;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .7s ease;pointer-events:none}
 .panel.active .caption{opacity:.75}
 
@@ -129,11 +128,11 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
       <span class="num">1</span>
       <span class="caption">Planificamos tu proyecto</span>
     </div>
-    <div class="panel inactive" data-color="yellow" data-index="1">
+    <div class="panel" data-color="yellow" data-index="1">
       <span class="num">2</span>
       <span class="caption">Dise&ntilde;amos tu web</span>
     </div>
-    <div class="panel inactive" data-color="green" data-index="2">
+    <div class="panel" data-color="green" data-index="2">
       <span class="num">3</span>
       <span class="caption">Desarrollamos y lanzamos</span>
     </div>
@@ -336,49 +335,25 @@ gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', 
 gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', stagger:0.35, scrollTrigger:{ trigger:'.testimonials-wrap', start:'top bottom-=20%', end:'top center', toggleActions:'play none none none' } });
 
 (function(){
-  var PA = Array.from(document.getElementById('carousel').querySelectorAll('.panel'));
-  var LI = PA.length - 1;
-  var AI = 0;
-  var target = 0;
-  var catchTimer = 0;
+  var panels = Array.from(document.getElementById('carousel').querySelectorAll('.panel'));
+  var n = panels.length;
 
-  function SA(i) {
-    if (i < 0 || i > LI) return;
-    AI = i;
-    PA.forEach(function(p, j) {
-      p.classList.toggle('active', j === AI);
-      p.classList.toggle('inactive', j !== AI);
+  function show(i) {
+    panels.forEach(function(el, j) {
+      el.classList.toggle('active', j === i);
     });
   }
-  SA(0);
-
-  function catchUp() {
-    catchTimer = 0;
-    if (target === AI) return;
-    if (Math.abs(target - AI) > 1) {
-      SA(AI + (target > AI ? 1 : -1));
-    } else {
-      SA(target);
-    }
-    if (target !== AI) catchTimer = setTimeout(catchUp, 16);
-  }
+  show(0);
 
   ScrollTrigger.create({
-    trigger:'#carousel-wrapper',
-    start:'top top',
-    end:'+=200vh',
-    scrub:true,
-    onUpdate:function(self){
+    trigger  : '#carousel-wrapper',
+    start    : 'top top',
+    end      : 'bottom bottom',
+    scrub    : true,
+    onUpdate : function(self) {
       var p = self.progress;
-      target = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
-      if (catchTimer) { clearTimeout(catchTimer); catchTimer = 0; }
-      if (target === AI) return;
-      if (Math.abs(target - AI) > 1) {
-        SA(AI + (target > AI ? 1 : -1));
-      } else {
-        SA(target);
-      }
-      if (target !== AI) catchTimer = setTimeout(catchUp, 16);
+      var i = p < 1 / n ? 0 : p < 2 / n ? 1 : 2;
+      show(i);
     }
   });
 })();
