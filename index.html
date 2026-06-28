@@ -356,9 +356,14 @@ gsap.to('.testimonial-card', { opacity:1, y:0, duration:2, ease:'power4.out', st
     end:'+=200vh',
     scrub:true,
     onUpdate:function(self){
-      var newAI = Math.round(self.progress * LI);
-      if (newAI > LI) newAI = LI;
-      if (newAI !== AI) SA(newAI);
+      var p = self.progress;
+      var newAI = p < 0.4 ? 0 : p < 0.6 ? 1 : 2;
+      if (newAI === AI) return;
+      if (Math.abs(newAI - AI) > 1) {
+        SA(AI + (newAI > AI ? 1 : -1));
+      } else {
+        SA(newAI);
+      }
     }
   });
 })();
