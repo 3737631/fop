@@ -406,8 +406,10 @@ ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, 
     'uniform float xScale;',
     'uniform float yScale;',
     'uniform float distortion;',
+    'uniform float aspect;',
     'void main() {',
-    '  vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);',
+    '  vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / resolution.y;',
+    '  p.x /= aspect;',
     '  float d = length(p) * distortion;',
     '  float rx = p.x * (1.0 + d);',
     '  float gx = p.x;',
@@ -428,7 +430,8 @@ ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, 
     time: { value: 0.0 },
     xScale: { value: 3.0 },
     yScale: { value: 0.5 },
-    distortion: { value: 0.05 }
+    distortion: { value: 0.05 },
+    aspect: { value: canvas.clientWidth / canvas.clientHeight }
   };
   var pos = [-1,-1,0, 1,-1,0, -1,1,0, 1,-1,0, -1,1,0, 1,1,0];
   var geom = new THREE.BufferGeometry();
@@ -440,6 +443,7 @@ ScrollTrigger.create({ trigger:'body', start:'32% top', end:'35% top', scrub:1, 
     var w = canvas.offsetWidth, h = canvas.offsetHeight;
     renderer.setSize(w, h, false);
     uniforms.resolution.value = [w, h];
+    uniforms.aspect.value = w / h;
   }
   resize();
   window.addEventListener('resize', resize);
