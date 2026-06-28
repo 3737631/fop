@@ -179,19 +179,50 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
   </div>
 </section>
 
-<section style="position:relative;z-index:1;padding:4rem 2rem;background:#0D0D0D">
+<section style="position:relative;z-index:1;padding:2rem 0;background:#0D0D0D;overflow:hidden">
   <style>
-    .web-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1.5rem;max-width:1400px;margin:0 auto}
-    .web-frame{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5);aspect-ratio:9/16;background:#111}
-    .web-frame iframe{width:100%;height:100%;border:none;display:block}
-    .web-frame .label{position:absolute;bottom:0;left:0;right:0;padding:.6rem 1rem;background:linear-gradient(transparent,rgba(0,0,0,.85));font-size:.7rem;color:#aaa;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+    @keyframes slide-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .slider-wrap{overflow:hidden;mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%)}
+    .site-track{display:flex;gap:1.5rem;width:max-content;animation:slide-left 40s linear infinite}
+    .site-track:hover{animation-play-state:paused}
+    .site-card{flex-shrink:0;width:clamp(260px,22vw,380px);aspect-ratio:1;border-radius:12px;overflow:hidden;position:relative;background:#111;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:width .3s ease,aspect-ratio .3s ease}
+    .site-card .preview{width:100%;height:100%;overflow:hidden;position:relative}
+    .site-card iframe{width:100%;height:100%;border:none;pointer-events:none;display:block;transition:width .3s ease}
+    .site-card .label{position:absolute;bottom:0;left:0;right:0;padding:.5rem .8rem;background:linear-gradient(transparent,rgba(0,0,0,.9));font-size:.65rem;color:#999;letter-spacing:.1em;text-transform:uppercase;pointer-events:none;z-index:2}
+    .site-card:hover{overflow:auto;width:clamp(300px,26vw,440px);aspect-ratio:9/16}
+    .site-card:hover iframe{pointer-events:auto;width:375px;margin:0 auto}
   </style>
-  <div class="web-grid">
-    <div class="web-frame"><iframe src="https://3737631.github.io/ventaelcapricho/#eventos" loading="lazy"></iframe><div class="label">Venta El Capricho</div></div>
-    <div class="web-frame"><iframe src="https://3737631.github.io/ventaelcapricho/#eventos" loading="lazy"></iframe><div class="label">Venta El Capricho</div></div>
-    <div class="web-frame"><iframe src="https://cornrevolution.resn.global/#testing" loading="lazy"></iframe><div class="label">Corn Revolution</div></div>
-    <div class="web-frame"><iframe src="https://3737631.github.io/-ghostmetamadrid/#presupuesto" loading="lazy"></iframe><div class="label">Ghost Meta Madrid</div></div>
+  <div class="slider-wrap">
+    <div class="site-track" id="siteTrack"></div>
   </div>
+  <script>
+    (function(){
+      var sites = [
+        {url:'https://3737631.github.io/ventaelcapricho/#eventos',label:'Venta El Capricho'},
+        {url:'https://cornrevolution.resn.global/#testing',label:'Corn Revolution'},
+        {url:'https://3737631.github.io/-ghostmetamadrid/#presupuesto',label:'Ghost Meta Madrid'},
+        {url:'https://3737631.github.io/test/',label:'Test'}
+      ];
+      var track = document.getElementById('siteTrack');
+      var all = sites.concat(sites);
+      all.forEach(function(s,i){
+        var card = document.createElement('div');
+        card.className = 'site-card';
+        var preview = document.createElement('div');
+        preview.className = 'preview';
+        var iframe = document.createElement('iframe');
+        iframe.src = s.url;
+        iframe.loading = 'lazy';
+        var label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = s.label;
+        preview.appendChild(iframe);
+        card.appendChild(preview);
+        card.appendChild(label);
+        track.appendChild(card);
+      });
+    })();
+  </script>
 </section>
 
 <script>
