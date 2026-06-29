@@ -597,36 +597,36 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .sim-block:nth-child(2){background:rgba(255,255,255,.015)}
 .sim-block:nth-child(4){background:rgba(255,255,255,.015)}
 .sim-block:nth-child(5){height:clamp(50px,7vw,85px)}
+.mockup-screen iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;background:#0D0D0D;opacity:0;transition:opacity .7s ease;z-index:1}
+.mockup-screen iframe.loaded{opacity:1}
 .scan-line{position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,245,245,.6),rgba(245,245,245,.8),rgba(245,245,245,.6),transparent);z-index:3;top:0;opacity:0;transition:none;pointer-events:none;box-shadow:0 0 12px rgba(245,245,245,.3),0 0 30px rgba(245,245,245,.15)}
 .scan-line.active{opacity:1}
 .audit-scan-status{text-align:center;padding:.8rem 0 0;min-height:2rem}
 .audit-scan-status .msg{font-size:.72rem;color:rgba(245,245,245,.35);letter-spacing:.08em;font-family:'Inter',sans-serif}
-.audit-scan-status .msg .hl{color:rgba(245,245,245,.55)}
 .audit-results{opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
 .audit-results.show{opacity:1;transform:translateY(0);pointer-events:auto}
-.audit-kpi{text-align:center;margin-bottom:2rem}
+.audit-kpi{text-align:center;margin-bottom:2.5rem}
 .kpi-wrap{display:inline-flex;align-items:center;justify-content:center;position:relative;width:120px;height:120px}
 .kpi-wrap svg{position:absolute;width:100%;height:100%;transform:rotate(-90deg)}
-.kpi-bg{fill:none;stroke:rgba(255,255,255,.06);stroke-width:5}
-.kpi-fg{fill:none;stroke:rgba(245,245,245,.6);stroke-width:5;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.6s cubic-bezier(.22,1,.36,1)}
-.kpi-fg.anim{stroke-dashoffset:var(--kpi-off)}
-.kpi-label-top{font-size:.55rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
-.kpi-headline{font-size:clamp(1rem,1.8vw,1.4rem);color:#F5F5F5;font-weight:600;margin-top:.5rem;letter-spacing:-.02em}
-.audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.65rem;margin-bottom:2rem}
-.audit-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:.65rem .8rem;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
-.audit-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(255,255,255,.03)}
-.audit-card-hd{display:flex;align-items:center;gap:.5rem;margin-bottom:.15rem}
-.audit-card-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:rgba(245,245,245,.5);background:rgba(255,255,255,.06)}
-.audit-card h4{font-size:.73rem;font-weight:600;color:#F5F5F5;letter-spacing:-.01em;margin:0}
-.audit-card p{font-size:.62rem;color:rgba(245,245,245,.4);line-height:1.35;margin:.05rem 0 .3rem}
+.kpi-wrap span{position:relative;z-index:1;font-size:2rem;font-weight:800;color:#F5F5F5;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.audit-kpi .sub{font-size:.55rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+.audit-kpi .hl{font-size:clamp(1rem,1.8vw,1.4rem);color:#F5F5F5;font-weight:600;margin-top:.5rem;letter-spacing:-.02em}
+.audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.85rem;margin-bottom:2.5rem}
+.audit-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:.9rem 1rem;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+.audit-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(255,255,255,.04)}
+.audit-card-hd{display:flex;align-items:center;gap:.65rem;margin-bottom:.25rem}
+.audit-card-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:rgba(245,245,245,.5);background:rgba(255,255,255,.06)}
+.audit-card h4{font-size:.9rem;font-weight:600;color:#F5F5F5;letter-spacing:-.01em;margin:0}
+.audit-card p{font-size:.78rem;color:rgba(245,245,245,.4);line-height:1.4;margin:.1rem 0 .35rem}
 .audit-card-ft{display:flex;align-items:center;justify-content:space-between}
-.audit-tag{font-size:.52rem;padding:.1rem .4rem;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(245,245,245,.45);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
-.audit-val{font-size:.68rem;font-weight:700;color:rgba(245,245,245,.5);font-variant-numeric:tabular-nums}
+.audit-tag{font-size:.6rem;padding:.15rem .5rem;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(245,245,245,.45);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.audit-val{font-size:.9rem;font-weight:700;color:rgba(245,245,245,.5);font-variant-numeric:tabular-nums}
 .audit-ctas{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
 .audit-ctas button{padding:.6rem 1.8rem;border-radius:9999px;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em}
 .audit-ctas .cta-p{border:1px solid rgba(245,245,245,.2);background:transparent;color:#F5F5F5}
 .audit-ctas .cta-p:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
-.audit-ctas .cta-s{border:1px solid rgba(245,245,245,.1);background:transparent;color:rgba(245,245,245,.45)}.audit-ctas .cta-s:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.25)}
+.audit-ctas .cta-s{border:1px solid rgba(245,245,245,.1);background:transparent;color:rgba(245,245,245,.45)}
+.audit-ctas .cta-s:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.25)}
 .audit-error{display:none;text-align:center;padding:.7rem;color:#f87171;font-size:.72rem;background:rgba(248,113,113,.06);border-radius:10px;margin:.8rem auto 0;max-width:400px}
 .audit-error.show{display:block}
 </style>
@@ -658,6 +658,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
           <div class="sim-block">Contacto &mdash; Hablemos</div>
         </div>
       </div>
+      <iframe id="auditIframe" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
       <div class="scan-line" id="scanLine"></div>
     </div>
   </div>
@@ -671,10 +672,10 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="5"/>
         <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(245,245,245,.6)" stroke-width="5" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="kpiCircle"/>
       </svg>
-      <span style="position:relative;z-index:1;font-size:2rem;font-weight:800;color:#F5F5F5;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums" id="kpiNumber">0%</span>
+      <span id="kpiNumber">0%</span>
     </div>
-    <div style="font-size:.55rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:3px">de mejora potencial</div>
-    <p style="font-size:clamp(1rem,1.8vw,1.4rem);color:#F5F5F5;font-weight:600;margin-top:.5rem;letter-spacing:-.02em">Tu web puede mejorar un <strong id="kpiHeadline" style="color:#F5F5F5">87%</strong></p>
+    <div class="sub">de mejora potencial</div>
+    <p class="hl">Tu web puede mejorar un <strong id="kpiHeadline" style="color:#F5F5F5">87%</strong></p>
   </div>
   <div class="audit-grid" id="auditGrid"></div>
   <div class="audit-ctas">
@@ -691,6 +692,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   var preview=document.getElementById('auditPreview');
   var simSite=document.getElementById('simSite');
   var simContent=document.getElementById('simContent');
+  var auditIframe=document.getElementById('auditIframe');
   var scanLine=document.getElementById('scanLine');
   var scanMsg=document.getElementById('scanMsg');
   var results=document.getElementById('auditResults');
@@ -744,14 +746,11 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     error.classList.remove('show');
     results.classList.remove('show');
     preview.classList.remove('scan-done');
-    simSite.scrollTop=0;
+    simSite.style.display='';
+    auditIframe.src='';
+    auditIframe.classList.remove('loaded');
     scanLine.classList.remove('active');
     btn.disabled=true;
-
-    setTimeout(function(){
-      scanLine.classList.add('active');
-      scanLine.style.top='0px';
-    },50);
 
     var li=0;
     scanMsg.textContent='Preparando an\u00E1lisis\u2026';
@@ -759,34 +758,71 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       if(li<labels.length){scanMsg.textContent=labels[li];li++}
     },320);
 
-    var totalScroll=simContent.offsetHeight-simSite.offsetHeight;
-    if(totalScroll<0)totalScroll=0;
+    var iframeLoaded=false;
+    var iframeErrored=false;
     var duration=3400;
-    var start=Date.now();
+    var scanH;
 
-    function frame(){
-      var elapsed=Date.now()-start;
-      var t=Math.min(elapsed/duration,1);
-      var ease=1-Math.pow(1-t,3);
-      var pos=totalScroll*ease;
-      simSite.scrollTop=pos;
-      var screenH=simSite.offsetHeight;
-      var scanY=pos/simContent.offsetHeight*screenH;
-      scanLine.style.top=Math.min(scanY,screenH-2)+'px';
-      if(t<1){requestAnimationFrame(frame)}
-      else{
-        scanLine.style.top=(screenH-2)+'px';
-        simSite.scrollTop=totalScroll;
-        finish();
+    function startScan(){
+      scanLine.classList.add('active');
+      scanLine.style.top='0px';
+      var screenH=document.querySelector('.mockup-screen').offsetHeight;
+      scanH=screenH;
+      var start=Date.now();
+
+      function scanFrame(){
+        var elapsed=Date.now()-start;
+        var t=Math.min(elapsed/duration,1);
+        var ease=1-Math.pow(1-t,3);
+        scanLine.style.top=(screenH-2)*ease+'px';
+        if(t<1){requestAnimationFrame(scanFrame)}
+        else{
+          scanLine.style.top=(screenH-2)+'px';
+          scanLine.classList.remove('active');
+          clearInterval(msgTimer);
+          preview.classList.add('scan-done');
+          setTimeout(showResults,400);
+        }
+      }
+
+      if(iframeLoaded||iframeErrored){
+        requestAnimationFrame(scanFrame);
       }
     }
 
-    function finish(){
-      clearInterval(msgTimer);
-      preview.classList.add('scan-done');
-      scanLine.classList.remove('active');
-      setTimeout(showResults,400);
+    setTimeout(function(){
+      auditIframe.src=raw;
+      auditIframe.addEventListener('load',function onload(){
+        iframeLoaded=true;
+        auditIframe.classList.add('loaded');
+        simSite.style.display='none';
+        auditIframe.removeEventListener('load',onload);
+        startScan();
+      });
+      auditIframe.addEventListener('error',function onerror(){
+        iframeErrored=true;
+        simSite.style.display='';
+        auditIframe.classList.remove('loaded');
+        auditIframe.removeEventListener('error',onerror);
+        startScan();
+      });
+    },100);
+
+    var retries=0;
+    var maxRetries=20;
+    function checkLoad(){
+      retries++;
+      if(iframeLoaded||iframeErrored)return;
+      if(retries>=maxRetries){
+        iframeErrored=true;
+        simSite.style.display='';
+        auditIframe.classList.remove('loaded');
+        startScan();
+        return;
+      }
+      setTimeout(checkLoad,200);
     }
+    setTimeout(checkLoad,200);
 
     function showResults(){
       var base=78+hashUrl(raw)%18;
@@ -819,8 +855,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       });
       btn.disabled=false;
     }
-
-    requestAnimationFrame(frame);
   });
 
   input.addEventListener('keydown',function(e){if(e.key==='Enter')btn.click()});
