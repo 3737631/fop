@@ -135,15 +135,15 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
   </svg>
 </button>
 
-<div id="menuOverlay" style="position:fixed;top:0;right:0;width:100%;height:100%;z-index:90;background:rgba(13,13,13,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;pointer-events:none;transition:opacity .5s ease">
-  <nav style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;font-family:'Barlow Condensed','Impact',sans-serif;text-transform:uppercase;text-align:center">
-    <a href="#" onclick="closeMenu();window.scrollTo({top:0,behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Home</a>
-    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.2rem,3vw,1.8rem);font-weight:400;color:rgba(245,245,245,.2);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;transition:color .3s;pointer-events:none">Servicios</a>
-    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Prototipo</a>
-    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Mis webs</a>
-    <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Mejoras</a>
-    <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Agente IA</a>
-    <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:900;color:#F5F5F5;text-decoration:none;letter-spacing:-.03em;background:rgba(255,255,255,.06);padding:.3rem 1.5rem;border-radius:9999px;border:1px solid rgba(245,245,245,.1);transition:all .3s" id="menuConsultoria" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">Consultor&iacute;a</a>
+<div id="menuOverlay" style="position:fixed;top:0;right:0;width:100%;height:100%;z-index:90;background:rgba(13,13,13,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;opacity:0;pointer-events:none;transition:opacity .5s ease">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:1rem;font-family:'Barlow Condensed','Impact',sans-serif;text-transform:uppercase;text-align:center">
+    <a href="#" onclick="closeMenu();window.scrollTo({top:0,behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Home</a>
+    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;color:rgba(245,245,245,.15);text-decoration:none;letter-spacing:.15em;pointer-events:none">Servicios</a>
+    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Prototipo</a>
+    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mis webs</a>
+    <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mejoras</a>
+    <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Agente IA</a>
+    <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:#F5F5F5;text-decoration:none;letter-spacing:-.02em" id="menuConsultoria">Consultor&iacute;a</a>
   </nav>
 </div>
 
@@ -184,24 +184,6 @@ function closeMenu(){
   l3.style.transform='translateY(7px)';l3.style.opacity='1';
   svg.style.color='rgba(245,245,245,.6)';
 }
-(function(){
-  var c=document.getElementById('menuConsultoria');
-  if(!c)return;
-  var cols=['#cc3333','#d4a017','#2d8a4e'];
-  c.addEventListener('mouseenter',function(){
-    if(this._ft)return;
-    var i=0;
-    this._ft=setInterval(function(){
-      c.style.borderColor=cols[i];c.style.boxShadow='0 0 12px '+cols[i].replace(')',',0.15)');
-      i++;
-      if(i>=cols.length){clearInterval(c._ft);c._ft=null;c.style.borderColor='';c.style.boxShadow=''}
-    },120);
-  });
-  c.addEventListener('mouseleave',function(){
-    if(this._ft){clearInterval(this._ft);this._ft=null}
-    this.style.borderColor='';this.style.boxShadow=''
-  });
-})();
 (function(){
   var links=document.querySelectorAll('.footer-legal a');
   var cols=['#cc3333','#d4a017','#2d8a4e'];
