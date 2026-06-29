@@ -833,23 +833,37 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       clearTimeout(fbTimer);
       try{
         var d=iframe.contentDocument||iframe.contentWindow.document;
-        if(d&&d.body&&d.body.scrollHeight>50){startScan('scrollable')}
-        else{startScan('visible')}
+        if(d&&d.body){
+          if(d.body.scrollHeight>80){
+            // Same-origin — auto-scroll
+            startScan('scrollable');
+          }else if(d.body.textContent&&d.body.textContent.match(/frame|denied|blocked|negar/i)){
+            // X-Frame-Options blocked — use sim
+            iframe.style.display='none';
+            simSite.style.display='block';
+            startScan('sim');
+          }else{
+            // Error or minimal page — show with scan line
+            startScan('visible');
+          }
+        }else{
+          startScan('visible');
+        }
       }catch(e){
-        // Cross-origin — show site with scan line
+        // Cross-origin — show site, scan line moves over it
         startScan('visible');
       }
     };
     iframe.src=raw;
 
-    // Fallback to sim if iframe blocked or too slow
+    // Fallback after 12s
     var fbTimer=setTimeout(function(){
       if(!scanStarted){
         iframe.style.display='none';
         simSite.style.display='block';
         startScan('sim');
       }
-    },6000);
+    },12000);
 
     function showResults(){
       var base=60+hashUrl(raw)%23;
