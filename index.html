@@ -585,9 +585,11 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-preview.scan-done{opacity:0;transform:scale(.96) translateY(-10px);pointer-events:none;height:0;margin:0;overflow:hidden}
 .mockup-bar{display:flex;align-items:center;gap:6px;padding:.4rem .75rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border)}
 .mockup-bar span{width:8px;height:8px;border-radius:50%}
+.mockup-bar span{width:8px;height:8px;border-radius:50%}
 .mockup-bar span:nth-child(1){background:#ff5f57}
 .mockup-bar span:nth-child(2){background:#febc2e}
 .mockup-bar span:nth-child(3){background:#28c840}
+.mockup-bar .url-label{margin-left:auto;font-size:.55rem;color:rgba(245,245,245,.2);letter-spacing:.04em;font-family:'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:50%}
 .mockup-screen{position:relative;width:100%;height:clamp(200px,30vw,340px);overflow:hidden;background:#0D0D0D}
 .simulated-site{width:100%;height:100%;overflow-y:auto;scroll-behavior:smooth}
 .simulated-site::-webkit-scrollbar{display:none}
@@ -596,8 +598,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .sim-block:nth-child(1){height:clamp(120px,16vw,180px)}
 .sim-block:nth-child(2n){background:rgba(255,255,255,.015)}
 .sim-block:nth-child(8){height:clamp(80px,10vw,120px)}
-.mockup-screen iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;background:#0D0D0D;opacity:0;transition:opacity .7s ease;z-index:1;display:none}
-.mockup-screen iframe.loaded{opacity:1;display:block}
 .scan-line{position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,245,245,.6),rgba(245,245,245,.8),rgba(245,245,245,.6),transparent);z-index:3;top:0;opacity:0;transition:none;pointer-events:none;box-shadow:0 0 12px rgba(245,245,245,.3),0 0 30px rgba(245,245,245,.15)}
 .scan-line.active{opacity:1}
 .audit-scan-status{text-align:center;padding:.8rem 0 0;min-height:2rem}
@@ -641,6 +641,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <div class="audit-preview" id="auditPreview">
     <div class="mockup-bar">
       <span></span><span></span><span></span>
+      <span class="url-label" id="urlLabel"></span>
     </div>
     <div class="mockup-screen">
       <div class="simulated-site" id="simSite">
@@ -655,7 +656,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
           <div class="sim-block">Contacto &mdash; Hablemos</div>
         </div>
       </div>
-      <iframe id="auditIframe" sandbox="allow-scripts allow-same-origin"></iframe>
       <div class="scan-line" id="scanLine"></div>
     </div>
   </div>
@@ -688,7 +688,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   var preview=document.getElementById('auditPreview');
   var simSite=document.getElementById('simSite');
   var simContent=document.getElementById('simContent');
-  var auditIframe=document.getElementById('auditIframe');
+  var urlLabel=document.getElementById('urlLabel');
   var scanLine=document.getElementById('scanLine');
   var scanMsg=document.getElementById('scanMsg');
   var results=document.getElementById('auditResults');
@@ -736,10 +736,11 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     results.classList.remove('show');
     preview.classList.remove('scan-done');
     simSite.style.display='';
-    auditIframe.src='about:blank';
-    auditIframe.classList.remove('loaded');
+    simSite.scrollTop=0;
     scanLine.classList.remove('active');
     btn.disabled=true;
+
+    try{urlLabel.textContent=new URL(raw).hostname}catch(e){urlLabel.textContent=raw}
 
     var li=0;
     scanMsg.textContent='Preparando an\u00E1lisis\u2026';
@@ -747,14 +748,12 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       if(li<labels.length){scanMsg.textContent=labels[li];li++}
     },320);
 
-    var resolved=false;
     var duration=4500;
 
     function startScan(){
       scanLine.classList.add('active');
       scanLine.style.top='-1px';
       simSite.style.pointerEvents='none';
-      auditIframe.style.pointerEvents='none';
       var screenH=document.querySelector('.mockup-screen').offsetHeight;
       var totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
       var start=Date.now();
@@ -772,7 +771,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
           simSite.scrollTop=totalScroll;
           scanLine.style.top=(screenH-2)+'px';
           simSite.style.pointerEvents='';
-          auditIframe.style.pointerEvents='';
           scanLine.classList.remove('active');
           clearInterval(msgTimer);
           preview.classList.add('scan-done');
@@ -782,39 +780,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       requestAnimationFrame(scanFrame);
     }
 
-    function useFallback(){
-      if(resolved)return;
-      resolved=true;
-      auditIframe.src='about:blank';
-      auditIframe.classList.remove('loaded');
-      simSite.style.display='';
-      requestAnimationFrame(function(){setTimeout(startScan,80)});
-    }
-
-    function useIframe(){
-      if(resolved)return;
-      resolved=true;
-      auditIframe.classList.add('loaded');
-      simSite.style.display='none';
-      startScan();
-    }
-
-    setTimeout(function(){
-      auditIframe.src=raw;
-      var loadTimer=setTimeout(function(){
-        if(!resolved)useFallback();
-      },5000);
-      auditIframe.addEventListener('load',function onload(){
-        auditIframe.removeEventListener('load',onload);
-        clearTimeout(loadTimer);
-        useIframe();
-      });
-      auditIframe.addEventListener('error',function onerror(){
-        auditIframe.removeEventListener('error',onerror);
-        clearTimeout(loadTimer);
-        useFallback();
-      });
-    },100);
+    requestAnimationFrame(function(){setTimeout(startScan,80)});
 
     function showResults(){
       var base=60+hashUrl(raw)%23;
