@@ -89,9 +89,9 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .liquid-btn:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
 .liquid-btn .btn-glass{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border-radius:9999px;box-shadow:0 0 6px rgba(0,0,0,.03),0 2px 6px rgba(0,0,0,.08),inset 3px 3px .5px -3px rgba(0,0,0,.6),inset -3px -3px .5px -3px rgba(0,0,0,.55),inset 0 0 12px rgba(255,255,255,.08)}
 .liquid-btn .btn-displace{position:absolute;top:0;left:0;z-index:-2;width:100%;height:100%;overflow:hidden;border-radius:9999px;filter:url('#glass')}
-#menuBtn:hover #menuLine1{stroke:#cc3333;filter:drop-shadow(0 0 5px #cc3333)}
-#menuBtn:hover #menuLine2{stroke:#d4a017;filter:drop-shadow(0 0 5px #d4a017)}
-#menuBtn:hover #menuLine3{stroke:#2d8a4e;filter:drop-shadow(0 0 5px #2d8a4e)}
+#menuBtn:not(.menu-open):hover #menuLine1{stroke:#cc3333;filter:drop-shadow(0 0 5px #cc3333)}
+#menuBtn:not(.menu-open):hover #menuLine2{stroke:#d4a017;filter:drop-shadow(0 0 5px #d4a017)}
+#menuBtn:not(.menu-open):hover #menuLine3{stroke:#2d8a4e;filter:drop-shadow(0 0 5px #2d8a4e)}
 </style>
 </head>
 <body>
@@ -139,7 +139,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
     <a href="#" onclick="closeMenu();window.scrollTo({top:0,behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Home</a>
     <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;color:rgba(245,245,245,.15);text-decoration:none;letter-spacing:.15em;pointer-events:none">Servicios</a>
     <a href="#" onclick="closeMenu();var e=document.getElementById('shaderSection').querySelector('.shader-content');if(e)e.scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Prototipo</a>
-    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Trabajos recientes</a>
+    <a href="#" onclick="closeMenu();document.getElementById('sliderSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Trabajos recientes</a>
     <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mejoras</a>
     <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Agente IA</a>
     <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:#F5F5F5;text-decoration:none;letter-spacing:-.02em" id="menuConsultoria">Consultor&iacute;a</a>
@@ -162,6 +162,7 @@ function toggleMenu(){
     l2.style.transform='rotate(0deg)';
     l3.style.transform='translateY(7px)';l3.style.opacity='1';
     svg.style.color='rgba(245,245,245,.6)';
+    btn.classList.remove('menu-open');
   } else {
     open.style.opacity='1';
     open.style.pointerEvents='auto';
@@ -169,6 +170,7 @@ function toggleMenu(){
     l2.style.transform='rotate(45deg)';
     l3.style.transform='translateY(0) rotate(135deg)';l3.style.opacity='1';
     svg.style.color='#F5F5F5';
+    btn.classList.add('menu-open');
   }
 }
 function closeMenu(){
@@ -182,6 +184,7 @@ function closeMenu(){
   l2.style.transform='rotate(0deg)';
   l3.style.transform='translateY(7px)';l3.style.opacity='1';
   svg.style.color='rgba(245,245,245,.6)';
+  document.getElementById('menuBtn').classList.remove('menu-open');
 }
 (function(){
   var links=document.querySelectorAll('.footer-legal a');
@@ -265,8 +268,8 @@ function closeMenu(){
 </div>
 </section>
 
-<section style="position:relative;z-index:1;padding:1.5rem 0;overflow:hidden;background:transparent">
-  <style>
+<section id="sliderSection" style="position:relative;z-index:1;padding:1.5rem 0;overflow:hidden;background:transparent">
+<style>
     .slider-wrap{mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);cursor:grab;user-select:none;touch-action:pan-y}
     .slider-wrap.grabbing{cursor:grabbing}
     .site-track{display:flex;gap:1rem;width:max-content;padding:0 0 .8rem;will-change:transform;backface-visibility:hidden}
