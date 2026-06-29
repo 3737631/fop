@@ -121,6 +121,42 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
   </div>
 </div>
 
+<div id="navArrows" style="position:fixed;bottom:3rem;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:1.2rem;pointer-events:auto">
+  <button class="nav-dot" data-target="carousel-section" title="Servicios"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+  <button class="nav-dot" data-target="shaderSection" title="Clientes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+  <button class="nav-dot" data-target="auditSection" title="Auditor&iacute;a"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+</div>
+<style>
+.nav-dot{background:transparent;border:1px solid rgba(245,245,245,.1);border-radius:50%;width:2.2rem;height:2.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(245,245,245,.25);transition:all .4s cubic-bezier(.22,1,.36,1);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.nav-dot:hover{border-color:rgba(245,245,245,.3);color:rgba(245,245,245,.6);transform:translateY(-2px)}
+.nav-dot.active{border-color:rgba(245,245,245,.4);color:#F5F5F5;background:rgba(255,255,255,.05);box-shadow:0 0 20px rgba(245,245,245,.05)}
+</style>
+<script>
+(function(){
+  var dots=document.querySelectorAll('.nav-dot');
+  var sections=[];
+  dots.forEach(function(d){var t=d.getAttribute('data-target');sections.push(document.getElementById(t))});
+  function update(){
+    var scrollY=window.scrollY;
+    dots.forEach(function(d,i){
+      var s=sections[i];
+      if(!s)return;
+      var top=s.offsetTop, bot=top+s.offsetHeight;
+      d.classList.toggle('active',scrollY>=top-200&&scrollY<bot-200);
+    });
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  dots.forEach(function(d){
+    d.addEventListener('click',function(){
+      var id=this.getAttribute('data-target');
+      var el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+  update();
+})();
+</script>
+
 <div style="height:470vh"></div>
 <div id="carousel-wrapper" style="position:relative;height:300vh;z-index:10">
 <section class="carousel-section" id="carousel-section">
@@ -594,7 +630,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 </style>
 <section id="auditSection">
 <style>
-#auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:3rem 1rem 4rem;max-width:1200px;margin:0 auto;width:100%;background:#0D0D0D}
+#auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:2rem 1rem 3rem;max-width:1200px;margin:0 auto;width:100%;background:#0D0D0D}
 .audit-header{text-align:center;margin-bottom:1.5rem}
 .audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
 .audit-header p{font-size:clamp(.65rem,.8vw,.85rem);color:rgba(245,245,245,.18);letter-spacing:.08em;margin-top:.3rem}
@@ -910,7 +946,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
 <section id="consultingSection">
 <style>
-#consultingSection{max-width:1200px;margin:0 auto;padding:1.5rem 1rem 2rem;background:#0D0D0D}
+#consultingSection{max-width:1200px;margin:0 auto;padding:1rem 1rem 1.5rem;background:#0D0D0D}
 .consult-hero{text-align:center;margin-bottom:2.5rem;opacity:0;transform:translateY(30px)}
 .consult-hero h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;line-height:.9}
 .consult-hero h2 em{color:#B0B0B0;font-weight:400;font-style:normal;display:block;font-size:clamp(.75rem,1.8vw,1.2rem);letter-spacing:.08em;margin-top:.2rem}
@@ -962,7 +998,7 @@ ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top
 
 <section id="contactForm">
 <style>
-#contactForm{max-width:480px;margin:0 auto;padding:3rem 1rem 4rem;text-align:center;background:#0D0D0D}
+#contactForm{max-width:480px;margin:0 auto;padding:2rem 1rem 3rem;text-align:center;background:#0D0D0D}
 #contactForm .form-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:2rem 1.5rem}
 #contactForm h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.3rem,3vw,2.2rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:.2rem}
 #contactForm .sub{font-size:.65rem;color:rgba(245,245,245,.35);letter-spacing:.06em;margin-bottom:1.5rem}
@@ -1038,16 +1074,11 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
   <h2 class="cf-text-glow" style="font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:900;letter-spacing:-.04em;text-align:center;margin-bottom:2.5rem;line-height:1">Contacto</h2>
 
   <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;width:100%;max-width:500px">
+    <div style="font-family:'Inter',sans-serif;font-size:.55rem;color:rgba(245,245,245,.2);letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-bottom:.2rem">Otras formas de contacto</div>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem;width:100%">
       <a class="cf-flip" href="https://ig.me/m/paco.opp" target="_blank" rel="noopener">Instagram</a>
       <a class="cf-flip" href="mailto:fortpay107@gmail.com">Email</a>
       <a class="cf-flip" href="tel:+34611652518">Ll&aacute;manos</a>
-    </div>
-
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-top:2.5rem">
-      <a href="#" class="cf-pill cf-pill-sm">Aviso Legal</a>
-      <a href="#" class="cf-pill cf-pill-sm">Pol&iacute;tica de Privacidad</a>
-      <a href="#" class="cf-pill cf-pill-sm">Pol&iacute;tica de Cookies</a>
     </div>
   </div>
 </div>
@@ -1099,5 +1130,17 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
 })();
 </script>
 </section>
+
+<footer style="position:relative;z-index:30;width:100%;padding:1.5rem 1rem;background:#080808;border-top:1px solid rgba(255,255,255,.04)">
+  <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem 1.5rem;max-width:1000px;margin:0 auto">
+    <span style="font-size:.5rem;color:rgba(245,245,245,.12);letter-spacing:.12em;text-transform:uppercase">&copy; 2026 Francisco Ortu&ntilde;o</span>
+    <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
+    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Aviso Legal</a>
+    <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
+    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Pol&iacute;tica de Privacidad</a>
+    <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
+    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Pol&iacute;tica de Cookies</a>
+  </div>
+</footer>
 
 </body>
