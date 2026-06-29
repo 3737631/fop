@@ -12,7 +12,7 @@
 <style>
 html,body,div,span,section,h1,h2,h3,p,canvas{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
-body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1350vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 
 .scene{perspective:1400px;position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;will-change:transform}
 #globeCanvas{width:380px;height:380px;border-radius:50%;will-change:transform,clip-path;display:block;position:absolute;z-index:3;clip-path:inset(0);cursor:grab;touch-action:none}
@@ -823,5 +823,74 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 </section>
 
 <hr class="section-divider">
+
+<section id="consultingSection">
+<style>
+#consultingSection{max-width:1200px;margin:0 auto;padding:5rem 1rem 6rem;background:#0D0D0D}
+.consult-hero{text-align:center;margin-bottom:3rem;opacity:0;transform:translateY(30px)}
+.consult-hero h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;line-height:.9}
+.consult-hero h2 em{color:#B0B0B0;font-weight:400;font-style:normal;display:block;font-size:clamp(1rem,2.5vw,1.8rem);letter-spacing:.08em;margin-top:.4rem}
+.consult-hero p{font-size:clamp(.75rem,.9vw,1rem);color:rgba(245,245,245,.45);max-width:600px;margin:.8rem auto 0;line-height:1.5}
+.consult-stats{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem}
+.consult-stat{text-align:center;opacity:0;transform:translateY(20px);min-width:140px}
+.consult-stat-num{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.03em;line-height:1}
+.consult-stat-label{font-size:.6rem;color:rgba(245,245,245,.4);letter-spacing:.12em;text-transform:uppercase;margin-top:.2rem}
+.consult-services{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;margin-bottom:4rem}
+.consult-service{background:rgba(255,255,255,.04);border-radius:8px;padding:1.2rem;opacity:0;transform:translateY(20px);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.consult-service:hover{transform:translateY(-3px)}
+.consult-service h4{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(.9rem,1.1vw,1.1rem);font-weight:700;color:#F5F5F5;letter-spacing:-.02em;text-transform:uppercase;margin:0 0 .3rem}
+.consult-service p{font-size:.72rem;color:rgba(245,245,245,.45);line-height:1.4;margin:0}
+.consult-service .badge{display:inline-block;font-size:.5rem;padding:.15rem .4rem;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(245,245,245,.4);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.consult-process{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:4rem}
+.consult-step{text-align:center;padding:1rem;opacity:0;transform:translateY(15px)}
+.consult-step .step-num{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2rem,3vw,2.8rem);font-weight:900;color:rgba(245,245,245,.15);line-height:1;margin-bottom:.3rem}
+.consult-step h5{font-family:'Barlow Condensed','Impact',sans-serif;font-size:.85rem;font-weight:700;color:#F5F5F5;letter-spacing:-.01em;text-transform:uppercase;margin:0 0 .2rem}
+.consult-step p{font-size:.65rem;color:rgba(245,245,245,.4);line-height:1.4;margin:0;max-width:200px;margin-left:auto;margin-right:auto}
+.consult-cta{text-align:center;opacity:0;transform:translateY(20px)}
+.consult-cta h3{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:.5rem}
+.consult-cta p{font-size:.72rem;color:rgba(245,245,245,.4);margin-bottom:1rem}
+.consult-cta button{padding:12px 36px;border-radius:9999px;font-family:'Inter',sans-serif;font-size:.82rem;font-weight:500;color:#F5F5F5;background:transparent;border:1px solid rgba(245,245,245,.2);cursor:pointer;transition:transform .3s,box-shadow .3s}
+.consult-cta button:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
+</style>
+
+<div class="consult-hero" id="consultHero">
+  <h2>Tu empresa con un agente IA<em>No pierdas m&aacute;s tiempo</em></h2>
+  <p>Automatizamos tus procesos con inteligencia artificial para que tu negocio crezca sin limites.</p>
+</div>
+
+<div class="consult-stats" id="consultStats">
+  <div class="consult-stat"><div class="consult-stat-num">300+</div><div class="consult-stat-label">Clientes Satisfechos</div></div>
+  <div class="consult-stat"><div class="consult-stat-num">10K+</div><div class="consult-stat-label">Horas Ahorradas</div></div>
+  <div class="consult-stat"><div class="consult-stat-num">500+</div><div class="consult-stat-label">Procesos Automatizados</div></div>
+</div>
+
+<div class="consult-services" id="consultServices">
+  <div class="consult-service"><span class="badge">M&aacute;s solicitado</span><h4>Automatizaciones &amp; IA</h4><p>Automatizaci&oacute;n inteligente para optimizar procesos y reducir costos operativos.</p></div>
+  <div class="consult-service"><h4>Desarrollo de Software</h4><p>Software personalizado adaptado a las necesidades &uacute;nicas de tu empresa.</p></div>
+  <div class="consult-service"><h4>Auditor&iacute;a de Procesos</h4><p>Estrategia y asesoramiento para tu transformaci&oacute;n digital con IA.</p></div>
+  <div class="consult-service"><h4>Data Science &amp; ML</h4><p>Convierte datos en decisiones con modelos predictivos avanzados.</p></div>
+</div>
+
+<div class="consult-process" id="consultProcess">
+  <div class="consult-step"><div class="step-num">01</div><h5>An&aacute;lisis</h5><p>Evaluamos tu situaci&oacute;n y detectamos oportunidades de mejora.</p></div>
+  <div class="consult-step"><div class="step-num">02</div><h5>Estrategia</h5><p>Dise&ntilde;amos una hoja de ruta tecnol&oacute;gica a tu medida.</p></div>
+  <div class="consult-step"><div class="step-num">03</div><h5>Implementaci&oacute;n</h5><p>Desarrollamos la soluci&oacute;n con metodolog&iacute;as &aacute;giles.</p></div>
+  <div class="consult-step"><div class="step-num">04</div><h5>Optimizaci&oacute;n</h5><p>Monitoreamos resultados y ajustamos para m&aacute;ximo rendimiento.</p></div>
+</div>
+
+<div class="consult-cta" id="consultCta">
+  <h3>&iquest;Listo para transformar tu empresa?</h3>
+  <p>Agenda una consultor&iacute;a gratuita y descubre c&oacute;mo podemos ayudarte.</p>
+  <button>Solicitar consultor&iacute;a</button>
+</div>
+
+<script>
+ScrollTrigger.create({trigger:'#consultHero',start:'top bottom-=10%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('#consultHero',{opacity:1,y:0,duration:1.2,ease:'power4.out'})}});
+ScrollTrigger.create({trigger:'#consultStats',start:'top bottom-=5%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('.consult-stat',{opacity:1,y:0,duration:1,ease:'power4.out',stagger:0.2})}});
+ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('.consult-service',{opacity:1,y:0,duration:.8,ease:'power4.out',stagger:0.15})}});
+ScrollTrigger.create({trigger:'#consultProcess',start:'top bottom-=5%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('.consult-step',{opacity:1,y:0,duration:.8,ease:'power4.out',stagger:0.15})}});
+ScrollTrigger.create({trigger:'#consultCta',start:'top bottom-=10%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('#consultCta',{opacity:1,y:0,duration:1.2,ease:'power4.out'})}});
+</script>
+</section>
 
 </body>
