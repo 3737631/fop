@@ -972,4 +972,42 @@ ScrollTrigger.create({trigger:'#consultCta',start:'top bottom-=10%',end:'top cen
 <div style="margin-top:1rem;font-size:.55rem;color:rgba(245,245,245,.2);font-family:'Inter',sans-serif;letter-spacing:.12em;text-transform:uppercase">Francisco Ortu&ntilde;o &mdash; Dise&ntilde;o Web</div>
 </section>
 
+<section id="flipLinks">
+<style>
+#flipLinks{display:grid;place-content:center;gap:.5rem;width:100%;padding:6rem 1rem;background:#0D0D0D}
+.flp{display:inline-block;position:relative;overflow:hidden;white-space:nowrap;font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2.5rem,10vw,7rem);font-weight:900;color:#F5F5F5;text-transform:uppercase;text-decoration:none;line-height:.75;transition:color .4s ease}
+.flp:hover{color:rgba(245,245,245,.4)}
+.flp .l{display:flex}
+.flp .l span{display:inline-block;transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.flp .t span{transition-delay:calc(var(--i,0)*30ms)}
+.flp .b span{transform:translateY(110%);transition-delay:calc(var(--i,0)*30ms)}
+.flp:hover .t span{transform:translateY(-110%)}
+.flp:hover .b span{transform:translateY(0)}
+</style>
+<script>
+(function(){
+  var links=document.querySelectorAll('.flp');
+  links.forEach(function(a){
+    var txt=a.textContent.trim();
+    if(!txt)return;
+    var tdiv=document.createElement('div');tdiv.className='l t';
+    var bdiv=document.createElement('div');bdiv.className='l b';
+    for(var i=0;i<txt.length;i++){
+      var ts=document.createElement('span');ts.textContent=txt[i]===' '?'\u00A0':txt[i];ts.style.setProperty('--i',i);
+      var bs=document.createElement('span');bs.textContent=txt[i]===' '?'\u00A0':txt[i];bs.style.setProperty('--i',i);
+      tdiv.appendChild(ts);
+      bdiv.appendChild(bs);
+    }
+    a.textContent='';
+    a.appendChild(tdiv);
+    a.appendChild(bdiv);
+  });
+})();
+</script>
+<a class="flp" href="https://x.com/thisis_vaib" target="_blank" rel="noopener">Twitter</a>
+<a class="flp" href="https://linkedin.com/in/vaib215" target="_blank" rel="noopener">Linkedin</a>
+<a class="flp" href="https://github.com/vaib215" target="_blank" rel="noopener">Github</a>
+<a class="flp" href="https://instagram.com/thisis_vaib" target="_blank" rel="noopener">Instagram</a>
+</section>
+
 </body>
