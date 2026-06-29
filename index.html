@@ -12,7 +12,7 @@
 <style>
 html,body,div,span,section,h1,h2,h3,p,canvas{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
-body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1350vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 
 .scene{perspective:1400px;position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;will-change:transform}
 #globeCanvas{width:380px;height:380px;border-radius:50%;will-change:transform,clip-path;display:block;position:absolute;z-index:3;clip-path:inset(0);cursor:grab;touch-action:none}
@@ -641,7 +641,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <button class="audit-btn" id="auditBtn">Analizar web</button>
 </div>
 
-<div class="audit-stage" id="auditStage">
+<div class="audit-stage" id="auditStage" style="display:none">
   <div class="audit-preview" id="auditPreview">
     <div class="mockup-bar">
       <div class="dots"><span></span><span></span><span></span></div>
@@ -735,6 +735,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     var raw=input.value.trim();
     if(!raw)return;
     if(!raw.startsWith('http://')&&!raw.startsWith('https://')) raw='https://'+raw;
+    document.getElementById('auditStage').style.display='';
     results.classList.remove('show');
     preview.classList.remove('scan-done');
     iframe.style.display='block';
