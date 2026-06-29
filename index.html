@@ -755,48 +755,41 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
     var scanStarted=false;
 
+    var TALL_H=3000;
     function startScan(mode){
       if(scanStarted)return;
       scanStarted=true;
-      if(mode==='scrollable'||mode==='visible'){
+      simSite.style.pointerEvents='none';
+      iframe.style.pointerEvents='none';
+      iframe.style.willChange='transform';
+      if(mode==='iframe'){
         iframe.style.display='block';
         simSite.style.display='none';
+        iframe.style.height=TALL_H+'px';
+        iframe.style.transform='translateY(0)';
       }else{
         iframe.style.display='none';
         simSite.style.display='block';
+        simSite.scrollTop=0;
         totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
+        iframe.style.height='';
+        iframe.style.transform='';
       }
       scanLine.classList.add('active');
       scanLine.style.top='-5px';
-      simSite.style.pointerEvents='none';
-      iframe.style.pointerEvents='none';
       var start=Date.now();
+      var maxTrans=mode==='iframe'?Math.round(TALL_H*0.6):0;
 
       function scanFrame(){
         var elapsed=Date.now()-start;
         var t=Math.min(elapsed/duration,1);
         var ease=1-Math.pow(1-t,3);
 
-        if(mode==='scrollable'){
-          try{
-            var d=iframe.contentDocument||iframe.contentWindow.document;
-            var h=d.body.scrollHeight;
-            var ms=Math.max(0,h-iframe.offsetHeight);
-            var pos=ms*ease;
-            iframe.contentWindow.scrollTo(0,pos);
-            var scanY=pos/h*screenH;
-            scanLine.style.top=Math.min(scanY,screenH-2)+'px';
-          }catch(e){
-            mode='visible';
-          }
-        }
-
-        if(mode==='visible'){
+        if(mode==='iframe'){
+          iframe.style.transform='translateY('+(-maxTrans*ease)+'px)';
           var scanY=screenH*ease;
           scanLine.style.top=Math.min(scanY,screenH-2)+'px';
-        }
-
-        if(mode==='sim'){
+        }else{
           var pos=totalScroll*ease;
           simSite.scrollTop=pos;
           var scanY=pos/simContent.offsetHeight*screenH;
@@ -805,17 +798,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
         if(t<1){requestAnimationFrame(scanFrame)}
         else{
-          if(mode==='scrollable'){
-            try{
-              var d=iframe.contentDocument||iframe.contentWindow.document;
-              iframe.contentWindow.scrollTo(0,d.body.scrollHeight);
-            }catch(e){}
-          }else if(mode==='sim'){
-            simSite.scrollTop=totalScroll;
-          }
+          if(mode==='sim')simSite.scrollTop=totalScroll;
           scanLine.style.top=(screenH-2)+'px';
           simSite.style.pointerEvents='';
           iframe.style.pointerEvents='';
+          iframe.style.height='';
+          iframe.style.transform='';
+          iframe.style.willChange='';
           scanLine.classList.remove('active');
           clearInterval(msgTimer);
           preview.classList.add('scan-done');
@@ -825,7 +814,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       requestAnimationFrame(scanFrame);
     }
 
-    // Load the real site directly in the iframe
+    // Load the real site
     var loaded=false;
     iframe.onload=function(){
       if(loaded)return;
@@ -833,30 +822,15 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       clearTimeout(fbTimer);
       try{
         var d=iframe.contentDocument||iframe.contentWindow.document;
-        if(d&&d.body){
-          if(d.body.scrollHeight>80){
-            // Same-origin — auto-scroll
-            startScan('scrollable');
-          }else if(d.body.textContent&&d.body.textContent.match(/frame|denied|blocked|negar/i)){
-            // X-Frame-Options blocked — use sim
-            iframe.style.display='none';
-            simSite.style.display='block';
-            startScan('sim');
-          }else{
-            // Error or minimal page — show with scan line
-            startScan('visible');
-          }
-        }else{
-          startScan('visible');
-        }
-      }catch(e){
-        // Cross-origin — show site, scan line moves over it
-        startScan('visible');
-      }
+        if(d&&d.body&&d.body.textContent&&d.body.textContent.match(/frame|denied|blocked|negar/i)){
+          iframe.style.display='none';
+          simSite.style.display='block';
+          startScan('sim');
+        }else{startScan('iframe')}
+      }catch(e){startScan('iframe')}
     };
     iframe.src=raw;
 
-    // Fallback after 12s
     var fbTimer=setTimeout(function(){
       if(!scanStarted){
         iframe.style.display='none';
