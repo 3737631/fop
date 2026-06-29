@@ -183,22 +183,40 @@ function closeMenu(){
 }
 (function(){
   var c=document.getElementById('menuConsultoria');
+  if(!c)return;
   var cols=['#cc3333','#d4a017','#2d8a4e'];
-  var i=0;
-  setInterval(function(){
-    if(!c)return;
-    c.style.borderColor=cols[i];c.style.boxShadow='0 0 12px '+cols[i].replace(')',',0.15)');
-    i=(i+1)%cols.length;
-  },800);
+  c.addEventListener('mouseenter',function(){
+    if(this._ft)return;
+    var i=0;
+    this._ft=setInterval(function(){
+      c.style.borderColor=cols[i];c.style.boxShadow='0 0 12px '+cols[i].replace(')',',0.15)');
+      i++;
+      if(i>=cols.length){clearInterval(c._ft);c._ft=null;c.style.borderColor='';c.style.boxShadow=''}
+    },120);
+  });
+  c.addEventListener('mouseleave',function(){
+    if(this._ft){clearInterval(this._ft);this._ft=null}
+    this.style.borderColor='';this.style.boxShadow=''
+  });
 })();
 (function(){
   var links=document.querySelectorAll('.footer-legal a');
   var cols=['#cc3333','#d4a017','#2d8a4e'];
-  var i=0;
-  setInterval(function(){
-    links.forEach(function(l){l.style.color=cols[i]});
-    i=(i+1)%cols.length;
-  },800);
+  links.forEach(function(l){
+    l.addEventListener('mouseenter',function(){
+      if(this._ft)return;
+      var i=0;
+      this._ft=setInterval(function(){
+        l.style.color=cols[i];
+        i++;
+        if(i>=cols.length){clearInterval(l._ft);l._ft=null;l.style.color=''}
+      },120);
+    });
+    l.addEventListener('mouseleave',function(){
+      if(this._ft){clearInterval(this._ft);this._ft=null}
+      this.style.color=''
+    });
+  });
 })();
 </script>
 
@@ -1112,11 +1130,11 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
   <div class="footer-legal" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem 1.5rem;max-width:1000px;margin:0 auto">
     <span style="font-size:.5rem;color:rgba(245,245,245,.12);letter-spacing:.12em;text-transform:uppercase">&copy; 2026 Francisco Ortu&ntilde;o</span>
     <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
-    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Aviso Legal</a>
+     <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Aviso Legal</a>
     <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
-    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Pol&iacute;tica de Privacidad</a>
+    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Pol&iacute;tica de Privacidad</a>
     <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
-    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Pol&iacute;tica de Cookies</a>
+    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Pol&iacute;tica de Cookies</a>
   </div>
 </footer>
 
