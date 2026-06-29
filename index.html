@@ -543,7 +543,7 @@ gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body',
 
 gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'29% top', end:'50% top', scrub:1 } });
 gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'29% top', end:'50% top', scrub:1.5 } });
-    gsap.to('#bgText', { opacity:0, y:-30, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'42.5% top', scrub:1 } });
+    gsap.to('#bgText', { opacity:0, y:-30, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'42.5% top', scrub:1, toggleActions:'play none none reverse', onLeave:function(){gsap.set('#bgText',{opacity:0})}, onLeaveBack:function(){gsap.set('#bgText',{opacity:1})} } });
 
 gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'45.5% top', end:'56.5% top', scrub:1.5 } });
 gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'45.5% top', end:'56.5% top', scrub:1.5 } });
