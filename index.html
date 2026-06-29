@@ -738,7 +738,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     iframe.style.display='block';
     simSite.style.display='none';
     simSite.scrollTop=0;
-    iframe.src='about:blank';
     scanLine.classList.remove('active');
     btn.disabled=true;
 
@@ -826,38 +825,38 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       requestAnimationFrame(scanFrame);
     }
 
-    // Try proxy + srcdoc (allows scrolling ANY site)
+    // Load via proxy + srcdoc (enables scroll on ANY site)
     var baseDomain=raw.match(/^https?:\/\/[^\/]+/)[0];
-    fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(raw))
-      .then(function(r){return r.text()})
-      .then(function(html){
-        if(html&&html.length>100){
-          html=html.replace('<head>','<head><base href="'+baseDomain+'/">');
-          iframe.srcdoc=html;
-          iframe.onload=function(){
-            try{
-              var d=iframe.contentDocument||iframe.contentWindow.document;
-              if(d&&d.body&&d.body.scrollHeight>50){
-                startScan('scrollable');
-              }else{startScan('visible')}
-            }catch(e){startScan('visible')}
-          };
-          return;
-        }
-        throw new Error('no content');
-      })
-      .catch(function(){
-        // Fallback: direct iframe
+    var proxies=['https://api.allorigins.win/raw?url=','https://corsproxy.io/?url='];
+    var pi=0;
+    (function tryProxy(){
+      if(pi>=proxies.length){
         iframe.onload=function(){
           try{
             var d=iframe.contentDocument||iframe.contentWindow.document;
-            if(d&&d.body&&d.body.scrollHeight>50){
-              startScan('scrollable');
-            }else{startScan('visible')}
+            if(d&&d.body&&d.body.scrollHeight>50){startScan('scrollable')}
+            else{startScan('visible')}
           }catch(e){startScan('visible')}
         };
         iframe.src=raw;
-      });
+        return;
+      }
+      fetch(proxies[pi]+encodeURIComponent(raw))
+        .then(function(r){return r.text()})
+        .then(function(html){
+          if(!html||html.length<100)throw new Error();
+          html=html.replace('<head>','<head><base href="'+baseDomain+'/">');
+          iframe.onload=function(){
+            try{
+              var d=iframe.contentDocument||iframe.contentWindow.document;
+              if(d&&d.body&&d.body.scrollHeight>50){startScan('scrollable')}
+              else{startScan('visible')}
+            }catch(e){startScan('visible')}
+          };
+          iframe.srcdoc=html;
+        })
+        .catch(function(){pi++;tryProxy()});
+    })();
 
     // Fallback to sim after 6s
     setTimeout(function(){
