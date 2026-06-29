@@ -75,8 +75,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 .shader-section{position:relative;width:100%;min-height:150vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 @media(max-width:768px){.shader-section{min-height:auto}}
-#shaderCanvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block}
-@media(max-width:768px){#shaderCanvas{clip-path:inset(22% 0 38% 0);-webkit-clip-path:inset(22% 0 38% 0)}}
+#shaderCanvas{position:absolute;bottom:0;left:0;width:100%;height:80%;display:block;z-index:0}
 .shader-content{position:relative;z-index:1;text-align:center;max-width:800px;padding:2rem;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:100vh}
 @media(max-width:768px){.shader-content{min-height:auto;padding:1rem}}
 .shader-content h1{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;color:#F5F5F5;font-size:clamp(2rem,8vw,7rem);margin-bottom:1rem}
@@ -225,8 +224,8 @@ function closeMenu(){
 </section>
 </div>
 
-<div id="shaderBg" style="position:relative;z-index:1">
-<canvas id="shaderCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;pointer-events:none"></canvas>
+<div id="shaderBg" style="position:relative;z-index:1;overflow:hidden">
+<canvas id="shaderCanvas" style="position:absolute;bottom:0;left:0;width:100%;height:80%;display:block;pointer-events:none"></canvas>
 <section class="shader-section" id="shaderSection" style="position:relative;z-index:1;background:transparent!important">
   <div class="testimonials-wrap">
     <h2>Lo que dicen <span>mis clientes</span></h2>
@@ -289,10 +288,10 @@ function closeMenu(){
   <div class="slider-wrap">
     <div class="site-track" id="siteTrack"></div>
   </div>
-  <div style="text-align:center;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.4rem;pointer-events:none;opacity:.35">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(245,245,245,.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    <span style="display:flex;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.35)"></span><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.15)"></span><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.15)"></span><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.15)"></span><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.15)"></span></span>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(245,245,245,.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  <div style="text-align:center;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.4rem;opacity:.35">
+    <svg id="sliderPrev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(245,245,245,.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer"><polyline points="15 18 9 12 15 6"/></svg>
+    <span style="display:flex;gap:5px;pointer-events:none"><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.35)"></span><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.15)"></span><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.15)"></span><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.15)"></span><span style="width:5px;height:5px;border-radius:50%;background:rgba(245,245,245,.15)"></span></span>
+    <svg id="sliderNext" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(245,245,245,.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer"><polyline points="9 18 15 12 9 6"/></svg>
   </div>
   </div>
   <script>
@@ -387,6 +386,8 @@ function closeMenu(){
         wrap.classList.remove('grabbing');
         paused=false;
       });
+      document.getElementById('sliderPrev').addEventListener('click',function(e){e.stopPropagation();var s=document.querySelector('.site-card').offsetWidth+16;pos+=s;pos=Math.min(pos,0)});
+      document.getElementById('sliderNext').addEventListener('click',function(e){e.stopPropagation();var s=document.querySelector('.site-card').offsetWidth+16;pos-=s;if(pos<=-halfW)pos=0});
       window.addEventListener('resize',updateHalf);
 })();
 </script>
