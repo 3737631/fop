@@ -911,15 +911,15 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 <section id="consultingSection">
 <style>
 #consultingSection{max-width:1200px;margin:0 auto;padding:1.5rem 1rem 2rem;background:#0D0D0D}
-.consult-hero{text-align:center;margin-bottom:1.5rem;opacity:0;transform:translateY(30px)}
+.consult-hero{text-align:center;margin-bottom:2.5rem;opacity:0;transform:translateY(30px)}
 .consult-hero h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;line-height:.9}
 .consult-hero h2 em{color:#B0B0B0;font-weight:400;font-style:normal;display:block;font-size:clamp(.75rem,1.8vw,1.2rem);letter-spacing:.08em;margin-top:.2rem}
 .consult-hero p{font-size:clamp(.6rem,.75vw,.8rem);color:rgba(245,245,245,.45);max-width:600px;margin:.4rem auto 0;line-height:1.4}
-.consult-stats{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.consult-stats{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
 .consult-stat{text-align:center;opacity:0;transform:translateY(20px);min-width:80px}
 .consult-stat-num{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.03em;line-height:1}
 .consult-stat-label{font-size:.5rem;color:rgba(245,245,245,.4);letter-spacing:.12em;text-transform:uppercase;margin-top:.1rem}
-.consult-services{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-bottom:1.5rem}
+.consult-services{display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem;margin-bottom:2.5rem}
 .consult-service{background:rgba(255,255,255,.04);border-radius:8px;padding:1rem;opacity:0;transform:translateY(20px);transition:transform .4s cubic-bezier(.22,1,.36,1);flex:0 1 220px;max-width:280px}
 .consult-service:hover{transform:translateY(-3px)}
 .consult-service .svc-icon{margin-bottom:.3rem;display:flex;align-items:center;gap:.4rem}
@@ -978,11 +978,12 @@ ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top
 <div class="form-card">
 <h2>Consultor&iacute;a</h2>
 <p class="sub">Cu&eacute;ntame qu&eacute; necesitas y te asesoro sin compromiso</p>
-<form id="leadForm"><div class="fg"><input type="text" id="leadName" placeholder="Tu nombre" required autocomplete="off"><select id="leadService" required><option value="" disabled selected>Qu&eacute; necesitas?</option><option value="automatizar">Automatizar</option><option value="redisenar">Redise&ntilde;ar web</option><option value="construir">Construir desde 0</option></select><button type="submit">Solicitar consultor&iacute;a</button></div></form>
+<form id="leadForm"><div class="fg"><input type="text" id="leadName" placeholder="Tu nombre" required autocomplete="off"><select id="leadService" required><option value="" disabled selected>Qu&eacute; necesitas?</option><option value="automatizar">Automatizar</option><option value="redisenar">Redise&ntilde;ar web</option><option value="construir">Construir desde 0</option></select>    <button type="submit">Solicitar consultor&iacute;a</button></div></form>
 </div>
 <script>
 document.getElementById('leadForm').addEventListener('submit',function(e){e.preventDefault();var n=document.getElementById('leadName').value;var s=document.getElementById('leadService');var v=s.options[s.selectedIndex]?s.options[s.selectedIndex].text:'';if(n){var t='Hola%2C%20soy%20'+encodeURIComponent(n)+'.%20Me%20interesa%3A%20'+encodeURIComponent(v);window.open('https://wa.me/34611652518?text='+t,'_blank')}});
 document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('click',function(){document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})})});
+(function(){var s=document.getElementById('leadService');s.style.color=s.value?'#F5F5F5':'rgba(245,245,245,.18)';s.addEventListener('change',function(){s.style.color=this.value?'#F5F5F5':'rgba(245,245,245,.18')})})();
 </script>
 </section>
 
@@ -1038,8 +1039,8 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
 
   <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;width:100%;max-width:500px">
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem;width:100%">
-      <a class="cf-flip" href="https://www.instagram.com/paco.opp/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener">Instagram</a>
-      <a class="cf-flip" href="mailto:fortpay107@gmail.com">Gmail</a>
+      <a class="cf-flip" href="https://ig.me/m/paco.opp" target="_blank" rel="noopener">Instagram</a>
+      <a class="cf-flip" href="mailto:fortpay107@gmail.com">Email</a>
       <a class="cf-flip" href="tel:+34611652518">Ll&aacute;manos</a>
     </div>
 
@@ -1055,7 +1056,17 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
   <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2rem;width:100%">
     <span style="font-size:.5rem;color:rgba(245,245,245,.15);letter-spacing:.12em;text-transform:uppercase">&copy; 2026 Francisco Ortu&ntilde;o</span>
     <span class="cf-pill cf-pill-sm" style="cursor:default;font-size:.45rem;padding:.25rem .6rem;gap:.3rem">Dise&ntilde;o Web</span>
-    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="cf-pill" style="width:2.2rem;height:2.2rem;border-radius:50%;justify-content:center;padding:0;gap:0;font-size:.7rem" title="Volver arriba">↑</button>
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="cf-pill" style="width:2.2rem;height:2.2rem;border-radius:50%;justify-content:center;padding:0;gap:0;font-size:.7rem" title="Volver arriba">&uarr;</button>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-top:.5rem">
+    <span style="display:inline-block;width:1rem;height:1rem;border-radius:50%;background:#F5F5F5;border:1px solid rgba(255,255,255,.1)"></span>
+    <span style="display:inline-block;width:1rem;height:1rem;border-radius:50%;background:rgba(245,245,245,.5);border:1px solid rgba(255,255,255,.1)"></span>
+    <span style="display:inline-block;width:1rem;height:1rem;border-radius:50%;background:rgba(245,245,245,.2);border:1px solid rgba(255,255,255,.1)"></span>
+    <span style="display:inline-block;width:1rem;height:1rem;border-radius:50%;background:#B0B0B0;border:1px solid rgba(255,255,255,.1)"></span>
+    <span style="display:inline-block;width:1rem;height:1rem;border-radius:50%;background:#0D0D0D;border:1px solid rgba(255,255,255,.15)"></span>
+    <span style="display:inline-block;width:1rem;height:1rem;border-radius:50%;background:#cc3333;border:1px solid rgba(255,255,255,.1)"></span>
+    <span style="display:inline-block;width:1rem;height:1rem;border-radius:50%;background:#d4a017;border:1px solid rgba(255,255,255,.1)"></span>
+    <span style="font-size:.4rem;color:rgba(245,245,245,.12);letter-spacing:.1em;text-transform:uppercase;margin-left:.2rem">Paleta</span>
   </div>
 </div>
 
