@@ -139,7 +139,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
     <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Mis webs</a>
     <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Mejoras</a>
     <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Agente IA</a>
-    <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:900;color:#F5F5F5;text-decoration:none;letter-spacing:-.03em;background:rgba(255,255,255,.08);padding:.3rem 1.5rem;border-radius:9999px;border:1px solid rgba(245,245,245,.15);transition:all .3s" onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">Consultor&iacute;a</a>
+    <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:900;color:#F5F5F5;text-decoration:none;letter-spacing:-.03em;background:rgba(255,255,255,.06);padding:.3rem 1.5rem;border-radius:9999px;border:1px solid rgba(245,245,245,.1);transition:all .3s" id="menuConsultoria" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">Consultor&iacute;a</a>
   </nav>
 </div>
 
@@ -180,6 +180,16 @@ function closeMenu(){
   l3.style.transform='translateY(7px)';l3.style.opacity='1';
   svg.style.color='rgba(245,245,245,.6)';
 }
+(function(){
+  var c=document.getElementById('menuConsultoria');
+  var colors=['rgba(245,245,245,.3)','rgba(245,245,245,.15)','rgba(245,245,245,.05)','rgba(180,180,180,.2)','rgba(200,200,200,.25)'];
+  var i=0;
+  setInterval(function(){
+    if(!c)return;
+    c.style.borderColor=colors[i];
+    i=(i+1)%colors.length;
+  },1800);
+})();
 </script>
 
 <div style="height:470vh"></div>
