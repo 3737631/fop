@@ -40,7 +40,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 .carousel-section{position:sticky;top:0;width:100%;height:100vh;z-index:100;background:#0D0D0D}
 .carousel{position:relative;width:100%;height:100%;display:flex;overflow:hidden;align-items:stretch}
-.panel{position:relative;flex:2;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex .9s cubic-bezier(.65,0,.35,1);min-height:0}
+.panel{position:relative;flex:2;display:flex;align-items:center;justify-content:center;gap:clamp(.6rem,1.8vw,1.5rem);overflow:hidden;transition:flex .9s cubic-bezier(.65,0,.35,1);min-height:0;cursor:pointer}
 .panel.active{flex:6}
 .panel[data-color=red]{background:#B91C1C}
 .panel[data-color=yellow]{background:#FFD300}
@@ -183,13 +183,22 @@ function closeMenu(){
 }
 (function(){
   var c=document.getElementById('menuConsultoria');
-  var colors=['rgba(245,245,245,.3)','rgba(245,245,245,.15)','rgba(245,245,245,.05)','rgba(180,180,180,.2)','rgba(200,200,200,.25)'];
+  var cols=['#cc3333','#d4a017','#2d8a4e'];
   var i=0;
   setInterval(function(){
     if(!c)return;
-    c.style.borderColor=colors[i];
-    i=(i+1)%colors.length;
-  },1800);
+    c.style.borderColor=cols[i];c.style.boxShadow='0 0 12px '+cols[i].replace(')',',0.15)');
+    i=(i+1)%cols.length;
+  },800);
+})();
+(function(){
+  var links=document.querySelectorAll('.footer-legal a');
+  var cols=['#cc3333','#d4a017','#2d8a4e'];
+  var i=0;
+  setInterval(function(){
+    links.forEach(function(l){l.style.color=cols[i]});
+    i=(i+1)%cols.length;
+  },800);
 })();
 </script>
 
@@ -197,15 +206,15 @@ function closeMenu(){
 <div id="carousel-wrapper" style="position:relative;height:300vh;z-index:10">
 <section class="carousel-section" id="carousel-section">
   <div class="carousel" id="carousel">
-    <div class="panel active" data-color="red" data-index="0">
+    <div class="panel active" data-color="red" data-index="0" onclick="document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})">
       <span class="num">1</span>
       <span class="caption">Planificamos tu proyecto</span>
     </div>
-    <div class="panel" data-color="yellow" data-index="1">
+    <div class="panel" data-color="yellow" data-index="1" onclick="document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})">
       <span class="num">2</span>
       <span class="caption">Dise&ntilde;amos tu web</span>
     </div>
-    <div class="panel" data-color="green" data-index="2">
+    <div class="panel" data-color="green" data-index="2" onclick="document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})">
       <span class="num">3</span>
       <span class="caption">Desarrollamos y lanzamos</span>
     </div>
@@ -1097,7 +1106,7 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
 </section>
 
 <footer style="position:relative;z-index:30;width:100%;padding:1.5rem 1rem;background:#080808;border-top:1px solid rgba(255,255,255,.04)">
-  <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem 1.5rem;max-width:1000px;margin:0 auto">
+  <div class="footer-legal" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem 1.5rem;max-width:1000px;margin:0 auto">
     <span style="font-size:.5rem;color:rgba(245,245,245,.12);letter-spacing:.12em;text-transform:uppercase">&copy; 2026 Francisco Ortu&ntilde;o</span>
     <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
     <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Aviso Legal</a>
