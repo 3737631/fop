@@ -131,8 +131,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 <div id="menuOverlay" style="position:fixed;top:0;right:0;width:100%;height:100%;z-index:90;background:rgba(13,13,13,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;pointer-events:none;transition:opacity .5s ease">
   <nav style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;font-family:'Barlow Condensed','Impact',sans-serif;text-transform:uppercase">
-    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Mis Webs</a>
-    <a href="#" onclick="closeMenu();document.getElementById('carousel-section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">C&oacute;mo trabajamos</a>
+    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Proyectos</a>
     <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Auditor&iacute;a</a>
     <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Consultor&iacute;a</a>
     <a href="#" onclick="closeMenu();document.getElementById('flipLinks').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Contacto</a>
@@ -508,7 +507,7 @@ gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body',
 
 gsap.to(coin, { rotationX:85, rotationY:360, ease:'power3.out', scrollTrigger:{ trigger:'body', start:'29% top', end:'50% top', scrub:1 } });
 gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'29% top', end:'50% top', scrub:1.5 } });
-gsap.to('#bgText', { opacity:0, y:-30, filter:'blur(8px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'42.5% top', scrub:1 } });
+    gsap.to('#bgText', { opacity:0, y:-30, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'42.5% top', scrub:1 } });
 
 gsap.to(coin, { opacity:0, scale:0.2, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'45.5% top', end:'56.5% top', scrub:1.5 } });
 gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'45.5% top', end:'56.5% top', scrub:1.5 } });
