@@ -73,7 +73,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .particle.spark{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#F5F5F5,#888);box-shadow:0 0 8px rgba(245,245,245,.4)}
 .particle.shard{width:4px;height:7px;border-radius:1px;background:linear-gradient(135deg,#F5F5F5,#666);box-shadow:0 0 4px rgba(245,245,245,.2)}
 
-.shader-section{position:relative;width:100%;min-height:150vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.shader-section{position:relative;width:100%;min-height:150vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 @media(max-width:768px){.shader-section{min-height:auto}}
 #shaderCanvas{position:absolute;bottom:0;left:0;width:100%;height:100%;display:block;z-index:0}
 .shader-content{position:relative;z-index:1;text-align:center;max-width:800px;padding:2rem;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:100vh}
@@ -253,7 +253,7 @@ function closeMenu(){
     </div>
     <div class="t-scroll-hint">desliza hacia arriba</div>
   </div>
-  <div class="prototipo-wrap" style="position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%),linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%),linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%);-webkit-mask-composite:intersect;mask-composite:intersect">
+  <div class="prototipo-wrap" style="position:relative;left:50%;margin-left:-50vw;width:100vw;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%)">
 <canvas id="shaderCanvas" style="position:absolute;bottom:0;left:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0"></canvas>
   <div class="shader-content" id="prototipoContent" style="position:relative;z-index:1">
     <h1>Creamos un prototipo gratis sin compromiso</h1>
