@@ -729,34 +729,22 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     {name:'Estructura',desc:'Modularidad, reutilizaci\u00F3n y escalabilidad.'}
   ];
 
-  function tryIframe(){
-    try{
-      var d=iframe.contentDocument||iframe.contentWindow.document;
-      if(d&&d.body&&d.body.scrollHeight>50){
-        iframe.style.display='block';
-        simSite.style.display='none';
-        return true;
-      }
-    }catch(e){}
-    return false;
-  }
-
   btn.addEventListener('click',function(){
     var raw=input.value.trim();
     if(!raw)return;
     if(!raw.startsWith('http://')&&!raw.startsWith('https://')) raw='https://'+raw;
     results.classList.remove('show');
     preview.classList.remove('scan-done');
-    simSite.style.display='block';
+    iframe.style.display='block';
+    simSite.style.display='none';
     simSite.scrollTop=0;
-    iframe.style.display='none';
-    iframe.src='';
+    iframe.src='about:blank';
     scanLine.classList.remove('active');
     btn.disabled=true;
 
     try{urlLabel.textContent=new URL(raw).hostname}catch(e){urlLabel.textContent=raw}
 
-    var usingIframe=false;
+    var usingIframe=null;
     var li=0;
     scanMsg.textContent='Cargando sitio web\u2026';
     var msgTimer=setInterval(function(){
@@ -768,16 +756,30 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     var totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
 
     iframe.src=raw;
-    var iframeChecked=false;
-    var iframeTimer=setTimeout(function(){
-      if(!iframeChecked&&tryIframe()){usingIframe=true}
-      iframeChecked=true;
-    },1500);
+    var iframeLoaded=false;
+    var fallbackTimer=setTimeout(function(){
+      if(!iframeLoaded){
+        usingIframe=false;
+        iframe.style.display='none';
+        simSite.style.display='block';
+        totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
+      }
+    },4000);
 
     iframe.onload=function(){
-      clearTimeout(iframeTimer);
-      if(!iframeChecked&&tryIframe()){usingIframe=true}
-      iframeChecked=true;
+      if(iframeLoaded)return;
+      iframeLoaded=true;
+      clearTimeout(fallbackTimer);
+      try{
+        var d=iframe.contentDocument||iframe.contentWindow.document;
+        if(d&&d.body&&d.body.scrollHeight>50){
+          usingIframe='scrollable';
+        }else{
+          usingIframe='visible';
+        }
+      }catch(e){
+        usingIframe='visible';
+      }
     };
 
     function startScan(){
@@ -792,7 +794,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         var t=Math.min(elapsed/duration,1);
         var ease=1-Math.pow(1-t,3);
 
-        if(usingIframe){
+        if(usingIframe==='scrollable'){
           try{
             var d=iframe.contentDocument||iframe.contentWindow.document;
             var h=d.body.scrollHeight;
@@ -802,15 +804,16 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
             var scanY=pos/h*screenH;
             scanLine.style.top=Math.min(scanY,screenH-2)+'px';
           }catch(e){
-            usingIframe=false;
-            iframe.style.display='none';
-            simSite.style.display='block';
-            simSite.scrollTop=0;
-            totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
+            usingIframe='visible';
           }
         }
 
-        if(!usingIframe){
+        if(usingIframe==='visible'){
+          var scanY=screenH*ease;
+          scanLine.style.top=Math.min(scanY,screenH-2)+'px';
+        }
+
+        if(usingIframe===null||usingIframe===false){
           var pos=totalScroll*ease;
           simSite.scrollTop=pos;
           var scanY=pos/simContent.offsetHeight*screenH;
@@ -819,12 +822,12 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
         if(t<1){requestAnimationFrame(scanFrame)}
         else{
-          if(usingIframe){
+          if(usingIframe==='scrollable'){
             try{
               var d=iframe.contentDocument||iframe.contentWindow.document;
               iframe.contentWindow.scrollTo(0,d.body.scrollHeight);
             }catch(e){}
-          }else{
+          }else if(usingIframe===null||usingIframe===false){
             simSite.scrollTop=totalScroll;
           }
           scanLine.style.top=(screenH-2)+'px';
