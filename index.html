@@ -74,8 +74,10 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 .particle.shard{width:4px;height:7px;border-radius:1px;background:linear-gradient(135deg,#F5F5F5,#666);box-shadow:0 0 4px rgba(245,245,245,.2)}
 
 .shader-section{position:relative;width:100%;min-height:150vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+@media(max-width:768px){.shader-section{min-height:auto}}
 #shaderCanvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block}
 .shader-content{position:relative;z-index:1;text-align:center;max-width:800px;padding:2rem;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:100vh}
+@media(max-width:768px){.shader-content{min-height:auto;padding:1rem}}
 .shader-content h1{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;color:#F5F5F5;font-size:clamp(2rem,8vw,7rem);margin-bottom:1rem}
 .shader-content p{font-family:'Inter',sans-serif;font-weight:300;color:rgba(245,245,245,.6);font-size:clamp(.75rem,1.1vw,1.1rem);line-height:1.7;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
 .shader-content .status{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:2rem}
@@ -130,11 +132,14 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 </button>
 
 <div id="menuOverlay" style="position:fixed;top:0;right:0;width:100%;height:100%;z-index:90;background:rgba(13,13,13,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;pointer-events:none;transition:opacity .5s ease">
-  <nav style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;font-family:'Barlow Condensed','Impact',sans-serif;text-transform:uppercase">
-    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Proyectos</a>
-    <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Auditor&iacute;a</a>
-    <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Consultor&iacute;a</a>
-    <a href="#" onclick="closeMenu();document.getElementById('flipLinks').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Contacto</a>
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;font-family:'Barlow Condensed','Impact',sans-serif;text-transform:uppercase;text-align:center">
+    <a href="#" onclick="closeMenu();window.scrollTo({top:0,behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Home</a>
+    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Opiniones</a>
+    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Prototipo</a>
+    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Mis webs</a>
+    <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Mejoras</a>
+    <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Agente IA</a>
+    <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:900;color:#F5F5F5;text-decoration:none;letter-spacing:-.03em;background:rgba(255,255,255,.08);padding:.3rem 1.5rem;border-radius:9999px;border:1px solid rgba(245,245,245,.15);transition:all .3s" onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">Consultor&iacute;a</a>
   </nav>
 </div>
 
@@ -650,7 +655,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 </style>
 <section id="auditSection">
 <style>
-#auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:2rem 1rem 3rem;max-width:1200px;margin:0 auto;width:100%;background:#0D0D0D}
+#auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:2rem 1rem 1.5rem;max-width:1200px;margin:0 auto;width:100%;background:#0D0D0D}
 .audit-header{text-align:center;margin-bottom:1.5rem}
 .audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
 .audit-header p{font-size:clamp(.65rem,.8vw,.85rem);color:rgba(245,245,245,.18);letter-spacing:.08em;margin-top:.3rem}
