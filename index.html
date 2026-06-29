@@ -614,8 +614,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.85rem;margin-bottom:2.5rem}
 .audit-card{background:rgba(255,255,255,.04);border-radius:8px;padding:clamp(1rem,1.5vw,1.5rem);transition:transform .4s cubic-bezier(.22,1,.36,1)}
 .audit-card:hover{transform:translateY(-3px)}
-.audit-card-hd{display:flex;align-items:center;gap:.65rem;margin-bottom:.25rem}
-.audit-card-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:rgba(245,245,245,.35)}
+.audit-card-hd{margin-bottom:.25rem}
 .audit-card h4{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1rem,1.1vw,1.15rem);font-weight:700;color:#F5F5F5;letter-spacing:-.02em;text-transform:uppercase;margin:0}
 .audit-card p{font-size:.78rem;font-weight:300;color:rgba(245,245,245,.5);line-height:1.5;margin:.15rem 0 .5rem}
 .audit-card-ft{display:flex;align-items:center;justify-content:space-between}
@@ -684,16 +683,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 (function(){
   var input=document.getElementById('auditUrl');
   var btn=document.getElementById('auditBtn');
-  var stage=document.getElementById('auditStage');
   var preview=document.getElementById('auditPreview');
   var simSite=document.getElementById('simSite');
-  var simContent=document.getElementById('simContent');
   var auditIframe=document.getElementById('auditIframe');
   var scanLine=document.getElementById('scanLine');
   var scanMsg=document.getElementById('scanMsg');
   var results=document.getElementById('auditResults');
   var kpiCircle=document.getElementById('kpiCircle');
-  var kpiWrap=document.getElementById('kpiWrap');
   var kpiNumber=document.getElementById('kpiNumber');
   var kpiHeadline=document.getElementById('kpiHeadline');
   var grid=document.getElementById('auditGrid');
@@ -721,17 +717,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     return a
   }
 
-  function clamp(n,a,b){return Math.min(b,Math.max(a,n))}
-
-  function pctFor(base,url,i){return clamp(base+(hashUrl(url+i)%14-7),50,99)}
-
   var analyses=[
-    {icon:'Z',name:'Velocidad de carga',desc:'Tiempo de respuesta, renderizado y recursos.',pct:88},
-    {icon:'D',name:'Dise\u00F1o visual',desc:'Jerarqu\u00EDa visual, paleta y tipograf\u00EDa.',pct:82},
-    {icon:'M',name:'UX m\u00F3vil',desc:'Adaptaci\u00F3n responsive y experiencia t\u00E1ctil.',pct:91},
-    {icon:'S',name:'SEO b\u00E1sico',desc:'Meta tags, sem\u00E1ntica y datos estructurados.',pct:76},
-    {icon:'A',name:'Accesibilidad',desc:'Contraste, ARIA y navegaci\u00F3n por teclado.',pct:85},
-    {icon:'E',name:'Estructura',desc:'Modularidad, reutilizaci\u00F3n y escalabilidad.',pct:79}
+    {name:'Velocidad de carga',desc:'Tiempo de respuesta, renderizado y recursos.'},
+    {name:'Dise\u00F1o visual',desc:'Jerarqu\u00EDa visual, paleta y tipograf\u00EDa.'},
+    {name:'UX m\u00F3vil',desc:'Adaptaci\u00F3n responsive y experiencia t\u00E1ctil.'},
+    {name:'SEO b\u00E1sico',desc:'Meta tags, sem\u00E1ntica y datos estructurados.'},
+    {name:'Accesibilidad',desc:'Contraste, ARIA y navegaci\u00F3n por teclado.'},
+    {name:'Estructura',desc:'Modularidad, reutilizaci\u00F3n y escalabilidad.'}
   ];
 
   btn.addEventListener('click',function(){
@@ -757,7 +749,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
     function startScan(){
       scanLine.classList.add('active');
-      scanLine.style.top='0px';
+      scanLine.style.top='-1px';
       var screenH=document.querySelector('.mockup-screen').offsetHeight;
       var start=Date.now();
 
@@ -765,7 +757,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         var elapsed=Date.now()-start;
         var t=Math.min(elapsed/duration,1);
         var ease=1-Math.pow(1-t,3);
-        scanLine.style.top=(screenH-2)*ease+'px';
+        scanLine.style.top=(-1+(screenH-1)*ease)+'px';
         if(t<1){requestAnimationFrame(scanFrame)}
         else{
           scanLine.style.top=(screenH-2)+'px';
@@ -813,7 +805,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     },100);
 
     function showResults(){
-      var base=78+hashUrl(raw)%18;
+      var base=60+hashUrl(raw)%23;
       kpiNumber.textContent='0%';
       kpiHeadline.textContent=base+'%';
       kpiCircle.style.strokeDashoffset=326.7;
@@ -822,12 +814,12 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       var items=shuffle(analyses.slice());
       grid.innerHTML='';
       items.forEach(function(a,i){
-        var p=pctFor(a.pct,raw,i);
+        var p=60+hashUrl(raw+a.name+i)%23;
         var c=document.createElement('div');
         c.className='audit-card';
         c.style.opacity='0';
         c.style.transform='translateY(10px)';
-        c.innerHTML='<div class="audit-card-hd"><div class="audit-card-icon">'+a.icon+'</div><h4>'+a.name+'</h4></div><p>'+a.desc+'</p><div class="audit-card-ft"><span class="audit-tag">Alto impacto</span><span class="audit-val">'+p+'%</span></div>';
+        c.innerHTML='<div class="audit-card-hd"><h4>'+a.name+'</h4></div><p>'+a.desc+'</p><div class="audit-card-ft"><span class="audit-tag">Alto impacto</span><span class="audit-val">'+p+'%</span></div>';
         grid.appendChild(c);
       });
 
