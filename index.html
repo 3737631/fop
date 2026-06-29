@@ -597,8 +597,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .sim-block:nth-child(2){background:rgba(255,255,255,.015)}
 .sim-block:nth-child(4){background:rgba(255,255,255,.015)}
 .sim-block:nth-child(5){height:clamp(50px,7vw,85px)}
-.mockup-screen iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;background:#0D0D0D;opacity:0;transition:opacity .7s ease;z-index:1}
-.mockup-screen iframe.loaded{opacity:1}
+.mockup-screen iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;background:#0D0D0D;opacity:0;transition:opacity .7s ease;z-index:1;display:none}
+.mockup-screen iframe.loaded{opacity:1;display:block}
 .scan-line{position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,245,245,.6),rgba(245,245,245,.8),rgba(245,245,245,.6),transparent);z-index:3;top:0;opacity:0;transition:none;pointer-events:none;box-shadow:0 0 12px rgba(245,245,245,.3),0 0 30px rgba(245,245,245,.15)}
 .scan-line.active{opacity:1}
 .audit-scan-status{text-align:center;padding:.8rem 0 0;min-height:2rem}
@@ -606,29 +606,27 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-results{opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
 .audit-results.show{opacity:1;transform:translateY(0);pointer-events:auto}
 .audit-kpi{text-align:center;margin-bottom:2.5rem}
-.kpi-wrap{display:inline-flex;align-items:center;justify-content:center;position:relative;width:120px;height:120px}
+.kpi-wrap{display:inline-flex;align-items:center;justify-content:center;position:relative;width:130px;height:130px}
 .kpi-wrap svg{position:absolute;width:100%;height:100%;transform:rotate(-90deg)}
-.kpi-wrap span{position:relative;z-index:1;font-size:2rem;font-weight:800;color:#F5F5F5;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
-.audit-kpi .sub{font-size:.55rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
-.audit-kpi .hl{font-size:clamp(1rem,1.8vw,1.4rem);color:#F5F5F5;font-weight:600;margin-top:.5rem;letter-spacing:-.02em}
-.audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.85rem;margin-bottom:2.5rem}
-.audit-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:.9rem 1rem;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
-.audit-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(255,255,255,.04)}
+.kpi-wrap span{position:relative;z-index:1;font-size:2.2rem;font-weight:800;color:#F5F5F5;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.audit-kpi .sub{font-size:.6rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
+.audit-kpi .hl{font-size:clamp(1rem,1.8vw,1.5rem);color:#F5F5F5;font-weight:600;margin-top:.6rem;letter-spacing:-.02em}
+.audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.85rem;margin-bottom:2.5rem}
+.audit-card{background:rgba(255,255,255,.04);border-radius:8px;padding:clamp(1rem,1.5vw,1.5rem);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.audit-card:hover{transform:translateY(-3px)}
 .audit-card-hd{display:flex;align-items:center;gap:.65rem;margin-bottom:.25rem}
-.audit-card-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:rgba(245,245,245,.5);background:rgba(255,255,255,.06)}
-.audit-card h4{font-size:.9rem;font-weight:600;color:#F5F5F5;letter-spacing:-.01em;margin:0}
-.audit-card p{font-size:.78rem;color:rgba(245,245,245,.4);line-height:1.4;margin:.1rem 0 .35rem}
+.audit-card-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:rgba(245,245,245,.35)}
+.audit-card h4{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1rem,1.1vw,1.15rem);font-weight:700;color:#F5F5F5;letter-spacing:-.02em;text-transform:uppercase;margin:0}
+.audit-card p{font-size:.78rem;font-weight:300;color:rgba(245,245,245,.5);line-height:1.5;margin:.15rem 0 .5rem}
 .audit-card-ft{display:flex;align-items:center;justify-content:space-between}
-.audit-tag{font-size:.6rem;padding:.15rem .5rem;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(245,245,245,.45);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
-.audit-val{font-size:.9rem;font-weight:700;color:rgba(245,245,245,.5);font-variant-numeric:tabular-nums}
+.audit-tag{font-size:.58rem;padding:.2rem .5rem;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(245,245,245,.4);letter-spacing:.06em;text-transform:uppercase;font-weight:400}
+.audit-val{font-size:.95rem;font-weight:700;color:rgba(245,245,245,.5);font-variant-numeric:tabular-nums}
 .audit-ctas{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
 .audit-ctas button{padding:.6rem 1.8rem;border-radius:9999px;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em}
 .audit-ctas .cta-p{border:1px solid rgba(245,245,245,.2);background:transparent;color:#F5F5F5}
 .audit-ctas .cta-p:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
 .audit-ctas .cta-s{border:1px solid rgba(245,245,245,.1);background:transparent;color:rgba(245,245,245,.45)}
 .audit-ctas .cta-s:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.25)}
-.audit-error{display:none;text-align:center;padding:.7rem;color:#f87171;font-size:.72rem;background:rgba(248,113,113,.06);border-radius:10px;margin:.8rem auto 0;max-width:400px}
-.audit-error.show{display:block}
 </style>
 
 <div class="audit-header">
@@ -640,8 +638,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <input type="url" id="auditUrl" placeholder="https://tudominio.com" autocomplete="off" spellcheck="false" />
   <button class="audit-btn" id="auditBtn">Analizar web</button>
 </div>
-
-<div class="audit-error" id="auditError"></div>
 
 <div class="audit-stage" id="auditStage">
   <div class="audit-preview" id="auditPreview">
@@ -658,7 +654,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
           <div class="sim-block">Contacto &mdash; Hablemos</div>
         </div>
       </div>
-      <iframe id="auditIframe" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
+      <iframe id="auditIframe" sandbox="allow-scripts allow-same-origin"></iframe>
       <div class="scan-line" id="scanLine"></div>
     </div>
   </div>
@@ -669,8 +665,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <div class="audit-kpi">
     <div class="kpi-wrap" id="kpiWrap">
       <svg viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="5"/>
-        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(245,245,245,.6)" stroke-width="5" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="kpiCircle"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="6"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(245,245,245,.5)" stroke-width="6" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="kpiCircle"/>
       </svg>
       <span id="kpiNumber">0%</span>
     </div>
@@ -701,7 +697,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   var kpiNumber=document.getElementById('kpiNumber');
   var kpiHeadline=document.getElementById('kpiHeadline');
   var grid=document.getElementById('auditGrid');
-  var error=document.getElementById('auditError');
 
   var labels=[
     'Analizando velocidad de carga\u2026',
@@ -743,11 +738,10 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     var raw=input.value.trim();
     if(!raw)return;
     if(!raw.startsWith('http://')&&!raw.startsWith('https://')) raw='https://'+raw;
-    error.classList.remove('show');
     results.classList.remove('show');
     preview.classList.remove('scan-done');
     simSite.style.display='';
-    auditIframe.src='';
+    auditIframe.src='about:blank';
     auditIframe.classList.remove('loaded');
     scanLine.classList.remove('active');
     btn.disabled=true;
@@ -758,16 +752,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       if(li<labels.length){scanMsg.textContent=labels[li];li++}
     },320);
 
-    var iframeLoaded=false;
-    var iframeErrored=false;
+    var resolved=false;
     var duration=3400;
-    var scanH;
 
     function startScan(){
       scanLine.classList.add('active');
       scanLine.style.top='0px';
       var screenH=document.querySelector('.mockup-screen').offsetHeight;
-      scanH=screenH;
       var start=Date.now();
 
       function scanFrame(){
@@ -784,45 +775,42 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
           setTimeout(showResults,400);
         }
       }
+      requestAnimationFrame(scanFrame);
+    }
 
-      if(iframeLoaded||iframeErrored){
-        requestAnimationFrame(scanFrame);
-      }
+    function useFallback(){
+      if(resolved)return;
+      resolved=true;
+      auditIframe.src='about:blank';
+      auditIframe.classList.remove('loaded');
+      simSite.style.display='';
+      startScan();
+    }
+
+    function useIframe(){
+      if(resolved)return;
+      resolved=true;
+      auditIframe.classList.add('loaded');
+      simSite.style.display='none';
+      startScan();
     }
 
     setTimeout(function(){
       auditIframe.src=raw;
+      var loadTimer=setTimeout(function(){
+        if(!resolved)useFallback();
+      },5000);
       auditIframe.addEventListener('load',function onload(){
-        iframeLoaded=true;
-        auditIframe.classList.add('loaded');
-        simSite.style.display='none';
         auditIframe.removeEventListener('load',onload);
-        startScan();
+        clearTimeout(loadTimer);
+        useIframe();
       });
       auditIframe.addEventListener('error',function onerror(){
-        iframeErrored=true;
-        simSite.style.display='';
-        auditIframe.classList.remove('loaded');
         auditIframe.removeEventListener('error',onerror);
-        startScan();
+        clearTimeout(loadTimer);
+        useFallback();
       });
     },100);
-
-    var retries=0;
-    var maxRetries=20;
-    function checkLoad(){
-      retries++;
-      if(iframeLoaded||iframeErrored)return;
-      if(retries>=maxRetries){
-        iframeErrored=true;
-        simSite.style.display='';
-        auditIframe.classList.remove('loaded');
-        startScan();
-        return;
-      }
-      setTimeout(checkLoad,200);
-    }
-    setTimeout(checkLoad,200);
 
     function showResults(){
       var base=78+hashUrl(raw)%18;
