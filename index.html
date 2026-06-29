@@ -567,7 +567,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
 <hr class="section-divider">
 <style>
-.section-divider{height:1px;border:none;background:linear-gradient(90deg,transparent,rgba(245,245,245,.1),transparent);margin:-15px auto 0;max-width:70%}
+.section-divider{height:1px;border:none;background:linear-gradient(90deg,transparent,rgba(245,245,245,.12),transparent);margin:-15px auto 0;max-width:70%}
 </style>
 <section id="auditSection">
 <style>
@@ -677,8 +677,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   </div>
   <div class="audit-grid" id="auditGrid"></div>
   <div class="audit-ctas">
-    <button class="cta-p">Mejorar mi web ahora</button>
-    <button class="cta-s">Ver informe completo</button>
+    <button class="cta-p cta-form">Mejorar mi web ahora</button>
+    <button class="cta-s cta-form">Ver informe completo</button>
   </div>
 </div>
 
@@ -932,11 +932,11 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
   
 
-<div class="consult-cta" id="consultCta">
-  <h3>&iquest;Listo para transformar tu empresa?</h3>
-  <p>Agenda una consultor&iacute;a gratuita y descubre c&oacute;mo podemos ayudarte.</p>
-  <button>Solicitar consultor&iacute;a</button>
-</div>
+  <div class="consult-cta" id="consultCta">
+    <h3>&iquest;Listo para transformar tu empresa?</h3>
+    <p>Agenda una consultor&iacute;a gratuita y descubre c&oacute;mo podemos ayudarte.</p>
+    <button class="cta-form">Solicitar consultor&iacute;a</button>
+  </div>
 
 <script>
 ScrollTrigger.create({trigger:'#consultHero',start:'top bottom-=10%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('#consultHero',{opacity:1,y:0,duration:1.2,ease:'power4.out'})}});
@@ -945,6 +945,31 @@ ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top
 ScrollTrigger.create({trigger:'#consultCta',start:'top bottom-=10%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('#consultCta',{opacity:1,y:0,duration:1.2,ease:'power4.out'})}});
 </script>
 </section>
+
+<hr class="section-divider">
+
+<section id="contactForm">
+<style>
+#contactForm{max-width:600px;margin:0 auto;padding:4rem 1rem 5rem;text-align:center;background:#0D0D0D}
+#contactForm h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.5rem,3.5vw,2.8rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:.5rem}
+#contactForm p{font-size:.75rem;color:rgba(245,245,245,.4);margin-bottom:1.5rem}
+#contactForm .fg{display:flex;gap:.6rem;max-width:380px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+#contactForm input{flex:1;min-width:160px;padding:.7rem 1rem;border-radius:10px;border:1.5px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);color:#F5F5F5;font-size:.85rem;outline:none;transition:border-color .3s}
+#contactForm input:focus{border-color:rgba(245,245,245,.3)}
+#contactForm input::placeholder{color:rgba(245,245,245,.2)}
+#contactForm button{padding:9px 26px;border-radius:9999px;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:500;color:#F5F5F5;background:transparent;border:1px solid rgba(245,245,245,.2);cursor:pointer;transition:transform .3s,box-shadow .3s}
+#contactForm button:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
+</style>
+<h2>¿Hablamos?</h2>
+<p>Déjame tu nombre y te contactaré sin compromiso</p>
+<form id="leadForm"><div class="fg"><input type="text" id="leadName" placeholder="Tu nombre" required autocomplete="off"><button type="submit">Enviar</button></div></form>
+<script>
+document.getElementById('leadForm').addEventListener('submit',function(e){e.preventDefault();var n=document.getElementById('leadName').value;if(n)alert('Gracias '+n+', te contactaré pronto.')});
+document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('click',function(){document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})})});
+</script>
+</section>
+
+<hr class="section-divider">
 
 <section id="flipLinks">
 <style>
