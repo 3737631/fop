@@ -744,7 +744,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
     try{urlLabel.textContent=new URL(raw).hostname}catch(e){urlLabel.textContent=raw}
 
-    var usingIframe=null;
     var li=0;
     scanMsg.textContent='Cargando sitio web\u2026';
     var msgTimer=setInterval(function(){
@@ -756,33 +755,19 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     var totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
 
     iframe.src=raw;
-    var iframeLoaded=false;
-    var fallbackTimer=setTimeout(function(){
-      if(!iframeLoaded){
-        usingIframe=false;
+    var scanStarted=false;
+
+    function startScan(mode){
+      if(scanStarted)return;
+      scanStarted=true;
+      if(mode==='scrollable'||mode==='visible'){
+        iframe.style.display='block';
+        simSite.style.display='none';
+      }else{
         iframe.style.display='none';
         simSite.style.display='block';
         totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
       }
-    },4000);
-
-    iframe.onload=function(){
-      if(iframeLoaded)return;
-      iframeLoaded=true;
-      clearTimeout(fallbackTimer);
-      try{
-        var d=iframe.contentDocument||iframe.contentWindow.document;
-        if(d&&d.body&&d.body.scrollHeight>50){
-          usingIframe='scrollable';
-        }else{
-          usingIframe='visible';
-        }
-      }catch(e){
-        usingIframe='visible';
-      }
-    };
-
-    function startScan(){
       scanLine.classList.add('active');
       scanLine.style.top='-2px';
       simSite.style.pointerEvents='none';
@@ -794,7 +779,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         var t=Math.min(elapsed/duration,1);
         var ease=1-Math.pow(1-t,3);
 
-        if(usingIframe==='scrollable'){
+        if(mode==='scrollable'){
           try{
             var d=iframe.contentDocument||iframe.contentWindow.document;
             var h=d.body.scrollHeight;
@@ -804,16 +789,16 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
             var scanY=pos/h*screenH;
             scanLine.style.top=Math.min(scanY,screenH-2)+'px';
           }catch(e){
-            usingIframe='visible';
+            mode='visible';
           }
         }
 
-        if(usingIframe==='visible'){
+        if(mode==='visible'){
           var scanY=screenH*ease;
           scanLine.style.top=Math.min(scanY,screenH-2)+'px';
         }
 
-        if(usingIframe===null||usingIframe===false){
+        if(mode==='sim'){
           var pos=totalScroll*ease;
           simSite.scrollTop=pos;
           var scanY=pos/simContent.offsetHeight*screenH;
@@ -822,12 +807,12 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
         if(t<1){requestAnimationFrame(scanFrame)}
         else{
-          if(usingIframe==='scrollable'){
+          if(mode==='scrollable'){
             try{
               var d=iframe.contentDocument||iframe.contentWindow.document;
               iframe.contentWindow.scrollTo(0,d.body.scrollHeight);
             }catch(e){}
-          }else if(usingIframe===null||usingIframe===false){
+          }else if(mode==='sim'){
             simSite.scrollTop=totalScroll;
           }
           scanLine.style.top=(screenH-2)+'px';
@@ -842,7 +827,22 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       requestAnimationFrame(scanFrame);
     }
 
-    requestAnimationFrame(function(){setTimeout(startScan,200)});
+    iframe.onload=function(){
+      try{
+        var d=iframe.contentDocument||iframe.contentWindow.document;
+        if(d&&d.body&&d.body.scrollHeight>50){
+          startScan('scrollable');
+        }else{
+          startScan('visible');
+        }
+      }catch(e){
+        startScan('visible');
+      }
+    };
+
+    setTimeout(function(){
+      if(!scanStarted)startScan('sim');
+    },4000);
 
     function showResults(){
       var base=60+hashUrl(raw)%23;
