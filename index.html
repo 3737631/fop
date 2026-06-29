@@ -12,7 +12,7 @@
 <style>
 html,body,div,span,section,h1,h2,h3,p,canvas{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+body{margin:0;background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 
 .scene{perspective:1400px;position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;will-change:transform}
 #globeCanvas{width:380px;height:380px;border-radius:50%;will-change:transform,clip-path;display:block;position:absolute;z-index:3;clip-path:inset(0);cursor:grab;touch-action:none}
@@ -253,7 +253,7 @@ function closeMenu(){
     </div>
     <div class="t-scroll-hint">desliza hacia arriba</div>
   </div>
-  <div class="prototipo-wrap" style="position:absolute;left:0;bottom:0;width:100vw;height:100%;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%)">
+  <div class="prototipo-wrap" style="position:relative;width:100vw;margin-left:calc(-50vw + 50%);overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%)">
 <canvas id="shaderCanvas" style="position:absolute;bottom:0;left:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0"></canvas>
   <div class="shader-content" id="prototipoContent" style="position:relative;z-index:1">
     <h1>Creamos un prototipo gratis sin compromiso</h1>
