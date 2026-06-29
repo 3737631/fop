@@ -253,7 +253,7 @@ function closeMenu(){
       <span class="status-dot"><span class="ping"></span><span class="solid"></span></span>
       <span class="status-text">Disponible para nuevos proyectos</span>
     </div>
-    <button class="liquid-btn">
+    <button class="liquid-btn" onclick="document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})">
       <span class="btn-glass"></span>
       <span class="btn-displace"></span>
       Solicitar prototipo
@@ -378,8 +378,9 @@ function closeMenu(){
         paused=false;
       });
       window.addEventListener('resize',updateHalf);
-    })();
-  </script>
+})();
+</script>
+</div>
 </section>
 </div>
 
@@ -669,13 +670,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <feComposite in="finalBlur" in2="finalBlur" operator="over"/>
 </filter></defs></svg>
 
-<div style="height:1px;background:rgba(255,255,255,.06);width:100vw;position:relative;left:50%;transform:translateX(-50%);margin:0"></div>
 <style>
 .section-divider{height:1px;border:none;background:linear-gradient(90deg,transparent,rgba(245,245,245,.25),transparent);margin:0 auto 2rem;max-width:60%}
 </style>
-<section id="auditSection">
+<section id="auditSection" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;background:#0D0D0D;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)">
 <style>
-#auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:2rem 1rem 1.5rem;max-width:1200px;margin:0 auto;width:100%;background:#0D0D0D}
+#auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1}
+#auditSection-inner{max-width:1200px;margin:0 auto;padding:2rem 1rem 1.5rem;width:100%}
 .audit-header{text-align:center;margin-bottom:1.5rem}
 .audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
 .audit-header p{font-size:clamp(.65rem,.8vw,.85rem);color:rgba(245,245,245,.18);letter-spacing:.08em;margin-top:.3rem}
@@ -735,6 +736,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-ctas .cta-s:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.25)}
 </style>
 
+<div id="auditSection-inner">
 <div class="audit-header">
   <h2>Tambi&eacute;n mejoramos tu web</h2>
   <p>Introduce la URL y obt&eacute;n un an&aacute;lisis visual con mejoras clave</p>
@@ -986,11 +988,10 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 </script>
 </section>
 
-<div style="height:1px;background:rgba(255,255,255,.06);width:100vw;position:relative;left:50%;transform:translateX(-50%);margin:0"></div>
-
-<section id="consultingSection">
+<section id="consultingSection" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;background:#0D0D0D;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)">
 <style>
-#consultingSection{max-width:1200px;margin:0 auto;padding:1rem 1rem 1.5rem;background:#0D0D0D}
+#consultingSection{--consult-bg:#0D0D0D;position:relative;z-index:1}
+#consultingSection-inner{max-width:1200px;margin:0 auto;padding:1rem 1rem 1.5rem;width:100%}
 .consult-hero{text-align:center;margin-bottom:2.5rem;opacity:0;transform:translateY(30px)}
 .consult-hero h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;line-height:.9}
 .consult-hero h2 em{color:#B0B0B0;font-weight:400;font-style:normal;display:block;font-size:clamp(.75rem,1.8vw,1.2rem);letter-spacing:.08em;margin-top:.2rem}
@@ -1010,6 +1011,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .consult-service .badge{display:inline-block;font-size:.45rem;padding:.1rem .35rem;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(245,245,245,.4);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
 </style>
 
+<div id="consultingSection-inner">
 <div class="consult-hero" id="consultHero">
   <div style="font-size:clamp(.6rem,.75vw,.7rem);color:rgba(245,245,245,.25);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem">&iquest;Ya tienes la web? &iquest;Quieres hacerte las cosas m&aacute;s f&aacute;ciles?</div>
   <h2>Tu negocio con un agente IA<em>No pierdas m&aacute;s tiempo</em></h2>
@@ -1036,6 +1038,7 @@ ScrollTrigger.create({trigger:'#consultHero',start:'top bottom-=10%',end:'top ce
 ScrollTrigger.create({trigger:'#consultStats',start:'top bottom-=5%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('.consult-stat',{opacity:1,y:0,duration:1,ease:'power4.out',stagger:0.2})}});
 ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top center',toggleActions:'play none none none',onEnter:function(){gsap.to('.consult-service',{opacity:1,y:0,duration:.8,ease:'power4.out',stagger:0.15})}});
 </script>
+</div>
 </section>
 
 <hr class="section-divider">
