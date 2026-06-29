@@ -184,14 +184,13 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
   <style>
     @keyframes slide-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .slider-wrap{mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%)}
-    .site-track{display:flex;gap:1.5rem;width:max-content;animation:slide-left 40s linear infinite;padding:.5rem 0 1.5rem}
+    .site-track{display:flex;gap:1.5rem;width:max-content;animation:slide-left 40s linear infinite;padding:.5rem 0 1.5rem;will-change:transform}
     .site-track.paused{animation-play-state:paused}
     .site-card{--card-w:clamp(200px,18vw,300px);flex-shrink:0;width:var(--card-w);height:var(--card-w);border-radius:18px;overflow:hidden;position:relative;background:#0D0D0D;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:height .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),border-radius .45s ease;z-index:1;border:1.5px solid rgba(255,255,255,.06)}
     .site-card .preview{width:100%;height:100%;overflow:hidden;position:relative}
     .site-card iframe{width:375px;height:667px;border:none;pointer-events:none;display:block;transform-origin:top left;transition:transform .55s cubic-bezier(.22,1,.36,1)}
     .site-card .label{position:absolute;bottom:0;left:0;right:0;padding:.5rem .8rem;background:linear-gradient(transparent,rgba(0,0,0,.9));font-size:.65rem;color:#999;letter-spacing:.1em;text-transform:uppercase;pointer-events:none;z-index:2}
     .site-card.hover{height:calc(var(--card-w) * 16 / 9);transform:scale(1.5);border-radius:14px;z-index:20}
-    .site-card.hover iframe{pointer-events:auto}
     .site-heading{text-align:center;padding:0 1rem 1.5rem}
     .site-heading h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.6rem,4vw,3rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
     .site-heading p{font-family:'Inter',sans-serif;font-size:clamp(.7rem,.85vw,.9rem);font-weight:300;color:rgba(245,245,245,.5);letter-spacing:.12em;text-transform:uppercase;margin-top:.4rem}
