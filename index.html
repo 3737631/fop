@@ -277,7 +277,6 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
     })();
   </script>
 </section>
-</div>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
@@ -567,7 +566,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
 <section id="auditSection">
 <style>
-#auditSection{--accent:#6366f1;--accent2:#8b5cf6;--card-bg:rgba(255,255,255,.03);--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:5rem 1rem 6rem;max-width:1200px;margin:0 auto;width:100%}
+#auditSection{--accent:#6366f1;--accent2:#8b5cf6;--card-bg:rgba(255,255,255,.03);--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:5rem 1rem 6rem;max-width:1200px;margin:0 auto;width:100%;background:transparent}
 .audit-header{text-align:center;margin-bottom:2.5rem}
 .audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
 .audit-header p{font-size:clamp(.75rem,.9vw,1rem);color:rgba(245,245,245,.45);letter-spacing:.08em;margin-top:.4rem}
@@ -575,9 +574,9 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-input-group input{flex:1;min-width:240px;padding:.75rem 1rem;border-radius:10px;border:1.5px solid var(--card-border);background:var(--card-bg);color:#F5F5F5;font-size:.9rem;outline:none;transition:border-color .3s,box-shadow .3s}
 .audit-input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,.2)}
 .audit-input-group input::placeholder{color:rgba(245,245,245,.25)}
-.audit-btn{padding:.75rem 1.6rem;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;white-space:nowrap;letter-spacing:.02em}
-.audit-btn:hover{transform:scale(1.04);box-shadow:0 6px 24px rgba(99,102,241,.35)}
-.audit-btn:disabled{opacity:.4;cursor:default;transform:none!important}
+.audit-btn{padding:.75rem 1.6rem;border-radius:10px;border:1px solid rgba(245,245,245,.2);background:transparent;color:#F5F5F5;font-size:.85rem;font-weight:500;cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s;white-space:nowrap;letter-spacing:.02em}
+.audit-btn:hover{transform:scale(1.04);box-shadow:0 0 20px rgba(245,245,245,.06);border-color:rgba(245,245,245,.35)}
+.audit-btn:disabled{opacity:.3;cursor:default;transform:none!important;border-color:rgba(245,245,245,.1)}
 .audit-results{display:none;margin-top:3rem;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) forwards}
 @keyframes fadeUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
 .audit-results.show{display:block}
@@ -618,13 +617,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-card-pct{font-size:.8rem;font-weight:700;color:rgba(245,245,245,.6);font-variant-numeric:tabular-nums}
 .audit-card-pct span{color:var(--accent)}
 .audit-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.cta-primary{padding:.8rem 2rem;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em}
-.cta-primary:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(99,102,241,.35)}
-.cta-secondary{padding:.8rem 2rem;border-radius:10px;border:1.5px solid var(--card-border);background:transparent;color:rgba(245,245,245,.7);font-size:.85rem;font-weight:500;cursor:pointer;transition:background .3s,color .3s,border-color .3s;letter-spacing:.02em}
-.cta-secondary:hover{background:var(--card-bg);color:#F5F5F5;border-color:rgba(255,255,255,.15)}
+.cta-primary{padding:.8rem 2rem;border-radius:10px;border:none;background:#F5F5F5;color:#0D0D0D;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em}
+.cta-primary:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(245,245,245,.1)}
+.cta-secondary{padding:.8rem 2rem;border-radius:10px;border:1px solid rgba(245,245,245,.2);background:transparent;color:rgba(245,245,245,.7);font-size:.85rem;font-weight:500;cursor:pointer;transition:background .3s,color .3s,border-color .3s;letter-spacing:.02em}
+.cta-secondary:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.35)}
 .audit-loader{display:none;text-align:center;padding:2rem 0}
 .audit-loader.show{display:block}
-.loader-spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.06);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
+.loader-spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.06);border-top-color:rgba(245,245,245,.5);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 .audit-loader p{font-size:.8rem;color:rgba(245,245,245,.4);margin-top:.6rem}
 .audit-error{display:none;text-align:center;padding:1rem;color:#f87171;font-size:.8rem;background:rgba(248,113,113,.08);border-radius:10px;margin:1rem auto 0;max-width:480px}
@@ -773,5 +772,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 })();
 </script>
 </section>
+</div>
 
 </body>
