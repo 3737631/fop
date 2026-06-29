@@ -182,11 +182,9 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 <section style="position:relative;z-index:1;padding:1.5rem 0;overflow:hidden;background:transparent">
   <style>
-    @keyframes slide-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .slider-wrap{mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);cursor:grab;user-select:none;touch-action:pan-y}
     .slider-wrap.grabbing{cursor:grabbing}
-    .site-track{display:flex;gap:1rem;width:max-content;animation:slide-left 40s linear infinite;padding:0 0 .8rem;will-change:transform;backface-visibility:hidden}
-    .site-track.paused{animation-play-state:paused}
+    .site-track{display:flex;gap:1rem;width:max-content;padding:0 0 .8rem;will-change:transform;backface-visibility:hidden}
     .site-card{--card-w:clamp(200px,18vw,300px);flex-shrink:0;width:var(--card-w);height:var(--card-w);border-radius:18px;overflow:hidden;position:relative;background:#0D0D0D;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:height .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),border-radius .45s ease;z-index:1;border:1.5px solid rgba(255,255,255,.06)}
     .site-card .preview{width:100%;height:100%;overflow:hidden;position:relative;background:#0D0D0D}
     .site-card iframe{width:375px;height:667px;border:none;pointer-events:none;display:block;transform-origin:top left;transition:transform .55s cubic-bezier(.22,1,.36,1);opacity:0}
@@ -223,9 +221,6 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
       var track = document.getElementById('siteTrack');
       var all = sites.concat(sites);
       var iframes = [];
-      function syncPause(){
-        track.classList.toggle('paused', !!document.querySelector('.site-card.hover'));
-      }
       all.forEach(function(s,i){
         var card = document.createElement('div');
         card.className = 'site-card';
@@ -245,17 +240,15 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
         card.addEventListener('mouseenter',function(){
           var ex = document.querySelector('.site-card.hover');
           if (ex && ex !== this) ex.classList.remove('hover');
-          this.classList.add('hover'); syncPause();
+          this.classList.add('hover');
         });
         card.addEventListener('mouseleave',function(){
           this.classList.remove('hover');
-          syncPause();
         });
         card.addEventListener('touchstart',function(e){
           var was = this.classList.contains('hover');
           document.querySelectorAll('.site-card.hover').forEach(function(c){ c.classList.remove('hover'); });
-          if (!was) { this.classList.add('hover'); }
-          syncPause();
+          if (!was) { this.classList.add('hover'); } else { this.classList.remove('hover'); }
         },{passive:true});
         rescale(card);
       });
@@ -265,7 +258,6 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
         var card = e.target.closest('.site-card');
         if (card && card === expanded) return;
         expanded.classList.remove('hover');
-        syncPause();
       });
       var obs = new IntersectionObserver(function(){
         iframes.forEach(function(o){ o.el.src = o.url; });
@@ -275,33 +267,36 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
       window.addEventListener('resize',function(){
         document.querySelectorAll('.site-card').forEach(rescale);
       });
-      var wrap=document.querySelector('.slider-wrap');
+      var pos=0, paused=false, wrap=document.querySelector('.slider-wrap');
+      var halfW=0;
+      function updateHalf(){halfW=track.scrollWidth/2}
+      updateHalf();
+      var animId;
+      function tick(){
+        if(!paused){pos-=0.6;if(pos<=-halfW)pos+=halfW}
+        track.style.transform='translateX('+pos+'px)';
+        animId=requestAnimationFrame(tick)
+      }
+      animId=requestAnimationFrame(tick);
       var dragState=null;
-      var st=track;
       wrap.addEventListener('pointerdown',function(e){
         if(e.target.closest('.site-card.hover'))return;
-        var m=window.getComputedStyle(st).transform;
-        var tx=0;
-        if(m&&m!=='none'){var v=m.match(/matrix.*\((.+)\)/);if(v)tx=parseFloat(v[1].split(', ')[4])}
-        dragState={sx:e.clientX,stx:tx};
-        st.classList.add('paused');
-        st.style.transition='none';
+        paused=true;
+        dragState={sx:e.clientX,sp:pos};
         wrap.classList.add('grabbing');
-        st.setPointerCapture(e.pointerId);
+        track.setPointerCapture(e.pointerId);
       });
       wrap.addEventListener('pointermove',function(e){
         if(!dragState)return;
-        var dx=e.clientX-dragState.sx;
-        st.style.transform='translateX('+(dragState.stx+dx)+'px)';
+        pos=dragState.sp+(e.clientX-dragState.sx);
       });
-      wrap.addEventListener('pointerup',function(e){
+      wrap.addEventListener('pointerup',function(){
         if(!dragState)return;
-        st.style.transition='';
-        st.style.transform='';
-        st.classList.remove('paused');
-        wrap.classList.remove('grabbing');
         dragState=null;
+        wrap.classList.remove('grabbing');
+        paused=false;
       });
+      window.addEventListener('resize',updateHalf);
     })();
   </script>
 </section>
@@ -900,6 +895,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         var o={v:0};
         gsap.to(o,{v:base,duration:1.5,ease:'power3.out',onUpdate:function(){kpiNumber.textContent=Math.round(o.v)+'%'}});
         gsap.fromTo('#auditGrid .audit-card',{opacity:0,y:10},{opacity:1,y:0,duration:.5,stagger:.07,ease:'power2.out'});
+        setTimeout(function(){results.scrollIntoView({behavior:'smooth',block:'center'})},400);
       });
       btn.disabled=false;
     }
@@ -919,11 +915,11 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .consult-hero h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;line-height:.9}
 .consult-hero h2 em{color:#B0B0B0;font-weight:400;font-style:normal;display:block;font-size:clamp(.75rem,1.8vw,1.2rem);letter-spacing:.08em;margin-top:.2rem}
 .consult-hero p{font-size:clamp(.6rem,.75vw,.8rem);color:rgba(245,245,245,.45);max-width:600px;margin:.4rem auto 0;line-height:1.4}
-.consult-stats{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.consult-stats{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
 .consult-stat{text-align:center;opacity:0;transform:translateY(20px);min-width:80px}
 .consult-stat-num{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.03em;line-height:1}
 .consult-stat-label{font-size:.5rem;color:rgba(245,245,245,.4);letter-spacing:.12em;text-transform:uppercase;margin-top:.1rem}
-.consult-services{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;margin-bottom:1.5rem}
+.consult-services{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-bottom:1.5rem}
 .consult-service{background:rgba(255,255,255,.04);border-radius:8px;padding:1rem;opacity:0;transform:translateY(20px);transition:transform .4s cubic-bezier(.22,1,.36,1);flex:0 1 220px;max-width:280px}
 .consult-service:hover{transform:translateY(-3px)}
 .consult-service .svc-icon{margin-bottom:.3rem;display:flex;align-items:center;gap:.4rem}
@@ -973,6 +969,7 @@ ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top
 #contactForm .fg{display:flex;flex-direction:column;gap:.7rem;max-width:340px;margin:0 auto}
 #contactForm .fg input,#contactForm .fg select{width:100%;padding:.65rem .9rem;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#F5F5F5;font-size:.78rem;font-family:'Inter',sans-serif;outline:none;transition:border-color .3s;box-sizing:border-box;-webkit-appearance:none;appearance:none}
 #contactForm .fg select option{background:#1a1a1a;color:#F5F5F5}
+#contactForm .fg select option:disabled{color:rgba(245,245,245,.18)}
 #contactForm .fg input:focus,#contactForm .fg select:focus{border-color:rgba(245,245,245,.2)}
 #contactForm .fg input::placeholder{color:rgba(245,245,245,.18)}
 #contactForm .fg button{width:100%;padding:.65rem;border-radius:8px;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:500;color:#F5F5F5;background:rgba(255,255,255,.06);border:1px solid rgba(245,245,245,.12);cursor:pointer;transition:transform .3s;letter-spacing:.04em}
@@ -984,7 +981,7 @@ ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top
 <form id="leadForm"><div class="fg"><input type="text" id="leadName" placeholder="Tu nombre" required autocomplete="off"><select id="leadService" required><option value="" disabled selected>Qu&eacute; necesitas?</option><option value="automatizar">Automatizar</option><option value="redisenar">Redise&ntilde;ar web</option><option value="construir">Construir desde 0</option></select><button type="submit">Solicitar consultor&iacute;a</button></div></form>
 </div>
 <script>
-document.getElementById('leadForm').addEventListener('submit',function(e){e.preventDefault();var n=document.getElementById('leadName').value;if(n)alert('Gracias '+n+', te responderé pronto.')});
+document.getElementById('leadForm').addEventListener('submit',function(e){e.preventDefault();var n=document.getElementById('leadName').value;var s=document.getElementById('leadService');var v=s.options[s.selectedIndex]?s.options[s.selectedIndex].text:'';if(n){var t='Hola%2C%20soy%20'+encodeURIComponent(n)+'.%20Me%20interesa%3A%20'+encodeURIComponent(v);window.open('https://wa.me/34611652518?text='+t,'_blank')}});
 document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('click',function(){document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})})});
 </script>
 </section>
@@ -993,7 +990,7 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
 
 <section id="flipLinks">
 <style>
-#flipLinks{display:grid;place-content:center;gap:.5rem;width:100%;padding:4rem 1rem 1.5rem;background:#0D0D0D}
+#flipLinks{display:grid;place-content:center;gap:.5rem;width:100%;padding:4rem 1rem 3rem;background:#0D0D0D}
 .flp{display:inline-block;position:relative;overflow:hidden;white-space:nowrap;font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2.5rem,10vw,4rem);font-weight:900;color:#F5F5F5;text-transform:uppercase;text-decoration:none;line-height:.75;transition:color .4s ease}
 .flp:hover{color:rgba(245,245,245,.4)}
 .flp .l{display:flex}
@@ -1024,11 +1021,9 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
 })();
 </script>
 <div style="font-family:'Inter',sans-serif;font-size:.55rem;color:rgba(245,245,245,.2);letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-bottom:.5rem">Otras formas de contacto</div>
-<a class="flp" href="https://instagram.com/tuusuario" target="_blank" rel="noopener">Instagram</a>
-<a class="flp" href="mailto:tuemail@gmail.com">Gmail</a>
-<a class="flp" href="https://wa.me/34600000000" target="_blank" rel="noopener">WhatsApp</a>
-<a class="flp" href="tel:+34600000000">Ll&aacute;manos</a>
-<div style="margin-top:2rem;font-size:.55rem;color:rgba(245,245,245,.2);font-family:'Inter',sans-serif;letter-spacing:.12em;text-transform:uppercase;text-align:center">Francisco Ortu&ntilde;o &mdash; Dise&ntilde;o Web</div>
+<a class="flp" href="https://www.instagram.com/paco.opp/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener">Instagram</a>
+<a class="flp" href="mailto:fortpay107@gmail.com">Gmail</a>
+<a class="flp" href="tel:+34611652518">Ll&aacute;manos</a>
 </section>
 
 </body>
