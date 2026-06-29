@@ -277,6 +277,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
     })();
   </script>
 </section>
+</div>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
@@ -566,7 +567,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
 <section id="auditSection">
 <style>
-#auditSection{--accent:#6366f1;--accent2:#8b5cf6;--card-bg:rgba(255,255,255,.03);--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:5rem 1rem 6rem;max-width:1200px;margin:0 auto;width:100%;background:transparent}
+#auditSection{--accent:#6366f1;--accent2:#8b5cf6;--card-bg:rgba(255,255,255,.03);--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:5rem 1rem 6rem;max-width:1200px;margin:0 auto;width:100%;background:#0D0D0D}
 .audit-header{text-align:center;margin-bottom:2.5rem}
 .audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
 .audit-header p{font-size:clamp(.75rem,.9vw,1rem);color:rgba(245,245,245,.45);letter-spacing:.08em;margin-top:.4rem}
@@ -574,13 +575,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-input-group input{flex:1;min-width:240px;padding:.75rem 1rem;border-radius:10px;border:1.5px solid var(--card-border);background:var(--card-bg);color:#F5F5F5;font-size:.9rem;outline:none;transition:border-color .3s,box-shadow .3s}
 .audit-input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,.2)}
 .audit-input-group input::placeholder{color:rgba(245,245,245,.25)}
-.audit-btn{padding:.75rem 1.6rem;border-radius:10px;border:1px solid rgba(245,245,245,.2);background:transparent;color:#F5F5F5;font-size:.85rem;font-weight:500;cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s;white-space:nowrap;letter-spacing:.02em}
-.audit-btn:hover{transform:scale(1.04);box-shadow:0 0 20px rgba(245,245,245,.06);border-color:rgba(245,245,245,.35)}
-.audit-btn:disabled{opacity:.3;cursor:default;transform:none!important;border-color:rgba(245,245,245,.1)}
+.audit-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:12px 32px;border-radius:9999px;font-family:'Inter',sans-serif;font-size:clamp(.75rem,.85vw,.9rem);font-weight:500;color:#F5F5F5;background:transparent;border:1px solid rgba(245,245,245,.2);cursor:pointer;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease;z-index:1;white-space:nowrap;letter-spacing:.02em}
+.audit-btn:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
+.audit-btn:disabled{opacity:.3;cursor:default;transform:none!important}
 .audit-results{display:none;margin-top:3rem;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) forwards}
 @keyframes fadeUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
 .audit-results.show{display:block}
-.audit-preview{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;margin-bottom:2.5rem;transition:box-shadow .4s}
+.audit-preview{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;margin-bottom:2.5rem;transition:box-shadow .4s;position:relative}
 .audit-preview:hover{box-shadow:0 12px 48px rgba(99,102,241,.1)}
 .preview-mockup{position:relative}
 .mockup-bar{display:flex;align-items:center;gap:6px;padding:.55rem .9rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border)}
@@ -589,11 +590,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .mockup-bar span:nth-child(2){background:#febc2e}
 .mockup-bar span:nth-child(3){background:#28c840}
 .mockup-url{margin-left:auto;font-size:.65rem;color:rgba(245,245,245,.35);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
-.preview-body{position:relative;height:clamp(200px,30vw,360px);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.preview-body .preview-glow{position:absolute;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.12),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
-.preview-body .preview-icon{position:relative;z-index:1;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;opacity:.6}
-.preview-body .preview-icon svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.preview-domain{text-align:center;margin-top:.5rem;font-size:.8rem;color:rgba(245,245,245,.25);letter-spacing:.03em}
+.audit-preview iframe{width:100%;height:clamp(200px,30vw,360px);border:none;display:block;background:#0D0D0D;opacity:0;transition:opacity .7s ease}
+.audit-preview.loaded iframe{opacity:1}
+.preview-fill{position:absolute;bottom:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,transparent 40%,rgba(99,102,241,.06) 70%,rgba(99,102,241,.12) 100%);pointer-events:none;z-index:1;transition:opacity .8s ease}
+.audit-preview.loaded .preview-fill{opacity:0}
+.preview-loader{position:absolute;top:0;left:0;width:100%;height:3px;background:rgba(255,255,255,.06);z-index:2;border-radius:0 0 3px 3px;overflow:hidden}
+.preview-loader .bar{width:0%;height:100%;background:linear-gradient(90deg,transparent,rgba(245,245,245,.4),transparent);border-radius:0 0 3px 3px;transition:width .3s ease}
+.audit-preview.loaded .preview-loader{opacity:0;transition:opacity .5s ease}
 .audit-kpi{text-align:center;margin-bottom:3rem}
 .kpi-ring{display:inline-flex;align-items:center;justify-content:center;position:relative;width:140px;height:140px}
 .kpi-ring svg{position:absolute;width:100%;height:100%;transform:rotate(-90deg)}
@@ -617,10 +620,10 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-card-pct{font-size:.8rem;font-weight:700;color:rgba(245,245,245,.6);font-variant-numeric:tabular-nums}
 .audit-card-pct span{color:var(--accent)}
 .audit-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.cta-primary{padding:.8rem 2rem;border-radius:10px;border:none;background:#F5F5F5;color:#0D0D0D;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em}
-.cta-primary:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(245,245,245,.1)}
-.cta-secondary{padding:.8rem 2rem;border-radius:10px;border:1px solid rgba(245,245,245,.2);background:transparent;color:rgba(245,245,245,.7);font-size:.85rem;font-weight:500;cursor:pointer;transition:background .3s,color .3s,border-color .3s;letter-spacing:.02em}
-.cta-secondary:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.35)}
+.cta-primary{padding:.8rem 2rem;border-radius:9999px;border:1px solid rgba(245,245,245,.2);background:transparent;color:#F5F5F5;font-size:.85rem;font-weight:500;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em;font-family:'Inter',sans-serif}
+.cta-primary:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
+.cta-secondary{padding:.8rem 2rem;border-radius:9999px;border:1px solid rgba(245,245,245,.12);background:transparent;color:rgba(245,245,245,.5);font-size:.8rem;font-weight:400;cursor:pointer;transition:background .3s,color .3s,border-color .3s;letter-spacing:.02em;font-family:'Inter',sans-serif}
+.cta-secondary:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.25)}
 .audit-loader{display:none;text-align:center;padding:2rem 0}
 .audit-loader.show{display:block}
 .loader-spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.06);border-top-color:rgba(245,245,245,.5);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
@@ -648,19 +651,15 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 <div class="audit-error" id="auditError"></div>
 
 <div class="audit-results" id="auditResults">
-  <div class="audit-preview">
+  <div class="audit-preview" id="auditPreview">
     <div class="preview-mockup">
       <div class="mockup-bar">
         <span></span><span></span><span></span>
         <span class="mockup-url" id="mockupUrl">tudominio.com</span>
       </div>
-      <div class="preview-body">
-        <div class="preview-glow"></div>
-        <div class="preview-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-      </div>
-      <div class="preview-domain" id="previewDomain">tudominio.com</div>
+      <div class="preview-loader"><div class="bar" id="loadBar"></div></div>
+      <iframe id="auditIframe" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
+      <div class="preview-fill"></div>
     </div>
   </div>
 
@@ -694,8 +693,10 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   var results = document.getElementById('auditResults');
   var loader = document.getElementById('auditLoader');
   var error = document.getElementById('auditError');
+  var preview = document.getElementById('auditPreview');
+  var iframe = document.getElementById('auditIframe');
   var mockupUrl = document.getElementById('mockupUrl');
-  var previewDomain = document.getElementById('previewDomain');
+  var loadBar = document.getElementById('loadBar');
   var kpiNumber = document.getElementById('kpiNumber');
   var kpiHeadline = document.getElementById('kpiHeadline');
   var kpiCircle = document.getElementById('kpiCircle');
@@ -711,13 +712,11 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     {icon:'E',name:'Estructura de componentes',desc:'Modularidad, reutilizaci&oacute;n de c&oacute;digo y escalabilidad del frontend.',pct:79}
   ];
 
-  function hashUrl(str){
-    var h=0,i,c;
-    for(i=0;i<str.length;i++){c=str.charCodeAt(i);h=((h<<5)-h)+c;h|=0}
-    return Math.abs(h);
-  }
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
 
   function clampPct(n){return Math.min(96,Math.max(78,n))}
+
+  function randPct(base){return clampPct(base+Math.round((Math.random()-0.5)*14))}
 
   btn.addEventListener('click',function(){
     var raw = input.value.trim();
@@ -726,24 +725,44 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     error.classList.remove('show');
     error.innerHTML='';
     results.classList.remove('show');
+    preview.classList.remove('loaded');
+    iframe.src='';
+    loadBar.style.width='0%';
     btn.disabled=true;
     loader.classList.add('show');
     var host;
     try{host=new URL(raw).hostname}catch(e){host=raw}
     mockupUrl.textContent=host;
-    previewDomain.textContent=host;
+
+    setTimeout(function(){ iframe.src=raw; },200);
+
+    var pct=0;
+    var loadInterval=setInterval(function(){
+      pct+=3+Math.random()*6;
+      if(pct>92){pct=92;clearInterval(loadInterval)}
+      loadBar.style.width=pct+'%';
+    },200);
+
+    iframe.addEventListener('load',function onload(){
+      clearInterval(loadInterval);
+      loadBar.style.width='100%';
+      preview.classList.add('loaded');
+      iframe.removeEventListener('load',onload);
+    });
 
     setTimeout(function(){
+      clearInterval(loadInterval);
       loader.classList.remove('show');
-      var base = clampPct(78 + (hashUrl(raw) % 18));
+      var base = clampPct(78+Math.floor(Math.random()*18));
       kpiNumber.textContent='0%';
       kpiHeadline.textContent=base+'%';
       kpiRing.classList.remove('active');
       var circ=326.7;
       kpiCircle.style.strokeDashoffset=circ;
+      var items = shuffle(analyses.slice());
       grid.innerHTML='';
-      analyses.forEach(function(a,i){
-        var p=clampPct(a.pct+(hashUrl(raw+i)%10-5));
+      items.forEach(function(a,i){
+        var p = randPct(a.pct);
         var card=document.createElement('div');
         card.className='audit-card';
         card.style.opacity='0';
@@ -765,13 +784,12 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       });
       gsap.fromTo('#auditGrid .audit-card',{opacity:0,y:16},{opacity:1,y:0,duration:.6,stagger:.1,ease:'power2.out',delay:.15});
       btn.disabled=false;
-    },1500);
+    },1800);
   });
 
   input.addEventListener('keydown',function(e){if(e.key==='Enter')btn.click()});
 })();
 </script>
 </section>
-</div>
 
 </body>
