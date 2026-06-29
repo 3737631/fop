@@ -75,7 +75,7 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 .shader-section{position:relative;width:100%;min-height:150vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 @media(max-width:768px){.shader-section{min-height:auto}}
-#shaderCanvas{position:absolute;bottom:0;left:0;width:100%;height:80%;display:block;z-index:0}
+#shaderCanvas{position:absolute;bottom:0;left:0;width:100%;height:100%;display:block;z-index:0}
 .shader-content{position:relative;z-index:1;text-align:center;max-width:800px;padding:2rem;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:100vh}
 @media(max-width:768px){.shader-content{min-height:auto;padding:1rem}}
 .shader-content h1{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;color:#F5F5F5;font-size:clamp(2rem,8vw,7rem);margin-bottom:1rem}
@@ -224,8 +224,7 @@ function closeMenu(){
 </section>
 </div>
 
-<div id="shaderBg" style="position:relative;z-index:1;overflow:hidden">
-<canvas id="shaderCanvas" style="position:absolute;bottom:0;left:0;width:100%;height:80%;display:block;pointer-events:none"></canvas>
+<div id="shaderBg" style="position:relative;z-index:1">
 <section class="shader-section" id="shaderSection" style="position:relative;z-index:1;background:transparent!important">
   <div class="testimonials-wrap">
     <h2>Lo que dicen <span>mis clientes</span></h2>
@@ -248,7 +247,9 @@ function closeMenu(){
     </div>
     <div class="t-scroll-hint">desliza hacia arriba</div>
   </div>
-  <div class="shader-content">
+  <div class="prototipo-wrap" style="position:relative;overflow:hidden">
+<canvas id="shaderCanvas" style="position:absolute;bottom:0;left:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0"></canvas>
+  <div class="shader-content" style="position:relative;z-index:1">
     <h1>Creamos un prototipo gratis sin compromiso</h1>
     <p>Cu&eacute;ntanos tu idea y te devolvemos un dise&ntilde;o funcional en 48h. Sin ataduras, sin letra peque&ntilde;a.</p>
     <div class="status">
@@ -261,6 +262,7 @@ function closeMenu(){
       Solicitar prototipo
     </button>
   </div>
+</div>
 </section>
 
 <section style="position:relative;z-index:1;padding:1.5rem 0;overflow:hidden;background:transparent">
