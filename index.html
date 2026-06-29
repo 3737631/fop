@@ -685,6 +685,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   var btn=document.getElementById('auditBtn');
   var preview=document.getElementById('auditPreview');
   var simSite=document.getElementById('simSite');
+  var simContent=document.getElementById('simContent');
   var auditIframe=document.getElementById('auditIframe');
   var scanLine=document.getElementById('scanLine');
   var scanMsg=document.getElementById('scanMsg');
@@ -750,17 +751,24 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     function startScan(){
       scanLine.classList.add('active');
       scanLine.style.top='-1px';
+      simSite.style.pointerEvents='none';
+      auditIframe.style.pointerEvents='none';
       var screenH=document.querySelector('.mockup-screen').offsetHeight;
+      var totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
       var start=Date.now();
 
       function scanFrame(){
         var elapsed=Date.now()-start;
         var t=Math.min(elapsed/duration,1);
         var ease=1-Math.pow(1-t,3);
+        simSite.scrollTop=totalScroll*ease;
         scanLine.style.top=(-1+(screenH-1)*ease)+'px';
         if(t<1){requestAnimationFrame(scanFrame)}
         else{
+          simSite.scrollTop=totalScroll;
           scanLine.style.top=(screenH-2)+'px';
+          simSite.style.pointerEvents='';
+          auditIframe.style.pointerEvents='';
           scanLine.classList.remove('active');
           clearInterval(msgTimer);
           preview.classList.add('scan-done');
@@ -812,9 +820,11 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       results.classList.remove('show');
 
       var items=shuffle(analyses.slice());
+      var skip=1+hashUrl(raw+'s')%2;
+      for(var s=0;s<skip;s++)items.splice(hashUrl(raw+'s'+s)%items.length,1);
       grid.innerHTML='';
       items.forEach(function(a,i){
-        var p=60+hashUrl(raw+a.name+i)%23;
+        var p=20+hashUrl(raw+a.name+i)%78;
         var c=document.createElement('div');
         c.className='audit-card';
         c.style.opacity='0';
