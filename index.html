@@ -565,73 +565,75 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <feComposite in="finalBlur" in2="finalBlur" operator="over"/>
 </filter></defs></svg>
 
+<hr class="section-divider">
+
 <section id="auditSection">
 <style>
-#auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:5rem 1rem 6rem;max-width:1200px;margin:0 auto;width:100%;background:#0D0D0D}
-.audit-header{text-align:center;margin-bottom:2rem}
+#auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:4rem 1rem 5rem;max-width:1200px;margin:0 auto;width:100%;background:#0D0D0D}
+.audit-header{text-align:center;margin-bottom:1.8rem}
 .audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
 .audit-header p{font-size:clamp(.75rem,.9vw,1rem);color:rgba(245,245,245,.45);letter-spacing:.08em;margin-top:.4rem}
-.audit-input-group{display:flex;gap:.6rem;max-width:520px;margin:0 auto;flex-wrap:wrap;justify-content:center}
-.audit-input-group input{flex:1;min-width:200px;padding:.65rem 1rem;border-radius:10px;border:1.5px solid var(--card-border);background:rgba(255,255,255,.03);color:#F5F5F5;font-size:.85rem;outline:none;transition:border-color .3s,box-shadow .3s}
+.audit-input-group{display:flex;gap:.6rem;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.audit-input-group input{flex:1;min-width:180px;padding:.6rem .9rem;border-radius:10px;border:1.5px solid var(--card-border);background:rgba(255,255,255,.03);color:#F5F5F5;font-size:.85rem;outline:none;transition:border-color .3s,box-shadow .3s}
 .audit-input-group input:focus{border-color:rgba(245,245,245,.3);box-shadow:0 0 0 3px rgba(245,245,245,.08)}
 .audit-input-group input::placeholder{color:rgba(245,245,245,.25)}
-.audit-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:10px 28px;border-radius:9999px;font-family:'Inter',sans-serif;font-size:clamp(.7rem,.8vw,.85rem);font-weight:500;color:#F5F5F5;background:transparent;border:1px solid rgba(245,245,245,.2);cursor:pointer;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease;z-index:1;white-space:nowrap;letter-spacing:.02em}
+.audit-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:9px 26px;border-radius:9999px;font-family:'Inter',sans-serif;font-size:clamp(.7rem,.8vw,.85rem);font-weight:500;color:#F5F5F5;background:transparent;border:1px solid rgba(245,245,245,.2);cursor:pointer;transition:transform .3s,box-shadow .3s;white-space:nowrap;letter-spacing:.02em}
 .audit-btn:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
 .audit-btn:disabled{opacity:.3;cursor:default;transform:none!important}
-.audit-results{display:none;margin-top:2.5rem;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) forwards}
-@keyframes fadeUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
-.audit-results.show{display:block}
-.audit-preview{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;margin-bottom:2rem;transition:box-shadow .4s;position:relative}
-.audit-preview:hover{box-shadow:0 12px 48px rgba(255,255,255,.04)}
-.preview-mockup{position:relative}
-.mockup-bar{display:flex;align-items:center;gap:6px;padding:.45rem .8rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border)}
-.mockup-bar span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.12)}
+.audit-stage{position:relative;margin-top:2rem}
+.audit-preview{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;position:relative;transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1),height .6s ease}
+.audit-preview.scan-done{opacity:0;transform:scale(.96) translateY(-10px);pointer-events:none;height:0;margin:0;overflow:hidden}
+.mockup-bar{display:flex;align-items:center;gap:6px;padding:.4rem .75rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border)}
+.mockup-bar span{width:8px;height:8px;border-radius:50%}
 .mockup-bar span:nth-child(1){background:#ff5f57}
 .mockup-bar span:nth-child(2){background:#febc2e}
 .mockup-bar span:nth-child(3){background:#28c840}
-.audit-preview iframe{width:100%;height:clamp(180px,28vw,320px);border:none;display:block;background:#0D0D0D;opacity:0;transition:opacity .7s ease}
-.audit-preview.loaded iframe{opacity:1}
-.preview-fill{position:absolute;bottom:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,transparent 40%,rgba(245,245,245,.04) 70%,rgba(245,245,245,.08) 100%);pointer-events:none;z-index:1;transition:opacity .8s ease}
-.audit-preview.loaded .preview-fill{opacity:0}
-.scan-line{position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,245,245,.5),transparent);z-index:3;top:0;opacity:0;transition:none;pointer-events:none}
+.mockup-screen{position:relative;width:100%;height:clamp(200px,30vw,340px);overflow:hidden;background:#0D0D0D}
+.simulated-site{width:100%;height:100%;overflow-y:auto;scroll-behavior:smooth}
+.simulated-site::-webkit-scrollbar{display:none}
+.sim-content{width:100%}
+.sim-block{height:clamp(40px,6vw,70px);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:rgba(245,245,245,.12);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.03);font-family:'Inter',sans-serif}
+.sim-block:nth-child(1){height:clamp(60px,9vw,110px)}
+.sim-block:nth-child(2){background:rgba(255,255,255,.015)}
+.sim-block:nth-child(4){background:rgba(255,255,255,.015)}
+.sim-block:nth-child(5){height:clamp(50px,7vw,85px)}
+.scan-line{position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,245,245,.6),rgba(245,245,245,.8),rgba(245,245,245,.6),transparent);z-index:3;top:0;opacity:0;transition:none;pointer-events:none;box-shadow:0 0 12px rgba(245,245,245,.3),0 0 30px rgba(245,245,245,.15)}
 .scan-line.active{opacity:1}
-.audit-scan-status{text-align:center;padding:1rem 0 0;min-height:2.5rem}
-.audit-scan-status .msg{font-size:.75rem;color:rgba(245,245,245,.35);letter-spacing:.08em;font-family:'Inter',sans-serif;transition:opacity .3s}
-.audit-scan-status .msg .highlight{color:rgba(245,245,245,.6)}
+.audit-scan-status{text-align:center;padding:.8rem 0 0;min-height:2rem}
+.audit-scan-status .msg{font-size:.72rem;color:rgba(245,245,245,.35);letter-spacing:.08em;font-family:'Inter',sans-serif}
+.audit-scan-status .msg .hl{color:rgba(245,245,245,.55)}
+.audit-results{opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.audit-results.show{opacity:1;transform:translateY(0);pointer-events:auto}
 .audit-kpi{text-align:center;margin-bottom:2rem}
-.kpi-ring{display:inline-flex;align-items:center;justify-content:center;position:relative;width:120px;height:120px}
-.kpi-ring svg{position:absolute;width:100%;height:100%;transform:rotate(-90deg)}
-.kpi-bg-circle{fill:none;stroke:rgba(255,255,255,.06);stroke-width:5}
-.kpi-fg-circle{fill:none;stroke:rgba(245,245,245,.6);stroke-width:5;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.6s cubic-bezier(.22,1,.36,1)}
-.kpi-ring.active .kpi-fg-circle{stroke-dashoffset:var(--kpi-offset)}
-.kpi-text{display:flex;flex-direction:column;align-items:center;z-index:1}
-.kpi-number{font-size:2rem;font-weight:800;color:#F5F5F5;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
-.kpi-label{font-size:.55rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
-.kpi-headline{font-size:clamp(1rem,1.8vw,1.4rem);color:#F5F5F5;font-weight:600;margin-top:.6rem;letter-spacing:-.02em}
-.audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.75rem;margin-bottom:2rem}
-.audit-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:.7rem .9rem;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+.kpi-wrap{display:inline-flex;align-items:center;justify-content:center;position:relative;width:120px;height:120px}
+.kpi-wrap svg{position:absolute;width:100%;height:100%;transform:rotate(-90deg)}
+.kpi-bg{fill:none;stroke:rgba(255,255,255,.06);stroke-width:5}
+.kpi-fg{fill:none;stroke:rgba(245,245,245,.6);stroke-width:5;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.6s cubic-bezier(.22,1,.36,1)}
+.kpi-fg.anim{stroke-dashoffset:var(--kpi-off)}
+.kpi-label-top{font-size:.55rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+.kpi-headline{font-size:clamp(1rem,1.8vw,1.4rem);color:#F5F5F5;font-weight:600;margin-top:.5rem;letter-spacing:-.02em}
+.audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.65rem;margin-bottom:2rem}
+.audit-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:.65rem .8rem;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
 .audit-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(255,255,255,.03)}
-.audit-card-header{display:flex;align-items:center;gap:.55rem;margin-bottom:.2rem}
-.audit-card-dot{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:rgba(245,245,245,.5);background:rgba(255,255,255,.06)}
-.audit-card h4{font-size:.75rem;font-weight:600;color:#F5F5F5;letter-spacing:-.01em;margin:0}
-.audit-card p{font-size:.65rem;color:rgba(245,245,245,.4);line-height:1.4;margin:.1rem 0 .35rem}
-.audit-card-footer{display:flex;align-items:center;justify-content:space-between}
-.audit-impact{font-size:.55rem;padding:.1rem .4rem;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(245,245,245,.45);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
-.audit-card-pct{font-size:.7rem;font-weight:700;color:rgba(245,245,245,.5);font-variant-numeric:tabular-nums}
+.audit-card-hd{display:flex;align-items:center;gap:.5rem;margin-bottom:.15rem}
+.audit-card-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:rgba(245,245,245,.5);background:rgba(255,255,255,.06)}
+.audit-card h4{font-size:.73rem;font-weight:600;color:#F5F5F5;letter-spacing:-.01em;margin:0}
+.audit-card p{font-size:.62rem;color:rgba(245,245,245,.4);line-height:1.35;margin:.05rem 0 .3rem}
+.audit-card-ft{display:flex;align-items:center;justify-content:space-between}
+.audit-tag{font-size:.52rem;padding:.1rem .4rem;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(245,245,245,.45);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.audit-val{font-size:.68rem;font-weight:700;color:rgba(245,245,245,.5);font-variant-numeric:tabular-nums}
 .audit-ctas{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
-.cta-primary{padding:.65rem 1.8rem;border-radius:9999px;border:1px solid rgba(245,245,245,.2);background:transparent;color:#F5F5F5;font-size:.8rem;font-weight:500;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em;font-family:'Inter',sans-serif}
-.cta-primary:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
-.cta-secondary{padding:.65rem 1.8rem;border-radius:9999px;border:1px solid rgba(245,245,245,.12);background:transparent;color:rgba(245,245,245,.5);font-size:.75rem;font-weight:400;cursor:pointer;transition:background .3s,color .3s,border-color .3s;letter-spacing:.02em;font-family:'Inter',sans-serif}
-.cta-secondary:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.25)}
-.audit-loader{display:none;text-align:center;padding:1.5rem 0 0}
-.audit-loader.show{display:block}
-.audit-error{display:none;text-align:center;padding:.8rem;color:#f87171;font-size:.75rem;background:rgba(248,113,113,.06);border-radius:10px;margin:.8rem auto 0;max-width:420px}
+.audit-ctas button{padding:.6rem 1.8rem;border-radius:9999px;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em}
+.audit-ctas .cta-p{border:1px solid rgba(245,245,245,.2);background:transparent;color:#F5F5F5}
+.audit-ctas .cta-p:hover{transform:scale(1.05);box-shadow:0 0 24px rgba(245,245,245,.08)}
+.audit-ctas .cta-s{border:1px solid rgba(245,245,245,.1);background:transparent;color:rgba(245,245,245,.45)}.audit-ctas .cta-s:hover{background:rgba(255,255,255,.03);color:#F5F5F5;border-color:rgba(245,245,245,.25)}
+.audit-error{display:none;text-align:center;padding:.7rem;color:#f87171;font-size:.72rem;background:rgba(248,113,113,.06);border-radius:10px;margin:.8rem auto 0;max-width:400px}
 .audit-error.show{display:block}
 </style>
 
 <div class="audit-header">
-  <h2>También mejoramos tu web</h2>
-  <p>Introduce la URL y obtén un an&aacute;lisis visual con mejoras clave</p>
+  <h2>Tambi&eacute;n mejoramos tu web</h2>
+  <p>Introduce la URL y obt&eacute;n un an&aacute;lisis visual con mejoras clave</p>
 </div>
 
 <div class="audit-input-group">
@@ -639,177 +641,193 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <button class="audit-btn" id="auditBtn">Analizar web</button>
 </div>
 
-<div class="audit-loader" id="auditLoader">
-  <div class="loader-spinner"></div>
-  <p>Analizando tu sitio...</p>
-</div>
-
 <div class="audit-error" id="auditError"></div>
 
-<div class="audit-results" id="auditResults">
+<div class="audit-stage" id="auditStage">
   <div class="audit-preview" id="auditPreview">
-    <div class="preview-mockup">
-      <div class="mockup-bar">
-        <span></span><span></span><span></span>
+    <div class="mockup-bar">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="mockup-screen">
+      <div class="simulated-site" id="simSite">
+        <div class="sim-content" id="simContent">
+          <div class="sim-block">Hero &mdash; Cabecera principal</div>
+          <div class="sim-block">Servicios &mdash; Nuestro trabajo</div>
+          <div class="sim-block">Sobre nosotros &mdash; Trayectoria</div>
+          <div class="sim-block">Proyectos &mdash; Casos reales</div>
+          <div class="sim-block">Contacto &mdash; Hablemos</div>
+        </div>
       </div>
       <div class="scan-line" id="scanLine"></div>
-      <iframe id="auditIframe" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
-      <div class="preview-fill"></div>
     </div>
   </div>
-  <div class="audit-scan-status" id="scanStatus"><span class="msg" id="scanMsg"></span></div>
+  <div class="audit-scan-status"><span class="msg" id="scanMsg"></span></div>
+</div>
 
+<div class="audit-results" id="auditResults">
   <div class="audit-kpi">
-    <div class="kpi-ring" id="kpiRing">
+    <div class="kpi-wrap" id="kpiWrap">
       <svg viewBox="0 0 120 120">
-        <defs><linearGradient id="kpiGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgba(245,245,245,.6)"/><stop offset="100%" stop-color="rgba(245,245,245,.4)"/></linearGradient></defs>
-        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="6"/>
-        <circle cx="60" cy="60" r="52" fill="none" stroke="url(#kpiGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="kpiCircle"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="5"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(245,245,245,.6)" stroke-width="5" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="kpiCircle"/>
       </svg>
-      <div class="kpi-text">
-        <span class="kpi-number" id="kpiNumber">0%</span>
-        <span class="kpi-label">de mejora potencial</span>
-      </div>
+      <span style="position:relative;z-index:1;font-size:2rem;font-weight:800;color:#F5F5F5;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums" id="kpiNumber">0%</span>
     </div>
-    <p class="kpi-headline">Tu web puede mejorar un <strong id="kpiHeadline">87%</strong></p>
+    <div style="font-size:.55rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:3px">de mejora potencial</div>
+    <p style="font-size:clamp(1rem,1.8vw,1.4rem);color:#F5F5F5;font-weight:600;margin-top:.5rem;letter-spacing:-.02em">Tu web puede mejorar un <strong id="kpiHeadline" style="color:#F5F5F5">87%</strong></p>
   </div>
-
   <div class="audit-grid" id="auditGrid"></div>
-
   <div class="audit-ctas">
-    <button class="cta-primary">Mejorar mi web ahora</button>
-    <button class="cta-secondary">Ver informe completo</button>
+    <button class="cta-p">Mejorar mi web ahora</button>
+    <button class="cta-s">Ver informe completo</button>
   </div>
 </div>
 
 <script>
 (function(){
-  var input = document.getElementById('auditUrl');
-  var btn = document.getElementById('auditBtn');
-  var results = document.getElementById('auditResults');
-  var loader = document.getElementById('auditLoader');
-  var error = document.getElementById('auditError');
-  var preview = document.getElementById('auditPreview');
-  var iframe = document.getElementById('auditIframe');
-  var scanLine = document.getElementById('scanLine');
-  var scanMsg = document.getElementById('scanMsg');
-  var kpiNumber = document.getElementById('kpiNumber');
-  var kpiHeadline = document.getElementById('kpiHeadline');
-  var kpiCircle = document.getElementById('kpiCircle');
-  var kpiRing = document.getElementById('kpiRing');
-  var grid = document.getElementById('auditGrid');
+  var input=document.getElementById('auditUrl');
+  var btn=document.getElementById('auditBtn');
+  var stage=document.getElementById('auditStage');
+  var preview=document.getElementById('auditPreview');
+  var simSite=document.getElementById('simSite');
+  var simContent=document.getElementById('simContent');
+  var scanLine=document.getElementById('scanLine');
+  var scanMsg=document.getElementById('scanMsg');
+  var results=document.getElementById('auditResults');
+  var kpiCircle=document.getElementById('kpiCircle');
+  var kpiWrap=document.getElementById('kpiWrap');
+  var kpiNumber=document.getElementById('kpiNumber');
+  var kpiHeadline=document.getElementById('kpiHeadline');
+  var grid=document.getElementById('auditGrid');
+  var error=document.getElementById('auditError');
 
-  var labels = ['Analizando velocidad de carga…','Analizando diseño visual…','Analizando UX móvil…','Analizando SEO básico…','Analizando accesibilidad…','Analizando estructura…'];
-  var labelsDone = ['Velocidad de carga ✓','Diseño visual ✓','UX móvil ✓','SEO básico ✓','Accesibilidad ✓','Estructura ✓'];
-
-  var analyses = [
-    {icon:'Z',name:'Velocidad de carga',desc:'Tiempo de respuesta, renderizado y carga de recursos.',pct:88},
-    {icon:'D',name:'Diseño visual',desc:'Jerarquía visual, paleta, tipografía y consistencia.',pct:82},
-    {icon:'M',name:'UX móvil',desc:'Adaptación responsive y experiencia táctil.',pct:91},
-    {icon:'S',name:'SEO básico',desc:'Meta tags, semántica y datos estructurados.',pct:76},
-    {icon:'A',name:'Accesibilidad',desc:'Contraste, ARIA y navegación por teclado.',pct:85},
-    {icon:'E',name:'Estructura',desc:'Modularidad, reutilización y escalabilidad.',pct:79}
+  var labels=[
+    'Analizando velocidad de carga\u2026',
+    'Analizando dise\u00F1o visual\u2026',
+    'Analizando UX m\u00F3vil\u2026',
+    'Analizando SEO b\u00E1sico\u2026',
+    'Analizando accesibilidad\u2026',
+    'Analizando estructura\u2026'
   ];
 
-  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function hashUrl(s){
+    var h=0,i,c;
+    for(i=0;i<s.length;i++){c=s.charCodeAt(i);h=((h<<5)-h)+c;h|=0}
+    return Math.abs(h);
+  }
 
-  function clampPct(n){return Math.min(99,Math.max(50,n))}
+  function shuffle(a){
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var t=a[i];a[i]=a[j];a[j]=t
+    }
+    return a
+  }
 
-  function randPct(base){return clampPct(base+Math.round((Math.random()-0.5)*20))}
+  function clamp(n,a,b){return Math.min(b,Math.max(a,n))}
+
+  function pctFor(base,url,i){return clamp(base+(hashUrl(url+i)%14-7),50,99)}
+
+  var analyses=[
+    {icon:'Z',name:'Velocidad de carga',desc:'Tiempo de respuesta, renderizado y recursos.',pct:88},
+    {icon:'D',name:'Dise\u00F1o visual',desc:'Jerarqu\u00EDa visual, paleta y tipograf\u00EDa.',pct:82},
+    {icon:'M',name:'UX m\u00F3vil',desc:'Adaptaci\u00F3n responsive y experiencia t\u00E1ctil.',pct:91},
+    {icon:'S',name:'SEO b\u00E1sico',desc:'Meta tags, sem\u00E1ntica y datos estructurados.',pct:76},
+    {icon:'A',name:'Accesibilidad',desc:'Contraste, ARIA y navegaci\u00F3n por teclado.',pct:85},
+    {icon:'E',name:'Estructura',desc:'Modularidad, reutilizaci\u00F3n y escalabilidad.',pct:79}
+  ];
 
   btn.addEventListener('click',function(){
-    var raw = input.value.trim();
-    if(!raw) return;
+    var raw=input.value.trim();
+    if(!raw)return;
     if(!raw.startsWith('http://')&&!raw.startsWith('https://')) raw='https://'+raw;
     error.classList.remove('show');
-    error.innerHTML='';
     results.classList.remove('show');
-    preview.classList.remove('loaded');
-    iframe.src='';
+    preview.classList.remove('scan-done');
+    simSite.scrollTop=0;
+    scanLine.classList.remove('active');
     btn.disabled=true;
-    loader.classList.add('show');
-    var host;
-    try{host=new URL(raw).hostname}catch(e){host=raw}
-
-    setTimeout(function(){ iframe.src=raw; },200);
-
-    var scanTop = 0;
-    var previewEl = preview;
-    scanLine.classList.add('active');
-    scanLine.style.top = '0px';
-    var labelIdx = -1;
-    scanMsg.innerHTML = 'Preparando análisis…';
-    var scanTimer = setInterval(function(){
-      labelIdx++;
-      if(labelIdx < labels.length){
-        scanMsg.innerHTML = labels[labelIdx];
-      }
-    },240);
-
-    var scanMove = setInterval(function(){
-      var ph = previewEl.offsetHeight;
-      scanTop += 1.5;
-      if(scanTop > ph){
-        scanTop = ph;
-        scanLine.style.top = scanTop + 'px';
-        clearInterval(scanMove);
-      } else {
-        scanLine.style.top = scanTop + 'px';
-      }
-    },16);
-
-    iframe.addEventListener('load',function onload(){
-      clearInterval(scanMove);
-      clearInterval(scanTimer);
-      preview.classList.add('loaded');
-      scanLine.classList.remove('active');
-      scanMsg.innerHTML = 'Análisis completado';
-      iframe.removeEventListener('load',onload);
-    });
 
     setTimeout(function(){
-      clearInterval(scanMove);
-      clearInterval(scanTimer);
+      scanLine.classList.add('active');
+      scanLine.style.top='0px';
+    },50);
+
+    var li=0;
+    scanMsg.textContent='Preparando an\u00E1lisis\u2026';
+    var msgTimer=setInterval(function(){
+      if(li<labels.length){scanMsg.textContent=labels[li];li++}
+    },320);
+
+    var totalScroll=simContent.offsetHeight-simSite.offsetHeight;
+    if(totalScroll<0)totalScroll=0;
+    var duration=3400;
+    var start=Date.now();
+
+    function frame(){
+      var elapsed=Date.now()-start;
+      var t=Math.min(elapsed/duration,1);
+      var ease=1-Math.pow(1-t,3);
+      var pos=totalScroll*ease;
+      simSite.scrollTop=pos;
+      var screenH=simSite.offsetHeight;
+      var scanY=pos/simContent.offsetHeight*screenH;
+      scanLine.style.top=Math.min(scanY,screenH-2)+'px';
+      if(t<1){requestAnimationFrame(frame)}
+      else{
+        scanLine.style.top=(screenH-2)+'px';
+        simSite.scrollTop=totalScroll;
+        finish();
+      }
+    }
+
+    function finish(){
+      clearInterval(msgTimer);
+      preview.classList.add('scan-done');
       scanLine.classList.remove('active');
-      loader.classList.remove('show');
-      var base = 78+Math.floor(Math.random()*18);
+      setTimeout(showResults,400);
+    }
+
+    function showResults(){
+      var base=78+hashUrl(raw)%18;
       kpiNumber.textContent='0%';
       kpiHeadline.textContent=base+'%';
-      kpiRing.classList.remove('active');
-      var circ=326.7;
-      kpiCircle.style.strokeDashoffset=circ;
-      var items = shuffle(analyses.slice());
+      kpiCircle.style.strokeDashoffset=326.7;
+      results.classList.remove('show');
+
+      var items=shuffle(analyses.slice());
       grid.innerHTML='';
       items.forEach(function(a,i){
-        var p = randPct(a.pct);
-        var card=document.createElement('div');
-        card.className='audit-card';
-        card.style.opacity='0';
-        card.style.transform='translateY(12px)';
-        card.innerHTML=
-          '<div class="audit-card-header"><div class="audit-card-dot">'+a.icon+'</div><h4>'+a.name+'</h4></div>'+
-          '<p>'+a.desc+'</p>'+
-          '<div class="audit-card-footer"><span class="audit-impact">Alto impacto</span><span class="audit-card-pct">'+p+'%</span></div>';
-        grid.appendChild(card);
+        var p=pctFor(a.pct,raw,i);
+        var c=document.createElement('div');
+        c.className='audit-card';
+        c.style.opacity='0';
+        c.style.transform='translateY(10px)';
+        c.innerHTML='<div class="audit-card-hd"><div class="audit-card-icon">'+a.icon+'</div><h4>'+a.name+'</h4></div><p>'+a.desc+'</p><div class="audit-card-ft"><span class="audit-tag">Alto impacto</span><span class="audit-val">'+p+'%</span></div>';
+        grid.appendChild(c);
       });
-      results.classList.add('show');
-      scanMsg.innerHTML = '';
+
+      scanMsg.textContent='';
 
       requestAnimationFrame(function(){
-        kpiRing.classList.add('active');
-        var off=circ-(base/100*circ);
+        results.classList.add('show');
+        var off=326.7-(base/100*326.7);
         kpiCircle.style.strokeDashoffset=off;
-        var obj={v:0};
-        gsap.to(obj,{v:base,duration:1.4,ease:'power3.out',onUpdate:function(){kpiNumber.textContent=Math.round(obj.v)+'%'}});
+        var o={v:0};
+        gsap.to(o,{v:base,duration:1.5,ease:'power3.out',onUpdate:function(){kpiNumber.textContent=Math.round(o.v)+'%'}});
+        gsap.fromTo('#auditGrid .audit-card',{opacity:0,y:10},{opacity:1,y:0,duration:.5,stagger:.07,ease:'power2.out'});
       });
-      gsap.fromTo('#auditGrid .audit-card',{opacity:0,y:12},{opacity:1,y:0,duration:.5,stagger:.08,ease:'power2.out',delay:.15});
       btn.disabled=false;
-    },2000);
+    }
+
+    requestAnimationFrame(frame);
   });
 
   input.addEventListener('keydown',function(e){if(e.key==='Enter')btn.click()});
 })();
 </script>
 </section>
+
+<hr class="section-divider">
 
 </body>
