@@ -825,42 +825,30 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       requestAnimationFrame(scanFrame);
     }
 
-    // Load via proxy + srcdoc (enables scroll on ANY site)
-    var baseDomain=raw.match(/^https?:\/\/[^\/]+/)[0];
-    var proxies=['https://api.allorigins.win/raw?url=','https://corsproxy.io/?url='];
-    var pi=0;
-    (function tryProxy(){
-      if(pi>=proxies.length){
-        iframe.onload=function(){
-          try{
-            var d=iframe.contentDocument||iframe.contentWindow.document;
-            if(d&&d.body&&d.body.scrollHeight>50){startScan('scrollable')}
-            else{startScan('visible')}
-          }catch(e){startScan('visible')}
-        };
-        iframe.src=raw;
-        return;
+    // Load the real site directly in the iframe
+    var loaded=false;
+    iframe.onload=function(){
+      if(loaded)return;
+      loaded=true;
+      clearTimeout(fbTimer);
+      try{
+        var d=iframe.contentDocument||iframe.contentWindow.document;
+        if(d&&d.body&&d.body.scrollHeight>50){startScan('scrollable')}
+        else{startScan('visible')}
+      }catch(e){
+        // Cross-origin — show site with scan line
+        startScan('visible');
       }
-      fetch(proxies[pi]+encodeURIComponent(raw))
-        .then(function(r){return r.text()})
-        .then(function(html){
-          if(!html||html.length<100)throw new Error();
-          html=html.replace('<head>','<head><base href="'+baseDomain+'/">');
-          iframe.onload=function(){
-            try{
-              var d=iframe.contentDocument||iframe.contentWindow.document;
-              if(d&&d.body&&d.body.scrollHeight>50){startScan('scrollable')}
-              else{startScan('visible')}
-            }catch(e){startScan('visible')}
-          };
-          iframe.srcdoc=html;
-        })
-        .catch(function(){pi++;tryProxy()});
-    })();
+    };
+    iframe.src=raw;
 
-    // Fallback to sim after 6s
-    setTimeout(function(){
-      if(!scanStarted)startScan('sim');
+    // Fallback to sim if iframe blocked or too slow
+    var fbTimer=setTimeout(function(){
+      if(!scanStarted){
+        iframe.style.display='none';
+        simSite.style.display='block';
+        startScan('sim');
+      }
     },6000);
 
     function showResults(){
@@ -934,7 +922,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
 <div class="consult-hero" id="consultHero">
   <div style="font-size:clamp(.6rem,.75vw,.7rem);color:rgba(245,245,245,.25);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem">&iquest;Ya tienes la web? &iquest;Quieres hacerte las cosas m&aacute;s f&aacute;ciles?</div>
-  <h2>Tu empresa con un agente IA<em>No pierdas m&aacute;s tiempo</em></h2>
+  <h2>Tu negocio con un agente IA<em>No pierdas m&aacute;s tiempo</em></h2>
   <p>Automatizamos tus procesos con inteligencia artificial para que tu negocio crezca sin limites.</p>
 </div>
 
