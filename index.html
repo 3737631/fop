@@ -137,12 +137,12 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 <div id="menuOverlay" style="position:fixed;top:0;right:0;width:100%;height:100%;z-index:90;background:rgba(13,13,13,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;opacity:0;pointer-events:none;transition:opacity .5s ease">
   <nav style="display:flex;flex-direction:column;align-items:center;gap:1rem;font-family:'Barlow Condensed','Impact',sans-serif;text-transform:uppercase;text-align:center">
     <a href="#" onclick="closeMenu();window.scrollTo({top:0,behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Home</a>
-    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;color:rgba(245,245,245,.15);text-decoration:none;letter-spacing:.15em;pointer-events:none">Servicios</a>
-    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Prototipo</a>
-    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mis webs</a>
-    <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mejoras</a>
-    <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Agente IA</a>
-    <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:#F5F5F5;text-decoration:none;letter-spacing:-.02em" id="menuConsultoria">Consultor&iacute;a</a>
+    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;color:rgba(245,245,245,.15);text-decoration:none;letter-spacing:.15em;pointer-events:none">Servicios</a>
+    <a href="#" onclick="closeMenu();var e=document.getElementById('shaderSection').querySelector('.shader-content');if(e)e.scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Prototipo</a>
+    <a href="#" onclick="closeMenu();document.getElementById('siteTrack').closest('section').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mis webs</a>
+    <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mejoras</a>
+    <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Agente IA</a>
+    <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:#F5F5F5;text-decoration:none;letter-spacing:-.02em" id="menuConsultoria">Consultor&iacute;a</a>
   </nav>
 </div>
 
@@ -1109,7 +1109,7 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
 <section id="flipLinks">
 <style>
 #flipLinks{display:grid;place-content:center;gap:.5rem;width:100%;padding:4rem 1rem 3rem;background:#0D0D0D;position:relative;z-index:1}
-.flp{display:inline-block;position:relative;overflow:hidden;white-space:nowrap;font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(2.5rem,10vw,4rem);font-weight:900;color:#F5F5F5;text-transform:uppercase;text-decoration:none;line-height:.75;transition:color .4s ease}
+.flp{display:inline-block;position:relative;overflow:hidden;white-space:nowrap;font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.8rem,6vw,3rem);font-weight:700;color:#F5F5F5;text-transform:uppercase;text-decoration:none;line-height:.75;transition:color .4s ease}
 .flp:hover{color:rgba(245,245,245,.4)}
 .flp .l{display:flex}
 .flp .l span{display:inline-block;transition:transform .35s cubic-bezier(.22,1,.36,1)}
@@ -1147,11 +1147,11 @@ document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('c
   <div class="footer-legal" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem 1.5rem;max-width:1000px;margin:0 auto">
     <span style="font-size:.5rem;color:rgba(245,245,245,.12);letter-spacing:.12em;text-transform:uppercase">&copy; 2026 Francisco Ortu&ntilde;o</span>
     <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
-     <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Aviso Legal</a>
+     <a href="javascript:void(0)" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Aviso Legal</a>
     <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
-    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Pol&iacute;tica de Privacidad</a>
+    <a href="javascript:void(0)" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Pol&iacute;tica de Privacidad</a>
     <span style="width:2px;height:2px;border-radius:50%;background:rgba(245,245,245,.08)"></span>
-    <a href="#" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Pol&iacute;tica de Cookies</a>
+    <a href="javascript:void(0)" style="font-size:.5rem;color:rgba(245,245,245,.2);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s">Pol&iacute;tica de Cookies</a>
   </div>
 </footer>
 
