@@ -754,7 +754,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     var screenH=document.querySelector('.mockup-screen').offsetHeight;
     var totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
 
-    iframe.src=raw;
     var scanStarted=false;
 
     function startScan(mode){
@@ -827,22 +826,43 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       requestAnimationFrame(scanFrame);
     }
 
-    iframe.onload=function(){
-      try{
-        var d=iframe.contentDocument||iframe.contentWindow.document;
-        if(d&&d.body&&d.body.scrollHeight>50){
-          startScan('scrollable');
-        }else{
-          startScan('visible');
+    // Try proxy + srcdoc (allows scrolling ANY site)
+    var baseDomain=raw.match(/^https?:\/\/[^\/]+/)[0];
+    fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(raw))
+      .then(function(r){return r.text()})
+      .then(function(html){
+        if(html&&html.length>100){
+          html=html.replace('<head>','<head><base href="'+baseDomain+'/">');
+          iframe.srcdoc=html;
+          iframe.onload=function(){
+            try{
+              var d=iframe.contentDocument||iframe.contentWindow.document;
+              if(d&&d.body&&d.body.scrollHeight>50){
+                startScan('scrollable');
+              }else{startScan('visible')}
+            }catch(e){startScan('visible')}
+          };
+          return;
         }
-      }catch(e){
-        startScan('visible');
-      }
-    };
+        throw new Error('no content');
+      })
+      .catch(function(){
+        // Fallback: direct iframe
+        iframe.onload=function(){
+          try{
+            var d=iframe.contentDocument||iframe.contentWindow.document;
+            if(d&&d.body&&d.body.scrollHeight>50){
+              startScan('scrollable');
+            }else{startScan('visible')}
+          }catch(e){startScan('visible')}
+        };
+        iframe.src=raw;
+      });
 
+    // Fallback to sim after 6s
     setTimeout(function(){
       if(!scanStarted)startScan('sim');
-    },4000);
+    },6000);
 
     function showResults(){
       var base=60+hashUrl(raw)%23;
