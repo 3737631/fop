@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
 <style>
 html,body,div,span,section,h1,h2,h3,p,canvas{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:auto}
+html{scroll-behavior:smooth}
 body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;height:1100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 
 .scene{perspective:1400px;position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;will-change:transform}
@@ -139,13 +139,13 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 
 <div id="menuOverlay" style="position:fixed;top:0;right:0;width:100%;height:100%;z-index:90;background:rgba(13,13,13,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;opacity:0;pointer-events:none;transition:opacity .5s ease">
   <nav style="display:flex;flex-direction:column;align-items:center;gap:1rem;font-family:'Barlow Condensed','Impact',sans-serif;text-transform:uppercase;text-align:center">
-    <a href="#" onclick="closeMenu();window.scrollTo({top:0,behavior:'smooth'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Home</a>
-    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;color:rgba(245,245,245,.15);text-decoration:none;letter-spacing:.15em;pointer-events:none">Servicios</a>
-    <a href="#" onclick="closeMenu();var e=document.getElementById('shaderSection').querySelector('.shader-content');if(e)e.scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Prototipo</a>
-    <a href="#" onclick="closeMenu();document.getElementById('sliderSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Trabajos recientes</a>
-    <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mejoras</a>
-    <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Agente IA</a>
-    <a href="#" onclick="closeMenu();document.getElementById('contactForm').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:#F5F5F5;text-decoration:none;letter-spacing:-.02em" id="menuConsultoria">Consultor&iacute;a</a>
+    <a href="#heroSection" onclick="closeMenu()" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Home</a>
+    <a href="javascript:void(0)" style="font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;color:rgba(245,245,245,.15);text-decoration:none;letter-spacing:.15em;pointer-events:none">Servicios</a>
+    <a href="#prototipoContent" onclick="closeMenu()" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Prototipo</a>
+    <a href="#sliderSection" onclick="closeMenu()" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Trabajos recientes</a>
+    <a href="#auditSection" onclick="closeMenu()" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Mejoras</a>
+    <a href="#consultingSection" onclick="closeMenu()" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:rgba(245,245,245,.35);text-decoration:none;letter-spacing:-.02em">Agente IA</a>
+    <a href="#contactForm" onclick="closeMenu()" style="font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:#F5F5F5;text-decoration:none;letter-spacing:-.02em" id="menuConsultoria">Consultor&iacute;a</a>
   </nav>
 </div>
 
@@ -253,9 +253,9 @@ function closeMenu(){
     </div>
     <div class="t-scroll-hint">desliza hacia arriba</div>
   </div>
-  <div class="prototipo-wrap" style="position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%)">
+  <div class="prototipo-wrap" style="position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%),linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%),linear-gradient(to bottom,transparent 0%,black 15%,black 85%,transparent 100%);-webkit-mask-composite:intersect;mask-composite:intersect">
 <canvas id="shaderCanvas" style="position:absolute;bottom:0;left:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0"></canvas>
-  <div class="shader-content" style="position:relative;z-index:1">
+  <div class="shader-content" id="prototipoContent" style="position:relative;z-index:1">
     <h1>Creamos un prototipo gratis sin compromiso</h1>
     <p>Cu&eacute;ntanos tu idea y te devolvemos un dise&ntilde;o funcional en 48h. Sin ataduras, sin letra peque&ntilde;a.</p>
     <div class="status">
@@ -1040,7 +1040,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 <section id="consultingSection" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;background:#0D0D0D;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)">
 <style>
 #consultingSection{--consult-bg:#0D0D0D;position:relative;z-index:1}
-#consultingSection-inner{max-width:1200px;margin:0 auto;padding:3rem 1rem 1.5rem;width:100%}
+#consultingSection-inner{max-width:1200px;margin:0 auto;padding:2rem 1rem 3rem;width:100%}
 .consult-hero{text-align:center;margin-bottom:2.5rem;opacity:0;transform:translateY(30px)}
 .consult-hero h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;line-height:.9}
 .consult-hero h2 em{color:#B0B0B0;font-weight:400;font-style:normal;display:block;font-size:clamp(.75rem,1.8vw,1.2rem);letter-spacing:.08em;margin-top:.2rem}
