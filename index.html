@@ -183,7 +183,8 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
 <section style="position:relative;z-index:1;padding:1.5rem 0;overflow:hidden;background:transparent">
   <style>
     @keyframes slide-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-    .slider-wrap{mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%)}
+    .slider-wrap{mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask:linear-gradient(90deg,transparent 0%,black 10%,black 90%,transparent 100%);cursor:grab;user-select:none;touch-action:pan-y}
+    .slider-wrap.grabbing{cursor:grabbing}
     .site-track{display:flex;gap:1rem;width:max-content;animation:slide-left 40s linear infinite;padding:0 0 .8rem;will-change:transform;backface-visibility:hidden}
     .site-track.paused{animation-play-state:paused}
     .site-card{--card-w:clamp(200px,18vw,300px);flex-shrink:0;width:var(--card-w);height:var(--card-w);border-radius:18px;overflow:hidden;position:relative;background:#0D0D0D;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:height .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),border-radius .45s ease;z-index:1;border:1.5px solid rgba(255,255,255,.06)}
@@ -273,6 +274,33 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
       obs.observe(track);
       window.addEventListener('resize',function(){
         document.querySelectorAll('.site-card').forEach(rescale);
+      });
+      var wrap=document.querySelector('.slider-wrap');
+      var dragState=null;
+      var st=track;
+      wrap.addEventListener('pointerdown',function(e){
+        if(e.target.closest('.site-card.hover'))return;
+        var m=window.getComputedStyle(st).transform;
+        var tx=0;
+        if(m&&m!=='none'){var v=m.match(/matrix.*\((.+)\)/);if(v)tx=parseFloat(v[1].split(', ')[4])}
+        dragState={sx:e.clientX,stx:tx};
+        st.classList.add('paused');
+        st.style.transition='none';
+        wrap.classList.add('grabbing');
+        st.setPointerCapture(e.pointerId);
+      });
+      wrap.addEventListener('pointermove',function(e){
+        if(!dragState)return;
+        var dx=e.clientX-dragState.sx;
+        st.style.transform='translateX('+(dragState.stx+dx)+'px)';
+      });
+      wrap.addEventListener('pointerup',function(e){
+        if(!dragState)return;
+        st.style.transition='';
+        st.style.transform='';
+        st.classList.remove('paused');
+        wrap.classList.remove('grabbing');
+        dragState=null;
       });
     })();
   </script>
