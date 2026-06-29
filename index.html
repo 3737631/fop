@@ -539,5 +539,212 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <feComposite in="finalBlur" in2="finalBlur" operator="over"/>
 </filter></defs></svg>
 
+<section id="auditSection">
+<style>
+#auditSection{--accent:#6366f1;--accent2:#8b5cf6;--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:5rem 1rem 6rem;max-width:1200px;margin:0 auto;width:100%}
+.audit-header{text-align:center;margin-bottom:2.5rem}
+.audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
+.audit-header p{font-size:clamp(.75rem,.9vw,1rem);color:rgba(245,245,245,.45);letter-spacing:.08em;margin-top:.4rem}
+.audit-input-group{display:flex;gap:.6rem;max-width:620px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.audit-input-group input{flex:1;min-width:240px;padding:.75rem 1rem;border-radius:10px;border:1.5px solid var(--glass-border);background:var(--glass);color:#F5F5F5;font-size:.9rem;outline:none;transition:border-color .3s,box-shadow .3s}
+.audit-input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,.2)}
+.audit-input-group input::placeholder{color:rgba(245,245,245,.25)}
+.audit-btn{padding:.75rem 1.6rem;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;white-space:nowrap;letter-spacing:.02em}
+.audit-btn:hover{transform:scale(1.04);box-shadow:0 6px 24px rgba(99,102,241,.35)}
+.audit-btn:disabled{opacity:.4;cursor:default;transform:none!important}
+.audit-results{display:none;margin-top:3rem;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
+.audit-results.show{display:block}
+.audit-preview{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;overflow:hidden;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-bottom:2.5rem;transition:box-shadow .4s}
+.audit-preview:hover{box-shadow:0 12px 48px rgba(99,102,241,.12)}
+.preview-mockup{position:relative}
+.mockup-bar{display:flex;align-items:center;gap:6px;padding:.55rem .9rem;background:rgba(255,255,255,.04);border-bottom:1px solid var(--glass-border)}
+.mockup-bar span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}
+.mockup-bar span:nth-child(1){background:#ff5f57}
+.mockup-bar span:nth-child(2){background:#febc2e}
+.mockup-bar span:nth-child(3){background:#28c840}
+.mockup-url{margin-left:auto;font-size:.65rem;color:rgba(245,245,245,.35);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
+.audit-preview iframe{width:100%;height:320px;border:none;display:block;background:#0D0D0D}@media(min-width:600px){.audit-preview iframe{height:400px}}
+@media(min-width:900px){.audit-preview iframe{height:480px}}
+.mockup-overlay{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;background:linear-gradient(180deg,transparent 60%,rgba(13,13,13,.6))}
+.audit-kpi{text-align:center;margin-bottom:3rem}
+.kpi-ring{display:inline-flex;align-items:center;justify-content:center;position:relative;width:140px;height:140px}
+.kpi-ring svg{position:absolute;width:100%;height:100%;transform:rotate(-90deg)}
+.kpi-bg-circle{fill:none;stroke:rgba(255,255,255,.06);stroke-width:6}
+.kpi-fg-circle{fill:none;stroke:url(#kpiGrad);stroke-width:6;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.6s cubic-bezier(.22,1,.36,1)}
+.kpi-ring.active .kpi-fg-circle{stroke-dashoffset:var(--kpi-offset)}
+.kpi-text{display:flex;flex-direction:column;align-items:center;z-index:1}
+.kpi-number{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.kpi-label{font-size:.6rem;color:rgba(245,245,245,.35);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+.kpi-headline{font-size:clamp(1.1rem,2vw,1.6rem);color:#F5F5F5;font-weight:600;margin-top:.8rem;letter-spacing:-.02em}
+.kpi-headline strong{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:3rem}
+.audit-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:1.25rem 1.2rem;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.audit-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(99,102,241,.1)}
+.audit-card-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem}
+.audit-card-dot{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.75rem;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.audit-card h4{font-size:.85rem;font-weight:600;color:#F5F5F5;letter-spacing:-.01em;margin:0}
+.audit-card p{font-size:.72rem;color:rgba(245,245,245,.45);line-height:1.5;margin:.2rem 0 .6rem}
+.audit-card-footer{display:flex;align-items:center;justify-content:space-between}
+.audit-impact{font-size:.6rem;padding:.15rem .5rem;border-radius:999px;background:rgba(99,102,241,.15);color:var(--accent);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.audit-card-pct{font-size:.8rem;font-weight:700;color:rgba(245,245,245,.6);font-variant-numeric:tabular-nums}
+.audit-card-pct span{color:var(--accent)}
+.audit-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.cta-primary{padding:.8rem 2rem;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em}
+.cta-primary:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(99,102,241,.35)}
+.cta-secondary{padding:.8rem 2rem;border-radius:10px;border:1.5px solid var(--glass-border);background:transparent;color:rgba(245,245,245,.7);font-size:.85rem;font-weight:500;cursor:pointer;transition:background .3s,color .3s,border-color .3s;letter-spacing:.02em}
+.cta-secondary:hover{background:var(--glass);color:#F5F5F5;border-color:rgba(255,255,255,.15)}
+.audit-loader{display:none;text-align:center;padding:2rem 0}
+.audit-loader.show{display:block}
+.loader-spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.06);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.audit-loader p{font-size:.8rem;color:rgba(245,245,245,.4);margin-top:.6rem}
+.audit-error{display:none;text-align:center;padding:1rem;color:#f87171;font-size:.8rem;background:rgba(248,113,113,.08);border-radius:10px;margin:1rem auto 0;max-width:480px}
+.audit-error.show{display:block}
+.audit-placeholder{text-align:center;padding:3rem 1rem;color:rgba(245,245,245,.2)}
+.audit-placeholder svg{width:48px;height:48px;opacity:.15;margin-bottom:.8rem}
+.audit-placeholder p{font-size:.85rem}
+</style>
+
+<div class="audit-header">
+  <h2>También mejoramos tu web</h2>
+  <p>Introduce la URL y obtén un an&aacute;lisis visual con mejoras clave</p>
+</div>
+
+<div class="audit-input-group">
+  <input type="url" id="auditUrl" placeholder="https://tudominio.com" autocomplete="off" spellcheck="false" />
+  <button class="audit-btn" id="auditBtn">Analizar web</button>
+</div>
+
+<div class="audit-loader" id="auditLoader">
+  <div class="loader-spinner"></div>
+  <p>Analizando tu sitio...</p>
+</div>
+
+<div class="audit-error" id="auditError"></div>
+
+<div class="audit-results" id="auditResults">
+  <div class="audit-preview">
+    <div class="preview-mockup">
+      <div class="mockup-bar">
+        <span></span><span></span><span></span>
+        <span class="mockup-url" id="mockupUrl">tudominio.com</span>
+      </div>
+      <iframe id="auditIframe" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
+      <div class="mockup-overlay"></div>
+    </div>
+  </div>
+
+  <div class="audit-kpi">
+    <div class="kpi-ring" id="kpiRing">
+      <svg viewBox="0 0 120 120">
+        <defs><linearGradient id="kpiGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="var(--accent2)"/></linearGradient></defs>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="6"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="url(#kpiGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="kpiCircle"/>
+      </svg>
+      <div class="kpi-text">
+        <span class="kpi-number" id="kpiNumber">0%</span>
+        <span class="kpi-label">de mejora potencial</span>
+      </div>
+    </div>
+    <p class="kpi-headline">Tu web puede mejorar un <strong id="kpiHeadline">87%</strong></p>
+  </div>
+
+  <div class="audit-grid" id="auditGrid"></div>
+
+  <div class="audit-ctas">
+    <button class="cta-primary">Mejorar mi web ahora</button>
+    <button class="cta-secondary">Ver informe completo</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var input = document.getElementById('auditUrl');
+  var btn = document.getElementById('auditBtn');
+  var results = document.getElementById('auditResults');
+  var loader = document.getElementById('auditLoader');
+  var error = document.getElementById('auditError');
+  var iframe = document.getElementById('auditIframe');
+  var mockupUrl = document.getElementById('mockupUrl');
+  var kpiNumber = document.getElementById('kpiNumber');
+  var kpiHeadline = document.getElementById('kpiHeadline');
+  var kpiCircle = document.getElementById('kpiCircle');
+  var kpiRing = document.getElementById('kpiRing');
+  var grid = document.getElementById('auditGrid');
+
+  var analyses = [
+    {icon:'Z',name:'Velocidad de carga',desc:'Tiempo de respuesta del servidor, renderizado y carga de recursos cr&iacute;ticos.',pct:88},
+    {icon:'D',name:'Dise&ntilde;o visual',desc:'Jerarqu&iacute;a visual, paleta de color, tipograf&iacute;a y consistencia est&eacute;tica.',pct:82},
+    {icon:'M',name:'UX m&oacute;vil',desc:'Adaptaci&oacute;n responsive, navegaci&oacute;n t&aacute;ctil y experiencia en pantallas peque&ntilde;as.',pct:91},
+    {icon:'S',name:'SEO b&aacute;sico',desc:'Meta tags, estructura sem&aacute;ntica, velocidad m&oacute;vil y datos estructurados.',pct:76},
+    {icon:'A',name:'Accesibilidad',desc:'Contraste, navegaci&oacute;n por teclado, etiquetas ARIA y soporte de lectores de pantalla.',pct:85},
+    {icon:'E',name:'Estructura de componentes',desc:'Modularidad, reutilizaci&oacute;n de c&oacute;digo y escalabilidad del frontend.',pct:79}
+  ];
+
+  function hashUrl(str){
+    var h=0,i,c;
+    for(i=0;i<str.length;i++){c=str.charCodeAt(i);h=((h<<5)-h)+c;h|=0}
+    return Math.abs(h);
+  }
+
+  function clampPct(n){return Math.min(96,Math.max(78,n))}
+
+  btn.addEventListener('click',function(){
+    var raw = input.value.trim();
+    if(!raw) return;
+    if(!raw.startsWith('http://')&&!raw.startsWith('https://')) raw='https://'+raw;
+    error.classList.remove('show');
+    error.innerHTML='';
+    results.classList.remove('show');
+    btn.disabled=true;
+    loader.classList.add('show');
+    var host;
+    try{host=new URL(raw).hostname}catch(e){host=raw}
+    mockupUrl.textContent=host;
+
+    setTimeout(function(){
+      iframe.src=raw;
+    },200);
+
+    setTimeout(function(){
+      loader.classList.remove('show');
+      var base = clampPct(78 + (hashUrl(raw) % 18));
+      kpiNumber.textContent='0%';
+      kpiHeadline.textContent=base+'%';
+      kpiRing.classList.remove('active');
+      var circ=326.7;
+      kpiCircle.style.strokeDashoffset=circ;
+      grid.innerHTML='';
+      analyses.forEach(function(a,i){
+        var p=clampPct(a.pct+(hashUrl(raw+i)%10-5));
+        var card=document.createElement('div');
+        card.className='audit-card';
+        card.style.opacity='0';
+        card.style.transform='translateY(16px)';
+        card.innerHTML=
+          '<div class="audit-card-header"><div class="audit-card-dot">'+a.icon+'</div><h4>'+a.name+'</h4></div>'+
+          '<p>'+a.desc+'</p>'+
+          '<div class="audit-card-footer"><span class="audit-impact">Alto impacto</span><span class="audit-card-pct"><span>'+p+'%</span></span></div>';
+        grid.appendChild(card);
+      });
+      results.classList.add('show');
+
+      requestAnimationFrame(function(){
+        kpiRing.classList.add('active');
+        var off=circ-(base/100*circ);
+        kpiCircle.style.strokeDashoffset=off;
+        var obj={v:0};
+        gsap.to(obj,{v:base,duration:1.4,ease:'power3.out',onUpdate:function(){kpiNumber.textContent=Math.round(obj.v)+'%'}});
+      });
+      gsap.fromTo('#auditGrid .audit-card',{opacity:0,y:16},{opacity:1,y:0,duration:.6,stagger:.1,ease:'power2.out',delay:.15});
+      btn.disabled=false;
+    },2200);
+  });
+
+  input.addEventListener('keydown',function(e){if(e.key==='Enter')btn.click()});
+})();
+</script>
+</section>
+
 </body>
-</html>
