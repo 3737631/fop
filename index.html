@@ -121,40 +121,61 @@ body{background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sans-serif;
   </div>
 </div>
 
-<div id="navArrows" style="position:fixed;bottom:3rem;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:1.2rem;pointer-events:auto">
-  <button class="nav-dot" data-target="carousel-section" title="Servicios"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-  <button class="nav-dot" data-target="shaderSection" title="Clientes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-  <button class="nav-dot" data-target="auditSection" title="Auditor&iacute;a"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+<button id="menuBtn" onclick="toggleMenu()" aria-label="Men&uacute;" style="position:fixed;top:1.5rem;right:1.5rem;z-index:100;background:transparent;border:none;cursor:pointer;padding:0;width:28px;height:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;overflow:visible;color:rgba(245,245,245,.6);transition:color .3s" id="menuSvg">
+    <path d="M4 12L20 12" style="transform-origin:center;transform:translateY(-7px);transition:transform .4s cubic-bezier(.5,.85,.25,1.1),opacity .3s" id="menuLine1"/>
+    <path d="M4 12H20" style="transform-origin:center;transition:transform .4s cubic-bezier(.5,.85,.25,1.8)" id="menuLine2"/>
+    <path d="M4 12H20" style="transform-origin:center;transform:translateY(7px);transition:transform .4s cubic-bezier(.5,.85,.25,1.1),opacity .3s" id="menuLine3"/>
+  </svg>
+</button>
+
+<div id="menuOverlay" style="position:fixed;top:0;right:0;width:100%;height:100%;z-index:90;background:rgba(13,13,13,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;pointer-events:none;transition:opacity .5s ease">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;font-family:'Barlow Condensed','Impact',sans-serif;text-transform:uppercase">
+    <a href="#" onclick="closeMenu();document.getElementById('carousel-section').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Servicios</a>
+    <a href="#" onclick="closeMenu();document.getElementById('shaderSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Clientes</a>
+    <a href="#" onclick="closeMenu();document.getElementById('auditSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Auditor&iacute;a</a>
+    <a href="#" onclick="closeMenu();document.getElementById('consultingSection').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Consultor&iacute;a</a>
+    <a href="#" onclick="closeMenu();document.getElementById('flipLinks').scrollIntoView({behavior:'smooth'})" style="font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:rgba(245,245,245,.5);text-decoration:none;letter-spacing:-.03em;transition:color .3s" onmouseover="this.style.color='#F5F5F5'" onmouseout="this.style.color=''">Contacto</a>
+  </nav>
 </div>
-<style>
-.nav-dot{background:transparent;border:1px solid rgba(245,245,245,.1);border-radius:50%;width:2.2rem;height:2.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(245,245,245,.25);transition:all .4s cubic-bezier(.22,1,.36,1);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.nav-dot:hover{border-color:rgba(245,245,245,.3);color:rgba(245,245,245,.6);transform:translateY(-2px)}
-.nav-dot.active{border-color:rgba(245,245,245,.4);color:#F5F5F5;background:rgba(255,255,255,.05);box-shadow:0 0 20px rgba(245,245,245,.05)}
-</style>
+
 <script>
-(function(){
-  var dots=document.querySelectorAll('.nav-dot');
-  var sections=[];
-  dots.forEach(function(d){var t=d.getAttribute('data-target');sections.push(document.getElementById(t))});
-  function update(){
-    var scrollY=window.scrollY;
-    dots.forEach(function(d,i){
-      var s=sections[i];
-      if(!s)return;
-      var top=s.offsetTop, bot=top+s.offsetHeight;
-      d.classList.toggle('active',scrollY>=top-200&&scrollY<bot-200);
-    });
+function toggleMenu(){
+  var open=document.getElementById('menuOverlay');
+  var btn=document.getElementById('menuBtn');
+  var svg=document.getElementById('menuSvg');
+  var l1=document.getElementById('menuLine1');
+  var l2=document.getElementById('menuLine2');
+  var l3=document.getElementById('menuLine3');
+  var isOpen=open.style.opacity==='1';
+  if(isOpen){
+    open.style.opacity='0';
+    open.style.pointerEvents='none';
+    l1.style.transform='translateY(-7px)';l1.style.opacity='1';
+    l2.style.transform='rotate(0deg)';
+    l3.style.transform='translateY(7px)';l3.style.opacity='1';
+    svg.style.color='rgba(245,245,245,.6)';
+  } else {
+    open.style.opacity='1';
+    open.style.pointerEvents='auto';
+    l1.style.transform='translateY(0) rotate(315deg)';l1.style.opacity='1';
+    l2.style.transform='rotate(45deg)';
+    l3.style.transform='translateY(0) rotate(135deg)';l3.style.opacity='1';
+    svg.style.color='#F5F5F5';
   }
-  window.addEventListener('scroll',update,{passive:true});
-  dots.forEach(function(d){
-    d.addEventListener('click',function(){
-      var id=this.getAttribute('data-target');
-      var el=document.getElementById(id);
-      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
-    });
-  });
-  update();
-})();
+}
+function closeMenu(){
+  var open=document.getElementById('menuOverlay');
+  var l1=document.getElementById('menuLine1');
+  var l2=document.getElementById('menuLine2');
+  var l3=document.getElementById('menuLine3');
+  var svg=document.getElementById('menuSvg');
+  open.style.opacity='0';open.style.pointerEvents='none';
+  l1.style.transform='translateY(-7px)';l1.style.opacity='1';
+  l2.style.transform='rotate(0deg)';
+  l3.style.transform='translateY(7px)';l3.style.opacity='1';
+  svg.style.color='rgba(245,245,245,.6)';
+}
 </script>
 
 <div style="height:470vh"></div>
