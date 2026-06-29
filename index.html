@@ -567,12 +567,12 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
 <section id="auditSection">
 <style>
-#auditSection{--accent:#6366f1;--accent2:#8b5cf6;--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:5rem 1rem 6rem;max-width:1200px;margin:0 auto;width:100%}
+#auditSection{--accent:#6366f1;--accent2:#8b5cf6;--card-bg:rgba(255,255,255,.03);--card-border:rgba(255,255,255,.07);position:relative;z-index:1;padding:5rem 1rem 6rem;max-width:1200px;margin:0 auto;width:100%}
 .audit-header{text-align:center;margin-bottom:2.5rem}
 .audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
 .audit-header p{font-size:clamp(.75rem,.9vw,1rem);color:rgba(245,245,245,.45);letter-spacing:.08em;margin-top:.4rem}
 .audit-input-group{display:flex;gap:.6rem;max-width:620px;margin:0 auto;flex-wrap:wrap;justify-content:center}
-.audit-input-group input{flex:1;min-width:240px;padding:.75rem 1rem;border-radius:10px;border:1.5px solid var(--glass-border);background:var(--glass);color:#F5F5F5;font-size:.9rem;outline:none;transition:border-color .3s,box-shadow .3s}
+.audit-input-group input{flex:1;min-width:240px;padding:.75rem 1rem;border-radius:10px;border:1.5px solid var(--card-border);background:var(--card-bg);color:#F5F5F5;font-size:.9rem;outline:none;transition:border-color .3s,box-shadow .3s}
 .audit-input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,.2)}
 .audit-input-group input::placeholder{color:rgba(245,245,245,.25)}
 .audit-btn{padding:.75rem 1.6rem;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;white-space:nowrap;letter-spacing:.02em}
@@ -581,18 +581,20 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-results{display:none;margin-top:3rem;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) forwards}
 @keyframes fadeUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
 .audit-results.show{display:block}
-.audit-preview{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;overflow:hidden;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-bottom:2.5rem;transition:box-shadow .4s}
-.audit-preview:hover{box-shadow:0 12px 48px rgba(99,102,241,.12)}
+.audit-preview{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;margin-bottom:2.5rem;transition:box-shadow .4s}
+.audit-preview:hover{box-shadow:0 12px 48px rgba(99,102,241,.1)}
 .preview-mockup{position:relative}
-.mockup-bar{display:flex;align-items:center;gap:6px;padding:.55rem .9rem;background:rgba(255,255,255,.04);border-bottom:1px solid var(--glass-border)}
+.mockup-bar{display:flex;align-items:center;gap:6px;padding:.55rem .9rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border)}
 .mockup-bar span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}
 .mockup-bar span:nth-child(1){background:#ff5f57}
 .mockup-bar span:nth-child(2){background:#febc2e}
 .mockup-bar span:nth-child(3){background:#28c840}
 .mockup-url{margin-left:auto;font-size:.65rem;color:rgba(245,245,245,.35);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
-.audit-preview iframe{width:100%;height:320px;border:none;display:block;background:#0D0D0D}@media(min-width:600px){.audit-preview iframe{height:400px}}
-@media(min-width:900px){.audit-preview iframe{height:480px}}
-.mockup-overlay{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;background:linear-gradient(180deg,transparent 60%,rgba(13,13,13,.6))}
+.preview-body{position:relative;height:clamp(200px,30vw,360px);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.preview-body .preview-glow{position:absolute;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.12),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.preview-body .preview-icon{position:relative;z-index:1;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;opacity:.6}
+.preview-body .preview-icon svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.preview-domain{text-align:center;margin-top:.5rem;font-size:.8rem;color:rgba(245,245,245,.25);letter-spacing:.03em}
 .audit-kpi{text-align:center;margin-bottom:3rem}
 .kpi-ring{display:inline-flex;align-items:center;justify-content:center;position:relative;width:140px;height:140px}
 .kpi-ring svg{position:absolute;width:100%;height:100%;transform:rotate(-90deg)}
@@ -605,7 +607,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .kpi-headline{font-size:clamp(1.1rem,2vw,1.6rem);color:#F5F5F5;font-weight:600;margin-top:.8rem;letter-spacing:-.02em}
 .kpi-headline strong{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:3rem}
-.audit-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:1.25rem 1.2rem;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.audit-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:1.25rem 1.2rem;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
 .audit-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(99,102,241,.1)}
 .audit-card-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem}
 .audit-card-dot{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.75rem;background:linear-gradient(135deg,var(--accent),var(--accent2))}
@@ -618,8 +620,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .cta-primary{padding:.8rem 2rem;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;letter-spacing:.02em}
 .cta-primary:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(99,102,241,.35)}
-.cta-secondary{padding:.8rem 2rem;border-radius:10px;border:1.5px solid var(--glass-border);background:transparent;color:rgba(245,245,245,.7);font-size:.85rem;font-weight:500;cursor:pointer;transition:background .3s,color .3s,border-color .3s;letter-spacing:.02em}
-.cta-secondary:hover{background:var(--glass);color:#F5F5F5;border-color:rgba(255,255,255,.15)}
+.cta-secondary{padding:.8rem 2rem;border-radius:10px;border:1.5px solid var(--card-border);background:transparent;color:rgba(245,245,245,.7);font-size:.85rem;font-weight:500;cursor:pointer;transition:background .3s,color .3s,border-color .3s;letter-spacing:.02em}
+.cta-secondary:hover{background:var(--card-bg);color:#F5F5F5;border-color:rgba(255,255,255,.15)}
 .audit-loader{display:none;text-align:center;padding:2rem 0}
 .audit-loader.show{display:block}
 .loader-spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.06);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
@@ -627,9 +629,6 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-loader p{font-size:.8rem;color:rgba(245,245,245,.4);margin-top:.6rem}
 .audit-error{display:none;text-align:center;padding:1rem;color:#f87171;font-size:.8rem;background:rgba(248,113,113,.08);border-radius:10px;margin:1rem auto 0;max-width:480px}
 .audit-error.show{display:block}
-.audit-placeholder{text-align:center;padding:3rem 1rem;color:rgba(245,245,245,.2)}
-.audit-placeholder svg{width:48px;height:48px;opacity:.15;margin-bottom:.8rem}
-.audit-placeholder p{font-size:.85rem}
 </style>
 
 <div class="audit-header">
@@ -656,8 +655,13 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         <span></span><span></span><span></span>
         <span class="mockup-url" id="mockupUrl">tudominio.com</span>
       </div>
-      <iframe id="auditIframe" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
-      <div class="mockup-overlay"></div>
+      <div class="preview-body">
+        <div class="preview-glow"></div>
+        <div class="preview-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+      </div>
+      <div class="preview-domain" id="previewDomain">tudominio.com</div>
     </div>
   </div>
 
@@ -691,8 +695,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   var results = document.getElementById('auditResults');
   var loader = document.getElementById('auditLoader');
   var error = document.getElementById('auditError');
-  var iframe = document.getElementById('auditIframe');
   var mockupUrl = document.getElementById('mockupUrl');
+  var previewDomain = document.getElementById('previewDomain');
   var kpiNumber = document.getElementById('kpiNumber');
   var kpiHeadline = document.getElementById('kpiHeadline');
   var kpiCircle = document.getElementById('kpiCircle');
@@ -728,10 +732,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     var host;
     try{host=new URL(raw).hostname}catch(e){host=raw}
     mockupUrl.textContent=host;
-
-    setTimeout(function(){
-      iframe.src=raw;
-    },200);
+    previewDomain.textContent=host;
 
     setTimeout(function(){
       loader.classList.remove('show');
@@ -765,7 +766,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       });
       gsap.fromTo('#auditGrid .audit-card',{opacity:0,y:16},{opacity:1,y:0,duration:.6,stagger:.1,ease:'power2.out',delay:.15});
       btn.disabled=false;
-    },2200);
+    },1500);
   });
 
   input.addEventListener('keydown',function(e){if(e.key==='Enter')btn.click()});
