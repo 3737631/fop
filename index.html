@@ -595,7 +595,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .sim-block{height:clamp(70px,10vw,110px);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:rgba(245,245,245,.12);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.03);font-family:'Inter',sans-serif}
 .sim-block:nth-child(1){height:clamp(120px,16vw,180px)}
 .sim-block:nth-child(2n){background:rgba(255,255,255,.015)}
-.sim-block:nth-child(6){height:clamp(80px,10vw,120px)}
+.sim-block:nth-child(8){height:clamp(80px,10vw,120px)}
 .mockup-screen iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;background:#0D0D0D;opacity:0;transition:opacity .7s ease;z-index:1;display:none}
 .mockup-screen iframe.loaded{opacity:1;display:block}
 .scan-line{position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,245,245,.6),rgba(245,245,245,.8),rgba(245,245,245,.6),transparent);z-index:3;top:0;opacity:0;transition:none;pointer-events:none;box-shadow:0 0 12px rgba(245,245,245,.3),0 0 30px rgba(245,245,245,.15)}
@@ -650,6 +650,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
           <div class="sim-block">Sobre nosotros &mdash; Trayectoria</div>
           <div class="sim-block">Proyectos &mdash; Casos reales</div>
           <div class="sim-block">Testimonios &mdash; Clientes</div>
+          <div class="sim-block">Blog &mdash; Art&iacute;culos</div>
+          <div class="sim-block">FAQ &mdash; Preguntas frecuentes</div>
           <div class="sim-block">Contacto &mdash; Hablemos</div>
         </div>
       </div>
@@ -746,7 +748,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     },320);
 
     var resolved=false;
-    var duration=3400;
+    var duration=4500;
 
     function startScan(){
       scanLine.classList.add('active');
@@ -786,7 +788,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       auditIframe.src='about:blank';
       auditIframe.classList.remove('loaded');
       simSite.style.display='';
-      startScan();
+      requestAnimationFrame(function(){setTimeout(startScan,80)});
     }
 
     function useIframe(){
