@@ -31,7 +31,7 @@ body{margin:0;background:#0D0D0D;color:#F5F5F5;font-family:'Inter','Segoe UI',sa
 .hero-name em{color:#B0B0B0;font-weight:400}
 .hero-role{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1rem,2.5vw,1.8rem);font-weight:400;color:#A0A0A0;letter-spacing:.16em;text-transform:uppercase;margin-top:.6rem;opacity:.85}
 
-.bg-text{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:4;pointer-events:none;opacity:0}
+.bg-text{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;pointer-events:none;opacity:0}
 .bg-text .line{display:block;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
 .bg-text .line-inner{display:block;transform:translateY(100%)}
 .bg-text-title{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(3rem,9vw,7rem);font-weight:900;color:#F5F5F5;line-height:.88;letter-spacing:-.04em;text-transform:uppercase;text-align:center}
@@ -545,7 +545,7 @@ gsap.to('.hero .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.1
 gsap.to(canvas, { x:'2vw', opacity:1, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=9%', scrub:1.2 } });
 gsap.to('#bgText', { opacity:1, duration:1.5, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'+=5%', scrub:1.2 } });
 gsap.to('#bgText .line-inner', { y:0, duration:1.5, ease:'power4.out', stagger:0.08, scrollTrigger:{ trigger:'body', start:'top top', end:'+=5%', scrub:1.2 } });
-gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'1% top', end:'8% top', scrub:1.2 } });
+gsap.to(heroS, { opacity:0, x:-160, filter:'blur(12px)', ease:'power4.out', scrollTrigger:{ trigger:'body', start:'top top', end:'6% top', scrub:1.2 } });
 
 gsap.to(canvas, { clipPath:'inset(0 0 100% 0)', ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'11% top', end:'22.5% top', scrub:1.8 } });
 gsap.to(canvas, { scale:0.6, opacity:0.2, ease:'power3.inOut', scrollTrigger:{ trigger:'body', start:'12% top', end:'20% top', scrub:1.4 } });
@@ -1042,7 +1042,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 <section id="consultingSection" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;background:#0D0D0D;border-top:1px solid rgba(255,255,255,.06)">
 <style>
 #consultingSection{--consult-bg:#0D0D0D;position:relative;z-index:1}
-#consultingSection-inner{max-width:1200px;margin:0 auto;padding:3rem 1rem 3rem;width:100%}
+#consultingSection-inner{max-width:1200px;margin:0 auto;padding:2.5rem 1rem 3rem;width:100%}
 .consult-hero{text-align:center;margin-bottom:1.5rem;opacity:0;transform:translateY(30px)}
 .consult-hero h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:900;color:#F5F5F5;letter-spacing:-.04em;text-transform:uppercase;line-height:.9}
 .consult-hero h2 em{color:#B0B0B0;font-weight:400;font-style:normal;display:block;font-size:clamp(.75rem,1.8vw,1.2rem);letter-spacing:.08em;margin-top:.2rem}
