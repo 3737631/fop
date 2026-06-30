@@ -744,15 +744,15 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .audit-kpi .sub{font-size:.55rem;color:rgba(245,245,245,.2);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
 .audit-kpi .hl{font-size:clamp(.8rem,1.2vw,1rem);color:rgba(245,245,245,.35);font-weight:300;margin-top:.6rem;letter-spacing:.02em}
 .audit-kpi .hl strong{color:#F5F5F5;font-weight:600}
-.audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.8rem;margin-bottom:2rem}
-.audit-card{padding:0;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.audit-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem;margin-bottom:2rem}
+.audit-card{padding:0;transition:transform .4s cubic-bezier(.22,1,.36,1);flex:0 1 180px}
 .audit-card h4{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(.8rem,.9vw,1rem);font-weight:700;color:#F5F5F5;letter-spacing:-.02em;text-transform:uppercase;margin:0 0 .15rem}
 .audit-card p{font-size:.65rem;font-weight:300;color:rgba(245,245,245,.35);line-height:1.4;margin:0 0 .6rem}
 .audit-card-ft{display:flex;align-items:center;gap:.6rem}
 .audit-tag{font-size:.45rem;color:rgba(245,245,245,.2);letter-spacing:.06em;text-transform:uppercase;font-weight:400}
 .audit-val{font-size:.75rem;font-weight:700;color:rgba(245,245,245,.4);font-variant-numeric:tabular-nums}
 .audit-ctas{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
-.audit-ctas button{padding:.5rem 1.4rem;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:400;cursor:pointer;transition:color .3s,border-color .3s;letter-spacing:.04em;background:transparent}
+.audit-ctas button{padding:.5rem 1.4rem;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:400;cursor:pointer;transition:color .3s,border-color .3s;letter-spacing:.04em;background:transparent;border-radius:9999px}
 .audit-ctas .cta-p{border:1px solid rgba(245,245,245,.15);color:rgba(245,245,245,.6)}
 .audit-ctas .cta-p:hover{color:#F5F5F5;border-color:rgba(245,245,245,.3)}
 .audit-ctas .cta-s{border:1px solid transparent;color:rgba(245,245,245,.25)}
@@ -871,9 +871,9 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         btn.disabled=false;
         scanMsg.textContent='';
         results.classList.add('show');
-        kpiNumber.textContent='100%';
-        kpiHeadline.innerHTML='<span style="color:#22c55e">100%</span> — Esta web ya está optimizada al máximo por Francisco Ortuño';
-        grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:1.5rem 0"><div style="font-size:2rem;margin-bottom:.5rem">🏆</div><div style="font-family:\'Barlow Condensed\',\'Impact\',sans-serif;font-size:1.1rem;font-weight:700;color:#F5F5F5;letter-spacing:-.02em">¡Esta web ya está optimizada al máximo por Francisco Ortuño!</div><p style="font-size:.7rem;color:rgba(245,245,245,.45);margin-top:.3rem">Analizar otra web si quieres ver cómo podemos mejorar la tuya.</p></div>';
+        kpiNumber.innerHTML='<span style="color:#22c55e">0%</span>';
+        kpiHeadline.innerHTML='<span style="color:#22c55e">0%</span> — Esta web ya est&aacute; optimizada';
+        grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:1.5rem 0"><div style="font-family:\'Barlow Condensed\',\'Impact\',sans-serif;font-size:1rem;font-weight:700;color:#22c55e;letter-spacing:-.02em">Esta web ya est&aacute; optimizada</div><p style="font-size:.7rem;color:rgba(245,245,245,.45);margin-top:.3rem">Analiza otra web para ver c&oacute;mo podemos mejorar la tuya.</p></div>';
         results.scrollIntoView({behavior:'smooth',block:'center'});
       },2000);
       return;
