@@ -882,8 +882,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     document.getElementById('auditStage').style.display='';
     results.classList.remove('show');
     preview.classList.remove('scan-done');
-    iframe.style.display='block';
-    simSite.style.display='none';
+    iframe.style.display='none';
+    simSite.style.display='block';
     simSite.scrollTop=0;
     scanLine.classList.remove('active');
     btn.disabled=true;
@@ -975,6 +975,15 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
           startScan('sim');
         }else{startScan('iframe')}
       }catch(e){startScan('iframe')}
+    };
+    iframe.onerror=function(){
+      if(!scanStarted&&!loaded){
+        loaded=true;
+        clearTimeout(fbTimer);
+        simSite.style.display='block';
+        iframe.style.display='none';
+        startScan('sim');
+      }
     };
     iframe.src=raw;
 
