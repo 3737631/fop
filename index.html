@@ -561,7 +561,7 @@ gsap.to(gsGlobe, { opacity:0.6, ease:'power4.out', scrollTrigger:{ trigger:'body
 gsap.to(gsGlobe, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'20% top', end:'29% top', scrub:1 } });
 
 gsap.to(gsCoin, { opacity:0.7, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'29% top', end:'50% top', scrub:1.5 } });
-gsap.to('#bgText', { opacity:0, y:-30, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'42.5% top', scrub:1, toggleActions:'play none none none', onLeave:function(){gsap.set('#bgText',{opacity:0,display:'none'})} } });
+gsap.to('#bgText', { opacity:0, y:-30, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'32% top', end:'42.5% top', scrub:1, toggleActions:'play none reverse none', onLeave:function(){gsap.set('#bgText',{display:'none'})}, onEnterBack:function(){gsap.set('#bgText',{display:''})} } });
 
 gsap.to(gsCoin, { opacity:0, ease:'power4.out', scrollTrigger:{ trigger:'body', start:'45.5% top', end:'56.5% top', scrub:1.5 } });
 
