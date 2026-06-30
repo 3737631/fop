@@ -730,7 +730,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .mockup-urlbar svg{flex-shrink:0;opacity:.3}
 .mockup-urlbar .url-label{font-size:.58rem;color:rgba(245,245,245,.5);letter-spacing:.02em;font-family:'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mockup-screen{position:relative;width:100%;height:clamp(200px,30vw,340px);overflow:hidden}
-#auditIframe{width:100%;height:100%;border:none;display:none}
+#auditIframe{width:100%;height:100%;border:none;display:none;will-change:transform}
 .simulated-site{width:100%;height:100%;overflow-y:auto}
 .simulated-site::-webkit-scrollbar{display:none}
 .sim-content{width:100%}
@@ -885,7 +885,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     document.getElementById('auditStage').style.display='';
     results.classList.remove('show');
     preview.classList.remove('scan-done');
-    iframe.style.opacity='0';iframe.style.display='none';
+    iframe.style.display='none';iframe.style.opacity='0';
+    iframe.style.transform='';iframe.style.height='';iframe.style.willChange='';
     simSite.style.display='block';simSite.scrollTop=0;
     scanLine.classList.remove('active');
     btn.disabled=true;
@@ -899,46 +900,66 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
     var duration=4500;
     var screenH=document.querySelector('.mockup-screen').offsetHeight;
-    var totalScroll=0;
     var scanStarted=false, loaded=false;
+    var TALL_H=3000;
 
-    function switchToIframe(){
-      iframe.style.display='block';iframe.style.opacity='1';
-      simSite.style.display='none';
-    }
-
-    function startScan(){
+    function startSimScan(){
       if(scanStarted)return;
       scanStarted=true;
-      totalScroll=Math.max(0,simContent.scrollHeight-simSite.clientHeight);
-      if(totalScroll<20){
-        totalScroll=200; // fallback fixed scroll
-      }
+      var totalScroll=Math.max(0,simContent.scrollHeight-simSite.clientHeight);
+      if(totalScroll<20)totalScroll=200;
       simSite.style.pointerEvents='none';
       iframe.style.pointerEvents='none';
       simSite.scrollTop=0;
       scanLine.classList.add('active');scanLine.style.top='-15px';
       var start=Date.now();
-      function scanFrame(){
-        var elapsed=Date.now()-start;
-        var t=Math.min(elapsed/duration,1);
+      function frame(){
+        var e=Date.now()-start;
+        var t=Math.min(e/duration,1);
         var ease=1-Math.pow(1-t,3);
-        var pos=totalScroll*ease;
-        simSite.scrollTop=pos;
-        var scanY=pos/totalScroll*screenH;
-        scanLine.style.top=Math.min(scanY,screenH-2)+'px';
-        if(t<1){requestAnimationFrame(scanFrame)}else{
+        simSite.scrollTop=totalScroll*ease;
+        scanLine.style.top=Math.min(totalScroll*ease/totalScroll*screenH,screenH-2)+'px';
+        if(t<1){requestAnimationFrame(frame)}else{
           simSite.scrollTop=totalScroll;
           scanLine.style.top=(screenH-2)+'px';
-          simSite.style.pointerEvents='';
-          iframe.style.pointerEvents='';
+          simSite.style.pointerEvents='';iframe.style.pointerEvents='';
           scanLine.classList.remove('active');
           clearInterval(msgTimer);
           preview.classList.add('scan-done');
           setTimeout(showResults,400);
         }
       }
-      requestAnimationFrame(scanFrame);
+      requestAnimationFrame(frame);
+    }
+
+    function startIframeScan(){
+      if(scanStarted)return;
+      scanStarted=true;
+      iframe.style.display='block';iframe.style.opacity='1';
+      iframe.style.height=TALL_H+'px';iframe.style.transform='translateY(0)';
+      iframe.style.willChange='transform';
+      simSite.style.display='none';
+      simSite.style.pointerEvents='none';iframe.style.pointerEvents='none';
+      scanLine.classList.add('active');scanLine.style.top='-15px';
+      var start=Date.now();
+      var maxTrans=Math.round(TALL_H*0.6);
+      function frame(){
+        var e=Date.now()-start;
+        var t=Math.min(e/duration,1);
+        var ease=1-Math.pow(1-t,3);
+        iframe.style.transform='translateY('+(-maxTrans*ease)+'px)';
+        scanLine.style.top=Math.min(screenH*ease,screenH-2)+'px';
+        if(t<1){requestAnimationFrame(frame)}else{
+          scanLine.style.top=(screenH-2)+'px';
+          simSite.style.pointerEvents='';iframe.style.pointerEvents='';
+          iframe.style.height='';iframe.style.transform='';iframe.style.willChange='';
+          scanLine.classList.remove('active');
+          clearInterval(msgTimer);
+          preview.classList.add('scan-done');
+          setTimeout(showResults,400);
+        }
+      }
+      requestAnimationFrame(frame);
     }
 
     iframe.onload=function(){
@@ -947,21 +968,18 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       try{
         var d=iframe.contentDocument||iframe.contentWindow.document;
         if(d&&d.body&&d.body.textContent&&d.body.textContent.match(/frame|denied|blocked|negar/i)){
-          // XFO - keep sim mode
-        }else{switchToIframe()}
-      }catch(e){switchToIframe()}
+          iframe.style.display='none';startSimScan();
+        }else{startIframeScan()}
+      }catch(e){startIframeScan()}
     };
     iframe.onerror=function(){
-      if(!scanStarted&&!loaded){loaded=true;clearTimeout(fbTimer)}
+      if(!scanStarted&&!loaded){loaded=true;clearTimeout(fbTimer);iframe.style.display='none';startSimScan()}
     };
     iframe.src=raw;
 
     var fbTimer=setTimeout(function(){
-      if(!scanStarted&&!loaded){loaded=true}
+      if(!scanStarted&&!loaded){loaded=true;iframe.style.display='none';startSimScan()}
     },12000);
-
-    // Start sim scan immediately
-    startScan('sim');
 
     function showResults(){
       var base=60+hashUrl(raw)%23;
