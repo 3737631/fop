@@ -338,15 +338,17 @@ function closeMenu(){
         card.addEventListener('mouseenter',function(){
           var ex = document.querySelector('.site-card.hover');
           if (ex && ex !== this) ex.classList.remove('hover');
-          this.classList.add('hover');
+          this.classList.add('hover');paused=true;
         });
         card.addEventListener('mouseleave',function(){
           this.classList.remove('hover');
+          if(!document.querySelector('.site-card.hover'))paused=false;
         });
         card.addEventListener('touchstart',function(e){
           var was = this.classList.contains('hover');
           document.querySelectorAll('.site-card.hover').forEach(function(c){ c.classList.remove('hover'); });
-          if (!was) { this.classList.add('hover'); } else { this.classList.remove('hover'); }
+          if (!was){this.classList.add('hover');paused=true}
+          else{if(!document.querySelector('.site-card.hover'))paused=false}
         },{passive:true});
         rescale(card);
       });
@@ -355,7 +357,7 @@ function closeMenu(){
         if (!expanded) return;
         var card = e.target.closest('.site-card');
         if (card && card === expanded) return;
-        expanded.classList.remove('hover');
+        expanded.classList.remove('hover');paused=false;
       });
       var obs = new IntersectionObserver(function(){
         iframes.forEach(function(o){ o.el.src = o.url; });
@@ -398,7 +400,7 @@ function closeMenu(){
         if(!dragState)return;
         dragState=null;
         wrap.classList.remove('grabbing');
-        paused=false;
+        if(!document.querySelector('.site-card.hover'))paused=false;
       });
       document.getElementById('sliderPrev').addEventListener('click',function(e){e.stopPropagation();var s=document.querySelector('.site-card').offsetWidth+16;pos+=s;pos=Math.min(pos,0);updateDots()});
       document.getElementById('sliderNext').addEventListener('click',function(e){e.stopPropagation();var s=document.querySelector('.site-card').offsetWidth+16;pos-=s;if(pos<=-halfW)pos=0;updateDots()});
