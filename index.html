@@ -865,7 +865,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       document.getElementById('auditStage').style.display='';
       results.classList.remove('show');
       preview.classList.remove('scan-done');
-      iframe.style.display='block';simSite.style.display='none';
+      simSite.style.display='block';iframe.style.display='none';
       scanLine.classList.remove('active');btn.disabled=true;
       try{urlLabel.textContent=new URL(raw).hostname}catch(e){urlLabel.textContent=raw}
       scanMsg.textContent='Analizando web de Francisco Ortuño...';
@@ -885,12 +885,10 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     document.getElementById('auditStage').style.display='';
     results.classList.remove('show');
     preview.classList.remove('scan-done');
-    iframe.style.display='block';
-    simSite.style.display='none';
-    simSite.scrollTop=0;
+    iframe.style.opacity='0';iframe.style.display='none';
+    simSite.style.display='block';simSite.scrollTop=0;
     scanLine.classList.remove('active');
     btn.disabled=true;
-
     try{urlLabel.textContent=new URL(raw).hostname}catch(e){urlLabel.textContent=raw}
 
     var li=0;
@@ -902,59 +900,36 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
     var duration=4500;
     var screenH=document.querySelector('.mockup-screen').offsetHeight;
     var totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
+    var scanStarted=false, loaded=false;
 
-    var scanStarted=false;
+    function switchToIframe(){
+      iframe.style.display='block';iframe.style.opacity='1';
+      iframe.style.height='';iframe.style.transform='';iframe.style.willChange='';
+      simSite.style.display='none';
+    }
 
-    var TALL_H=3000;
-    function startScan(mode){
+    function startScan(){
       if(scanStarted)return;
       scanStarted=true;
       simSite.style.pointerEvents='none';
       iframe.style.pointerEvents='none';
-      iframe.style.willChange='transform';
-      if(mode==='iframe'){
-        iframe.style.display='block';
-        simSite.style.display='none';
-        iframe.style.height=TALL_H+'px';
-        iframe.style.transform='translateY(0)';
-      }else{
-        iframe.style.display='none';
-        simSite.style.display='block';
-        simSite.scrollTop=0;
-        totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
-        iframe.style.height='';
-        iframe.style.transform='';
-      }
-      scanLine.classList.add('active');
-      scanLine.style.top='-15px';
+      simSite.scrollTop=0;
+      scanLine.classList.add('active');scanLine.style.top='-15px';
       var start=Date.now();
-      var maxTrans=mode==='iframe'?Math.round(TALL_H*0.6):0;
-
       function scanFrame(){
         var elapsed=Date.now()-start;
         var t=Math.min(elapsed/duration,1);
         var ease=1-Math.pow(1-t,3);
-
-        if(mode==='iframe'){
-          iframe.style.transform='translateY('+(-maxTrans*ease)+'px)';
-          var scanY=screenH*ease;
-          scanLine.style.top=Math.min(scanY,screenH-2)+'px';
-        }else{
-          var pos=totalScroll*ease;
-          simSite.scrollTop=pos;
-          var scanY=pos/simContent.offsetHeight*screenH;
-          scanLine.style.top=Math.min(scanY,screenH-2)+'px';
-        }
-
-        if(t<1){requestAnimationFrame(scanFrame)}
-        else{
-          if(mode==='sim')simSite.scrollTop=totalScroll;
+        var pos=totalScroll*ease;
+        simSite.scrollTop=pos;
+        var scanY=pos/simContent.offsetHeight*screenH;
+        scanLine.style.top=Math.min(scanY,screenH-2)+'px';
+        if(t<1){requestAnimationFrame(scanFrame)}else{
+          simSite.scrollTop=totalScroll;
           scanLine.style.top=(screenH-2)+'px';
           simSite.style.pointerEvents='';
           iframe.style.pointerEvents='';
-          iframe.style.height='';
-          iframe.style.transform='';
-          iframe.style.willChange='';
+          iframe.style.height='';iframe.style.transform='';iframe.style.willChange='';
           scanLine.classList.remove('active');
           clearInterval(msgTimer);
           preview.classList.add('scan-done');
@@ -964,46 +939,33 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       requestAnimationFrame(scanFrame);
     }
 
-    // Load the real site
-    var loaded=false;
     iframe.onload=function(){
       if(loaded)return;
-      loaded=true;
-      clearTimeout(fbTimer);
+      loaded=true;clearTimeout(fbTimer);
       try{
         var d=iframe.contentDocument||iframe.contentWindow.document;
         if(d&&d.body&&d.body.textContent&&d.body.textContent.match(/frame|denied|blocked|negar/i)){
-          iframe.style.display='none';
-          simSite.style.display='block';
-          startScan('sim');
-        }else{startScan('iframe')}
-      }catch(e){startScan('iframe')}
+          // XFO - keep sim mode
+        }else{switchToIframe()}
+      }catch(e){switchToIframe()}
     };
     iframe.onerror=function(){
-      if(!scanStarted&&!loaded){
-        loaded=true;
-        clearTimeout(fbTimer);
-        simSite.style.display='block';
-        iframe.style.display='none';
-        startScan('sim');
-      }
+      if(!scanStarted&&!loaded){loaded=true;clearTimeout(fbTimer)}
     };
     iframe.src=raw;
 
     var fbTimer=setTimeout(function(){
-      if(!scanStarted){
-        iframe.style.display='none';
-        simSite.style.display='block';
-        startScan('sim');
-      }
+      if(!scanStarted&&!loaded){loaded=true}
     },12000);
+
+    // Start sim scan immediately
+    startScan('sim');
 
     function showResults(){
       var base=60+hashUrl(raw)%23;
       kpiNumber.textContent='0%';
       kpiHeadline.textContent=base+'%';
       results.classList.remove('show');
-
       var items=shuffle(analyses.slice());
       var skip=1+hashUrl(raw+'s')%2;
       for(var s=0;s<skip;s++)items.splice(hashUrl(raw+'s'+s)%items.length,1);
@@ -1012,14 +974,11 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         var p=20+hashUrl(raw+a.name+i)%78;
         var c=document.createElement('div');
         c.className='audit-card';
-        c.style.opacity='0';
-        c.style.transform='translateY(10px)';
+        c.style.opacity='0';c.style.transform='translateY(10px)';
         c.innerHTML='<div class="audit-card-hd"><h4>'+a.name+'</h4></div><p>'+a.desc+'</p><div class="audit-card-ft"><span class="audit-tag">Alto impacto</span><span class="audit-val">'+p+'%</span></div>';
         grid.appendChild(c);
       });
-
       scanMsg.textContent='';
-
       requestAnimationFrame(function(){
         results.classList.add('show');
         var o={v:0};
