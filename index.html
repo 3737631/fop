@@ -1102,6 +1102,10 @@ ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top
 #contactForm .sub{font-size:.65rem;color:rgba(245,245,245,.35);letter-spacing:.06em;margin-bottom:1.5rem}
 #contactForm .fg{display:flex;flex-direction:column;gap:.7rem;max-width:340px;margin:0 auto}
 #contactForm .fg input,#contactForm .fg select{width:100%;padding:.65rem .9rem;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#F5F5F5;font-size:.78rem;font-family:'Inter',sans-serif;outline:none;transition:border-color .3s;box-sizing:border-box;-webkit-appearance:none;appearance:none}
+#contactForm .fg input.error,#contactForm .fg select.error{border-color:rgba(255,80,80,.4)}
+#contactForm .fg .err{font-size:.6rem;color:rgba(255,120,120,.6);min-height:0;max-height:0;overflow:hidden;transition:max-height .3s ease,opacity .3s ease;opacity:0;margin:0}
+#contactForm .fg .err.show{max-height:20px;opacity:1}
+#contactForm .fg .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden}
 #contactForm .fg select option{background:#1a1a1a;color:#F5F5F5}
 #contactForm .fg input:focus,#contactForm .fg select:focus{border-color:rgba(245,245,245,.2)}
 #contactForm .fg input::placeholder{color:rgba(245,245,245,.18)}
@@ -1111,12 +1115,38 @@ ScrollTrigger.create({trigger:'#consultServices',start:'top bottom-=5%',end:'top
 <div class="form-card">
 <h2>Consultor&iacute;a</h2>
 <p class="sub">Cu&eacute;ntame qu&eacute; necesitas y te asesoro sin compromiso</p>
-<form id="leadForm"><div class="fg"><input type="text" id="leadName" placeholder="Tu nombre" required autocomplete="off"><select id="leadService" required><option value="" disabled selected>Qu&eacute; necesitas?</option><option value="automatizar">Automatizar</option><option value="redisenar">Redise&ntilde;ar web</option><option value="construir">Construir desde 0</option></select>    <button type="submit">Solicitar consultor&iacute;a</button></div></form>
+<form id="leadForm" novalidate><div class="fg"><input type="text" id="leadName" placeholder="Tu nombre" required autocomplete="off"><span class="err" id="nameErr"></span><select id="leadService" required><option value="" disabled selected>Qu&eacute; necesitas?</option><option value="automatizar">Automatizar</option><option value="redisenar">Redise&ntilde;ar web</option><option value="construir">Construir desde 0</option></select><span class="err" id="serviceErr"></span><input type="text" class="hp" id="hpField" tabindex="-1" autocomplete="off"><button type="submit">Solicitar consultor&iacute;a</button></div></form>
 </div>
 <script>
-document.getElementById('leadForm').addEventListener('submit',function(e){e.preventDefault();var n=document.getElementById('leadName').value;var s=document.getElementById('leadService');var v=s.options[s.selectedIndex]?s.options[s.selectedIndex].text:'';if(n){var t='Hola%2C%20soy%20'+encodeURIComponent(n)+'.%20Me%20interesa%3A%20'+encodeURIComponent(v);window.open('https://wa.me/34611652518?text='+t,'_blank')}});
+(function(){
+  var f=document.getElementById('leadForm');
+  var n=document.getElementById('leadName');
+  var s=document.getElementById('leadService');
+  var h=document.getElementById('hpField');
+  var ne=document.getElementById('nameErr');
+  var se=document.getElementById('serviceErr');
+  s.style.color=s.value?'#F5F5F5':'rgba(245,245,245,.18)';
+  s.addEventListener('change',function(){s.style.color=this.value?'#F5F5F5':'rgba(245,245,245,.18)'});
+  function sanitize(t){return t.replace(/[<>&"']/g,function(c){return{'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]})}
+  function v(){
+    var ok=true;
+    if(!n.value.trim()||n.value.trim().length<2){n.classList.add('error');ne.textContent='Introduce tu nombre';ne.classList.add('show');ok=false}else{n.classList.remove('error');ne.textContent='';ne.classList.remove('show')}
+    if(!s.value){s.classList.add('error');se.textContent='Selecciona un servicio';se.classList.add('show');ok=false}else{s.classList.remove('error');se.textContent='';se.classList.remove('show')}
+    return ok;
+  }
+  n.addEventListener('input',function(){n.classList.remove('error');ne.textContent='';ne.classList.remove('show')});
+  s.addEventListener('change',function(){s.classList.remove('error');se.textContent='';se.classList.remove('show')});
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(h.value){return}
+    if(!v()){return}
+    var nm=sanitize(n.value.trim());
+    var sv=s.options[s.selectedIndex].text;
+    var msg='Hola%2C%20soy%20'+encodeURIComponent(nm)+'.%20Me%20interesa%3A%20'+encodeURIComponent(sv);
+    window.open('https://wa.me/34611652518?text='+msg,'_blank');
+  });
+})();
 document.querySelectorAll('.cta-form').forEach(function(b){b.addEventListener('click',function(){document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})})});
-(function(){var s=document.getElementById('leadService');s.style.color=s.value?'#F5F5F5':'rgba(245,245,245,.18)';s.addEventListener('change',function(){s.style.color=this.value?'#F5F5F5':'rgba(245,245,245,.18)'})})();
 </script>
 </section>
 
