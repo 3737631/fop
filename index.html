@@ -911,9 +911,8 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
       if(scanStarted)return;
       scanStarted=true;
       totalScroll=Math.max(0,simContent.scrollHeight-simSite.clientHeight);
-      if(totalScroll<1){
-        var h=0;for(var i=0;i<simContent.children.length;i++)h+=simContent.children[i].offsetHeight||0;
-        totalScroll=Math.max(0,h-simSite.clientHeight);
+      if(totalScroll<20){
+        totalScroll=200; // fallback fixed scroll
       }
       simSite.style.pointerEvents='none';
       iframe.style.pointerEvents='none';
@@ -926,7 +925,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         var ease=1-Math.pow(1-t,3);
         var pos=totalScroll*ease;
         simSite.scrollTop=pos;
-        var scanY=pos/(totalScroll||screenH)*screenH;
+        var scanY=pos/totalScroll*screenH;
         scanLine.style.top=Math.min(scanY,screenH-2)+'px';
         if(t<1){requestAnimationFrame(scanFrame)}else{
           simSite.scrollTop=totalScroll;
