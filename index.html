@@ -731,9 +731,9 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 .mockup-urlbar .url-label{font-size:.58rem;color:rgba(245,245,245,.5);letter-spacing:.02em;font-family:'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mockup-screen{position:relative;width:100%;height:clamp(200px,30vw,340px);overflow:hidden}
 #auditIframe{width:100%;height:100%;border:none;display:none}
-.simulated-site{width:100%;height:100%;overflow-y:auto;scroll-behavior:smooth}
+.simulated-site{width:100%;height:100%;overflow:hidden}
 .simulated-site::-webkit-scrollbar{display:none}
-.sim-content{width:100%}
+.sim-content{width:100%;will-change:transform}
 .sim-block{height:clamp(70px,10vw,110px);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:rgba(245,245,245,.08);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.02);font-family:'Inter',sans-serif}
 .sim-block:nth-child(1){height:clamp(120px,16vw,180px)}
 .scan-line{position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,245,245,.6),rgba(245,245,245,.8),rgba(245,245,245,.6),transparent);z-index:3;top:0;opacity:0;transition:none;pointer-events:none;box-shadow:0 0 12px rgba(245,245,245,.3),0 0 30px rgba(245,245,245,.15)}
@@ -899,21 +899,22 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 
     var duration=4500;
     var screenH=document.querySelector('.mockup-screen').offsetHeight;
-    var totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
+    var totalScroll=0;
     var scanStarted=false, loaded=false;
 
     function switchToIframe(){
       iframe.style.display='block';iframe.style.opacity='1';
-      iframe.style.height='';iframe.style.transform='';iframe.style.willChange='';
       simSite.style.display='none';
     }
 
     function startScan(){
       if(scanStarted)return;
       scanStarted=true;
+      totalScroll=Math.max(0,simContent.offsetHeight-simSite.offsetHeight);
+      if(totalScroll<1)totalScroll=simContent.offsetHeight;
       simSite.style.pointerEvents='none';
       iframe.style.pointerEvents='none';
-      simSite.scrollTop=0;
+      simSite.scrollTop=0;simContent.style.transform='translateY(0)';
       scanLine.classList.add('active');scanLine.style.top='-15px';
       var start=Date.now();
       function scanFrame(){
@@ -921,15 +922,14 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
         var t=Math.min(elapsed/duration,1);
         var ease=1-Math.pow(1-t,3);
         var pos=totalScroll*ease;
-        simSite.scrollTop=pos;
-        var scanY=pos/simContent.offsetHeight*screenH;
+        simContent.style.transform='translateY('+(-pos)+'px)';
+        var scanY=pos/totalScroll*screenH;
         scanLine.style.top=Math.min(scanY,screenH-2)+'px';
         if(t<1){requestAnimationFrame(scanFrame)}else{
-          simSite.scrollTop=totalScroll;
+          simContent.style.transform='translateY('+(-totalScroll)+'px)';
           scanLine.style.top=(screenH-2)+'px';
           simSite.style.pointerEvents='';
           iframe.style.pointerEvents='';
-          iframe.style.height='';iframe.style.transform='';iframe.style.willChange='';
           scanLine.classList.remove('active');
           clearInterval(msgTimer);
           preview.classList.add('scan-done');
