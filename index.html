@@ -703,12 +703,12 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
 <section id="auditSection" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;background:#0D0D0D;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)">
 <style>
 #auditSection{--card-bg:#0D0D0D;--card-border:rgba(255,255,255,.07);position:relative;z-index:1}
-#auditSection-inner{max-width:1200px;margin:0 auto;padding:1rem 1rem 1.5rem;width:100%}
-.audit-header{text-align:center;margin-bottom:.6rem}
+#auditSection-inner{max-width:1200px;margin:0 auto;padding:1rem 1rem .3rem;width:100%}
+.audit-header{text-align:center;margin-bottom:.3rem}
 .audit-header h2{font-family:'Barlow Condensed','Impact',sans-serif;font-size:clamp(1.4rem,3.5vw,2.5rem);font-weight:700;color:#F5F5F5;letter-spacing:-.03em;text-transform:uppercase}
 .audit-header p{font-size:clamp(.65rem,.8vw,.85rem);color:rgba(245,245,245,.18);letter-spacing:.08em;margin-top:.3rem}
-.audit-input-group{display:flex;gap:.6rem;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center}
-.audit-input-group input{flex:1;min-width:180px;padding:.6rem .9rem;border-radius:10px;border:1.5px solid var(--card-border);background:rgba(255,255,255,.03);color:#F5F5F5;font-size:.85rem;outline:none;transition:border-color .3s,box-shadow .3s}
+.audit-input-group{display:flex;gap:.4rem;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.audit-input-group input{flex:1;min-width:180px;padding:.4rem .7rem;border-radius:10px;border:1.5px solid var(--card-border);background:rgba(255,255,255,.03);color:#F5F5F5;font-size:.85rem;outline:none;transition:border-color .3s,box-shadow .3s}
 .audit-input-group input:focus{border-color:rgba(245,245,245,.3);box-shadow:0 0 0 3px rgba(245,245,245,.08)}
 .audit-input-group input::placeholder{color:rgba(245,245,245,.25)}
 .audit-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:9px 26px;border-radius:9999px;font-family:'Inter',sans-serif;font-size:clamp(.7rem,.8vw,.85rem);font-weight:500;color:#F5F5F5;background:transparent;border:1px solid rgba(245,245,245,.2);cursor:pointer;transition:transform .3s,box-shadow .3s;white-space:nowrap;letter-spacing:.02em}
@@ -774,7 +774,7 @@ ScrollTrigger.create({ trigger:'body', start:'29% top', end:'32% top', scrub:1, 
   <button class="audit-btn" id="auditBtn">Analizar web</button>
 </div>
 
-<div class="audit-stage" id="auditStage">
+<div class="audit-stage" id="auditStage" style="display:none">
   <div class="audit-preview" id="auditPreview">
     <div class="mockup-bar">
       <div class="dots"><span></span><span></span><span></span></div>
